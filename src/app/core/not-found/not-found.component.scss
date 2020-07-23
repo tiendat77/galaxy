@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  .image {
+    width: auto;
+    margin-bottom: 16px;
+  }
+
+  .title {
+    color: rgba(0, 0, 0, .68);
+    font-size: 2.4em;
+    margin-bottom: 16px;
+  }
+}
