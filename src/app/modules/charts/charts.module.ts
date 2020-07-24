@@ -9,6 +9,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { ClockComponent } from './clock/clock.component';
 import { SmoothZoomComponent } from './smooth-zoom/smooth-zoom.component';
 import { ZoomXYComponent } from './zoom-xy/zoom-xy.component';
+import { TooltipComponent } from './tooltip/tooltip.component';
+import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { ZoomXYComponent } from './zoom-xy/zoom-xy.component';
     LineChartComponent,
     ClockComponent,
     SmoothZoomComponent,
-    ZoomXYComponent
+    ZoomXYComponent,
+    TooltipComponent,
+    LineBarChartComponent
   ],
   imports: [
     CommonModule,

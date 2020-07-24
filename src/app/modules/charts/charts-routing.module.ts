@@ -5,6 +5,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { SmoothZoomComponent } from './smooth-zoom/smooth-zoom.component';
 import { ZoomXYComponent } from './zoom-xy/zoom-xy.component';
 import { ClockComponent } from './clock/clock.component';
+import { TooltipComponent } from './tooltip/tooltip.component';
+import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 
 
 const routes: Routes = [
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'line-chart', component: LineChartComponent },
   { path: 'smooth-zoom', component: SmoothZoomComponent },
   { path: 'zoom', component: ZoomXYComponent },
-  { path: 'clock', component: ClockComponent }
+  { path: 'clock', component: ClockComponent },
+  { path: 'tooltip', component: TooltipComponent },
+  { path: 'line-bar', component: LineBarChartComponent }
 ];
 
 @NgModule({

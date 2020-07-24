@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep .chart-tooltip {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.582);
+  border-radius: .1rem;
+  display: block;
+  font-size: 12px;
+  padding: 4px 6px;
+  white-space: pre;
+  position: absolute;
+  z-index: 300;
+  visibility: hidden;
+
+  &::after {
+    content: "";
+    border: solid;
+    border-color: transparent rgba(0, 0, 0, 0.582);
+    border-width: 6px 12px 6px 0px;
+    left: -12px;
+    bottom: 6px;
+    position: absolute;
+  }
+}
