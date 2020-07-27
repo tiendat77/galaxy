@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZoomXYComponent } from './zoom-xy.component';
+import { DashLineChartComponent } from './dash-line-chart.component';
 
-describe('ZoomXYComponent', () => {
-  let component: ZoomXYComponent;
-  let fixture: ComponentFixture<ZoomXYComponent>;
+describe('DashLineChartComponent', () => {
+  let component: DashLineChartComponent;
+  let fixture: ComponentFixture<DashLineChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ZoomXYComponent ]
+      declarations: [ DashLineChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZoomXYComponent);
+    fixture = TestBed.createComponent(DashLineChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

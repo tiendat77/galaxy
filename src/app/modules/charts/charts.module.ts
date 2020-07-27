@@ -8,10 +8,10 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { ClockComponent } from './clock/clock.component';
 import { SmoothZoomComponent } from './smooth-zoom/smooth-zoom.component';
-import { ZoomXYComponent } from './zoom-xy/zoom-xy.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
+import { DashLineChartComponent } from './dash-line-chart/dash-line-chart.component';
 
 
 @NgModule({
@@ -20,10 +20,10 @@ import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
     LineChartComponent,
     ClockComponent,
     SmoothZoomComponent,
-    ZoomXYComponent,
     TooltipComponent,
     LineBarChartComponent,
-    BulletChartComponent
+    BulletChartComponent,
+    DashLineChartComponent
   ],
   imports: [
     CommonModule,

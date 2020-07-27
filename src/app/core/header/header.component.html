@@ -1,4 +1,8 @@
 <div class="header-container navbar">
+  <a href="/">
+    <img height="30px" src="/assets/images/alien.svg" alt="" />
+  </a>
+
   <ul>
     <li *ngFor="let item of menuItems" [ngClass]="{ 'menu': item.children && item.children.length > 0 }">
       <a [routerLink]="item.url">{{ item.name }}</a>
