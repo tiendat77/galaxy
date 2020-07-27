@@ -7,6 +7,7 @@ import { ZoomXYComponent } from './zoom-xy/zoom-xy.component';
 import { ClockComponent } from './clock/clock.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
+import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'zoom', component: ZoomXYComponent },
   { path: 'clock', component: ClockComponent },
   { path: 'tooltip', component: TooltipComponent },
-  { path: 'line-bar', component: LineBarChartComponent }
+  { path: 'line-bar', component: LineBarChartComponent },
+  { path: 'bullet-chart', component: BulletChartComponent }
 ];
 
 @NgModule({

@@ -11,6 +11,7 @@ import { SmoothZoomComponent } from './smooth-zoom/smooth-zoom.component';
 import { ZoomXYComponent } from './zoom-xy/zoom-xy.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
+import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component
     SmoothZoomComponent,
     ZoomXYComponent,
     TooltipComponent,
-    LineBarChartComponent
+    LineBarChartComponent,
+    BulletChartComponent
   ],
   imports: [
     CommonModule,
