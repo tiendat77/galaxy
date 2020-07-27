@@ -50,19 +50,15 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
   initData(data: any[]) {
     // Parse data?
     for (const item of data) {
-      item.truncatedTitle = '';
-      item.truncatedSubtitle = '';
+      item.truncatedTitle = truncateText(item.title, 16);
+      item.truncatedSubtitle = truncateText(item.subtitle, 16);
+    }
 
-      if (item.title && item.title.length > 16) {
-        item.truncatedTitle = item.title.slice(0, 13) + '...';
+    function truncateText(text: string, maxCharacter: number): string {
+      if (text && text.length > maxCharacter) {
+        return text.slice(0, maxCharacter - 3) + '...';
       } else {
-        item.truncatedTitle = item.title;
-      }
-
-      if (item.subtitle && item.subtitle.length > 16) {
-        item.truncatedSubtitle = item.subtitle.slice(0, 13) + '...';
-      } else {
-        item.truncatedSubtitle = item.subtitle;
+        return text;
       }
     }
 

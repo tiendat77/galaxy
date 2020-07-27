@@ -11,7 +11,7 @@ import { SmoothZoomComponent } from './smooth-zoom/smooth-zoom.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
-import { DashLineChartComponent } from './dash-line-chart/dash-line-chart.component';
+import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { DashLineChartComponent } from './dash-line-chart/dash-line-chart.compon
     TooltipComponent,
     LineBarChartComponent,
     BulletChartComponent,
-    DashLineChartComponent
+    DashedLineChartComponent
   ],
   imports: [
     CommonModule,

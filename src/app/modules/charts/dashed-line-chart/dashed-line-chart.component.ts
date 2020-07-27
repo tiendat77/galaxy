@@ -3,16 +3,16 @@ import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { AAPL } from '../dashed-line-chart/mock';
+import { AAPL } from './mock';
 import * as d3 from 'd3';
-import { curveBasis } from 'd3';
 
 @Component({
-  selector: 'app-dash-line-chart',
-  templateUrl: './dash-line-chart.component.html',
-  styleUrls: ['./dash-line-chart.component.scss']
+  selector: 'app-dashed-line-chart',
+  templateUrl: './dashed-line-chart.component.html',
+  styleUrls: ['./dashed-line-chart.component.scss']
 })
-export class DashLineChartComponent implements OnInit, AfterViewInit {
+export class DashedLineChartComponent implements OnInit, AfterViewInit {
+
   @ViewChild('dashedLineChart') chartContainer: ElementRef;
 
   @Input() data: { date: Date, value: number }[];
@@ -39,7 +39,7 @@ export class DashLineChartComponent implements OnInit, AfterViewInit {
   }
 
   initData() { // parse data
-    this.data = Object.assign(AAPL.map(({date, close}) => ({ date: new Date(date), value: close })), {y: '$ Close'});
+    this.data = AAPL.map(({date, close}) => ({ date: new Date(date), value: close }));
 
   }
 
@@ -118,7 +118,12 @@ export class DashLineChartComponent implements OnInit, AfterViewInit {
       .y((d: any) => yScale(d.value))
       .curve(d3.curveBasis);
 
-    const data: any = Object.assign(this.data, { y: '$ Close'});
+    const zoom = d3.zoom()
+      .extent([[0, 0], [this.width, this.height]])
+      .scaleExtent([1, 8])
+      .on('zoom', onZoom);
+
+    const data: any = Object.assign(this.data, {columns: ['date', 'value']}, { y: '$ Close'});
 
     const svg = this.initSvg();
 
@@ -128,8 +133,10 @@ export class DashLineChartComponent implements OnInit, AfterViewInit {
     svg.append('g')
       .call(yAxis);
 
-    svg.append('path')
-      .datum(this.data)
+    const path = svg.append('g');
+
+    path.append('path')
+      .datum(data)
       .transition()
       .duration(1000)
       .attr('fill', 'none')
@@ -137,7 +144,13 @@ export class DashLineChartComponent implements OnInit, AfterViewInit {
       .attr('stroke-width', 1.5)
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round')
-      .attr('d', line(this.data));
+      .attr('d', line);
+
+    svg.call(zoom);
+
+    function onZoom() {
+      path.attr('transform', d3.event.transform);
+    }
   }
 
 }

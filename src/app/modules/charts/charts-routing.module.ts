@@ -7,8 +7,7 @@ import { ClockComponent } from './clock/clock.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
-import { DashLineChartComponent } from './dash-line-chart/dash-line-chart.component';
-
+import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/chart/bar-chart' },
@@ -19,7 +18,7 @@ const routes: Routes = [
   { path: 'tooltip', component: TooltipComponent },
   { path: 'line-bar-chart', component: LineBarChartComponent },
   { path: 'bullet-chart', component: BulletChartComponent },
-  { path: 'dash-line-chart', component: DashLineChartComponent }
+  { path: 'dash-line-chart', component: DashedLineChartComponent }
 ];
 
 @NgModule({
