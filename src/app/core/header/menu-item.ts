@@ -14,7 +14,7 @@ export const MENU_ITEMS: MenuItem[] = [
     url: '/chart',
     children: [
       { name: 'Bullet Chart', url: '/chart/bullet-chart' },
-      { name: 'Dash Line Chart', url: '/chart/dash-line-chart' },
+      { name: 'Dashed Line Chart', url: '/chart/dash-line-chart' },
       { name: 'Clock', url: '/chart/clock' },
       { name: 'Bar Chart', url: '/chart/bar-chart' },
       { name: 'Line Chart', url: '/chart/line-chart' },
