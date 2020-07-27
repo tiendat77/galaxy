@@ -1,3 +1,4 @@
+// tslint:disable
 export function createBulletChart(d3) {
 
   // Chart design based on the recommendations of Stephen Few. Implementation

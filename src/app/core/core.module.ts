@@ -14,12 +14,14 @@ export function HttpLoaderFactory(http: HttpClient) {
 import { ContainerComponent } from './container/container.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     ContainerComponent,
     DashboardComponent,
     NotFoundComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,

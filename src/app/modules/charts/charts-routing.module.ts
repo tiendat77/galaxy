@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'zoom', component: ZoomXYComponent },
   { path: 'clock', component: ClockComponent },
   { path: 'tooltip', component: TooltipComponent },
-  { path: 'line-bar', component: LineBarChartComponent },
+  { path: 'line-bar-chart', component: LineBarChartComponent },
   { path: 'bullet-chart', component: BulletChartComponent }
 ];
 

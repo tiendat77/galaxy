@@ -23,6 +23,10 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
   width = 960 - this.margin.left - this.margin.right;
   height = 70 - this.margin.top - this.margin.bottom;
 
+  domains = ['range 1', 'range 2', 'range 3'];
+  rangeColor: string[] = ['#0570b0', '#74a9cf', '#bdc9e1'];
+  measureColor = ['#9fa5af', '#666869'];
+
   debounce: BehaviorSubject<any> = new BehaviorSubject(0);
 
   constructor() { }
@@ -72,11 +76,11 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
         .bullet { font: 10px sans-serif; }
         .bullet .marker { stroke: #ff2839; stroke-width: 2px; }
         .bullet .tick line { stroke: #666; stroke-width: .5px; }
-        .bullet .range.s0 { fill: #0570b0; }
-        .bullet .range.s1 { fill: #74a9cf; }
-        .bullet .range.s2 { fill: #bdc9e1; }
-        .bullet .measure.s0 { fill: #9fa5af; }
-        .bullet .measure.s1 { fill: #666869; }
+        .bullet .range.s0 { fill: ${this.rangeColor[0]}; }
+        .bullet .range.s1 { fill: ${this.rangeColor[1]}; }
+        .bullet .range.s2 { fill: ${this.rangeColor[2]}; }
+        .bullet .measure.s0 { fill: ${this.measureColor[0]}; }
+        .bullet .measure.s1 { fill: ${this.measureColor[1]}; }
         .bullet .title {
           font-size: 14px;
           font-weight: bold;
@@ -137,6 +141,57 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
         .text((d: any) => d.truncatedSubtitle)
       .append('title')
         .text((d: any) => d.subtitle);
+
+    // this.initLegend();
+  }
+
+  initLegend() {
+    const svg = d3.select(this.chartID).append('svg')
+      .attr('width', this.width + this.margin.left + this.margin.right)
+      .attr('height', 125);
+
+    const legend = svg.append('g')
+      .attr('transform', `translate(${this.width - this.margin.right}, 0)`);
+
+    // Border
+    legend
+      .append('rect')
+      .attr('width', 120)
+      .attr('height', 125)
+      .style('fill', 'none')
+      .style('stroke-width', 1)
+      .style('stroke', 'black');
+
+    const size = 20;
+    const borderPadding = 15;
+    const itemPadding = 5;
+    const textOffset = 2;
+
+    // Boxes
+    legend.selectAll('boxes')
+      .data(this.domains)
+      .enter()
+      .append('rect')
+        .attr('x', borderPadding)
+        .attr('y', (d, i) => borderPadding + (i * (size + itemPadding)))
+        .attr('width', 20)
+        .attr('height', 20)
+        .style('fill', (d, i) => this.rangeColor[i]);
+
+    // Labels
+    legend.selectAll('labels')
+      .data(this.domains)
+      .enter()
+      .append('text')
+        .attr('x', borderPadding + size + itemPadding)
+        .attr('y', (d, i) => borderPadding + i * (size + itemPadding) + (size / 2) + textOffset)
+        // .style("fill", (d) => color(d))
+        .text((d) => d)
+        .attr('text-anchor', 'left')
+        .style('alignment-baseline', 'middle')
+        .style('font-family', 'sans-serif');
+
+    return svg.node();
   }
 
 }
