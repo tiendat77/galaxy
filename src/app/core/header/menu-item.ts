@@ -22,5 +22,9 @@ export const MENU_ITEMS: MenuItem[] = [
       { name: 'Tooltip', url: '/chart/tooltip' },
       { name: 'Line Bar Chart', url: '/chart/line-bar-chart' }
     ]
+  },
+  {
+    name: 'Board',
+    url: '/chart/board'
   }
 ];

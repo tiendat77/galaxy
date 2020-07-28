@@ -17,6 +17,8 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
   @ViewChild('bulletContainer') bulletContainer: ElementRef;
 
   @Input() data;
+  @Input() title: string;
+  @Input() subtitle: string;
 
   chartID = '#BULLET_CHART';
   margin = {top: 5, right: 40, bottom: 20, left: 160};
@@ -93,6 +95,7 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
     const element = this.bulletContainer.nativeElement;
 
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
+    this.height = element.offsetHeight / this.data.length - 2 * (this.margin.top + this.margin.bottom);
   }
 
   draw() {
@@ -137,8 +140,6 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
         .text((d: any) => d.truncatedSubtitle)
       .append('title')
         .text((d: any) => d.subtitle);
-
-    // this.initLegend();
   }
 
   initLegend() {

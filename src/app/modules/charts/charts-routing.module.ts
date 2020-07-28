@@ -8,9 +8,11 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
+import { BoardComponent } from './board/board.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/chart/bar-chart' },
+  { path: 'board', component: BoardComponent },
   { path: 'bar-chart', component: BarChartComponent },
   { path: 'line-chart', component: LineChartComponent },
   { path: 'smooth-zoom', component: SmoothZoomComponent },

@@ -12,10 +12,12 @@ import * as d3 from 'd3';
   styleUrls: ['./dashed-line-chart.component.scss']
 })
 export class DashedLineChartComponent implements OnInit, AfterViewInit {
-
   @ViewChild('dashedLineChart') chartContainer: ElementRef;
 
   @Input() data: { date: Date, value: number }[];
+  @Input() title: string;
+  @Input() subtitle: string;
+
   chartID = '#DASHED_LINE';
 
   margin = ({top: 20, right: 30, bottom: 30, left: 40});
@@ -133,13 +135,12 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
     svg.append('g')
       .call(yAxis);
 
-    const path = svg.append('g');
-
-    path.append('path')
+    svg.append('path')
       .datum(data)
       .transition()
       .duration(1000)
       .attr('fill', 'none')
+      .attr('stroke-dasharray', 3)
       .attr('stroke', 'steelblue')
       .attr('stroke-width', 1.5)
       .attr('stroke-linejoin', 'round')
@@ -149,7 +150,7 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
     svg.call(zoom);
 
     function onZoom() {
-      path.attr('transform', d3.event.transform);
+      svg.attr('transform', d3.event.transform);
     }
   }
 
