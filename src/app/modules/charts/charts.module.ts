@@ -14,6 +14,7 @@ import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
 import { BoardComponent } from './board/board.component';
+import { DottedLineChartComponent } from './dotted-line-chart/dotted-line-chart.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { BoardComponent } from './board/board.component';
     LineBarChartComponent,
     BulletChartComponent,
     DashedLineChartComponent,
-    BoardComponent
+    BoardComponent,
+    DottedLineChartComponent
   ],
   imports: [
     CommonModule,
