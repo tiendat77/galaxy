@@ -26,7 +26,6 @@ export class LineChartComponent implements OnInit {
     d3.csv('/assets/csv/aapl.csv', ({date, close}) => ({date: new Date(date), value: +close})).then((data) => {
       this.data = data;
       this.draw();
-      console.log(this.data);
     });
   }
 

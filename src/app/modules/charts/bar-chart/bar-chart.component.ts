@@ -128,6 +128,20 @@ export class BarChartComponent implements OnInit, AfterViewInit {
         .attr('width', xScale.bandwidth())
         .attr('height', (d: any) => yScale(0) - yScale(d.value));
 
+    svg.append('g')
+        .attr('fill', 'none')
+        .attr('pointer-events', 'all')
+      .selectAll('rect')
+      .data(this.data)
+      .join('rect')
+        .attr('x', (d: any) => xScale(d.date))
+        .attr('y', 0)
+        .attr('width', xScale.bandwidth())
+        .attr('height', this.height)
+      .append('title')
+        .text((d: any) => d.value);
+
+
     svg.append('g').call(xAxis);
     svg.append('g').call(yAxis);
   }

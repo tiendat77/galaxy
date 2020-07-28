@@ -17,6 +17,7 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
   @Input() data: { date: Date, value: number }[];
   @Input() title: string;
   @Input() subtitle: string;
+  @Input() axisColor = 'rgba(0, 0, 0, 0.68)';
 
   chartID = '#DASHED_LINE';
 
@@ -102,6 +103,15 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
         d3.axisBottom(xScale)
           .ticks(this.width / 80)
           .tickSizeOuter(0)
+      )
+      .call(axis => axis.select('.domain')
+        .attr('stroke', this.axisColor)
+      )
+      .call(axis => axis.selectAll('line')
+        .attr('stroke', this.axisColor)
+      )
+      .call(axis => axis.selectAll('text')
+        .attr('fill', this.axisColor)
       );
 
     const yAxis = g => g
@@ -112,7 +122,14 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
         .attr('x', 3)
         .attr('text-anchor', 'start')
         .attr('font-weight', 'bold')
-        .text('$ Close')); // Axis title
+        .text('$ Close')
+      ) // Axis title
+      .call(axis => axis.selectAll('line')
+        .attr('stroke', this.axisColor)
+      )
+      .call(axis => axis.selectAll('text')
+        .attr('fill', this.axisColor)
+      );
 
     const line = d3.line()
       .defined((d: any) => !isNaN(d.value))
