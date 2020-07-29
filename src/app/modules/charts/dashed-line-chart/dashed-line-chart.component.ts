@@ -154,8 +154,6 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
 
     svg.append('path')
       .datum(data)
-      .transition()
-      .duration(1000)
       .attr('fill', 'none')
       .attr('stroke-dasharray', 3)
       .attr('stroke', 'steelblue')
