@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
 
-import { MOCK_DATA } from './mock';
-
-import * as d3 from 'd3';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { MOCK_DATA } from './mock';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-dotted-line-chart',
