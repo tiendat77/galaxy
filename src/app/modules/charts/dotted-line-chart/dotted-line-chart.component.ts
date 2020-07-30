@@ -42,7 +42,6 @@ export class DottedLineChartComponent implements OnInit, AfterViewInit {
 
   initData() {
     this.data = MOCK_DATA.map(({date, value}) => ({ date: d3.timeParse('%Y-%m-%d')(date), value: +value }));
-    console.log({data: this.data});
   }
 
   initSvg() {

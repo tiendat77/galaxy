@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { MOCK_DATA } from './mock';
+import { MOCK_DATA, MOCK_OLE } from './mock';
 import * as d3 from 'd3';
 
 @Component({
@@ -17,10 +17,12 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   @Input() data: any[] = [];
   @Input() title: string;
   @Input() subtitle: string;
-  @Input() yLabel = 'Frequency';
+  @Input() yLabel = '';
+  @Input() showValueOnBar = false;
+  @Input() showYAxis = true;
+  @Input() showXAxis = true;
   @Input() barColor = 'steelblue';
   @Input() axisColor = 'rgba(0, 0, 0, 0.68)';
-
 
   chartID = '#BAR_CHART';
   margin = { top: 10, right: 30, bottom: 30, left: 40 };
@@ -54,7 +56,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   }
 
   initData() {
-    this.data = MOCK_DATA.map(({date, value}) => ({date, value: +value}));
+    this.data = MOCK_OLE.map(({id, value}) => ({id, value: +value}));
   }
 
   initSvg() {
@@ -79,9 +81,9 @@ export class BarChartComponent implements OnInit, AfterViewInit {
     const svg = this.initSvg();
 
     const xScale = d3.scaleBand()
-      .domain(this.data.map(d => d.date))
-      .rangeRound([this.margin.left, this.width - this.margin.right])
-      .padding(0.1);
+      .domain(this.data.map(d => d.id))
+      .rangeRound([this.margin.left + 10, this.width - this.margin.right])
+      .padding(0.2);
 
     const yScale = d3.scaleLinear()
       .domain([0, d3.max(this.data, (d: any) => d.value)]).nice()
@@ -123,7 +125,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       .selectAll('rect')
       .data(this.data)
       .join('rect')
-        .attr('x', (d: any) => xScale(d.date))
+        .attr('x', (d: any) => xScale(d.id))
         .attr('y', (d: any) => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', (d: any) => yScale(0) - yScale(d.value));
@@ -134,16 +136,35 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       .selectAll('rect')
       .data(this.data)
       .join('rect')
-        .attr('x', (d: any) => xScale(d.date))
+        .attr('x', (d: any) => xScale(d.id))
         .attr('y', 0)
         .attr('width', xScale.bandwidth())
         .attr('height', this.height)
       .append('title')
         .text((d: any) => d.value);
 
+    if (this.showValueOnBar) {
+      svg.append('g')
+          .attr('fill', this.axisColor)
+          .attr('text-anchor', 'middle')
+          .attr('font-size', '0.8em')
+        .selectAll('text')
+        .data(this.data)
+        .join('text')
+          .attr('x', (d: any) => xScale(d.id))
+          .attr('y', (d: any) => yScale(d.value))
+          .attr('dx', xScale.bandwidth() / 2)
+          .attr('dy', -8)
+          .text((d: any) => d.value + '%');
+    }
 
-    svg.append('g').call(xAxis);
-    svg.append('g').call(yAxis);
+    if (this.showXAxis) {
+      svg.append('g').call(xAxis);
+    }
+
+    if (this.showYAxis) {
+      svg.append('g').call(yAxis);
+    }
   }
 
 }

@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { AAPL } from './mock';
+import { AAPL, MOCK_DATA } from './mock';
 import * as d3 from 'd3';
 
 @Component({
@@ -14,21 +14,22 @@ import * as d3 from 'd3';
 export class DashedLineChartComponent implements OnInit, AfterViewInit {
   @ViewChild('dashedLineChart') chartContainer: ElementRef;
 
-  @Input() data: { date: Date, value: number }[];
+  @Input() data: any[];
   @Input() title: string;
   @Input() subtitle: string;
   @Input() axisColor = 'rgba(0, 0, 0, 0.68)';
 
   chartID = '#DASHED_LINE';
 
-  margin = ({top: 20, right: 30, bottom: 30, left: 40});
+  margin = {top: 20, right: 30, bottom: 30, left: 40};
+  tooltip = {width: 4, height: 4, x: 10, y: -30};
   width = 800 - this.margin.left - this.margin.right;
   height = 600 - this.margin.top - this.margin.bottom;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.initStyle();
+    this.initData();
 
     fromEvent(window, 'resize').pipe(
       debounceTime(600)
@@ -41,31 +42,8 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
     this.draw();
   }
 
-  initData() { // parse data
-    this.data = AAPL.map(({date, close}) => ({ date: new Date(date), value: close }));
-
-  }
-
-  initStyle() {
-
-  }
-
-  initTooltip() {
-    d3.select('#chartTooltip').remove();
-
-    const tooltip = d3.select('body')
-      .append('div')
-      .attr('id', 'chartTooltip')
-      .style('content', '""')
-      .style('border', 'solid')
-      .style('border-color', 'transparent rgba(0, 0, 0, 0.582)')
-      .style('border-width', '6px 12px 6px 0px')
-      .style('left', '-12px')
-      .style('bottom', '6px')
-      .style('position', 'absolute')
-      .style('visibility', 'hidden');
-
-    return tooltip;
+  initData() {
+    this.data = MOCK_DATA.map(({date, value}) => ({ date: new Date(date), value: +value }));
   }
 
   initSvg() {
@@ -83,25 +61,23 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
   }
 
   draw() {
-    this.initData();
-
+    const that = this;
     const element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
 
-    const xScale = d3.scaleUtc()
-      .domain(d3.extent(this.data, (d) => d.date))
+    const xScale = d3.scaleTime()
+      .domain(d3.extent(this.data, (d: any) => d.date))
       .range([this.margin.left, this.width - this.margin.right]);
 
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(this.data, (d) => d.value)])
+      .domain(d3.extent(this.data, (d: any) => d.value))
       .range([this.height - this.margin.bottom, this.margin.top]);
 
     const xAxis = g => g
       .attr('transform', `translate(0,${this.height - this.margin.bottom})`)
       .call(
         d3.axisBottom(xScale)
-          .ticks(this.width / 80)
           .tickSizeOuter(0)
       )
       .call(axis => axis.select('.domain')
@@ -118,12 +94,6 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
       .attr('transform', `translate(${this.margin.left}, 0)`)
       .call(d3.axisLeft(yScale))
       .call(axis => axis.select('.domain').remove())
-      .call(axis => axis.select('.tick:last-of-type text').clone()
-        .attr('x', 3)
-        .attr('text-anchor', 'start')
-        .attr('font-weight', 'bold')
-        .text('$ Close')
-      ) // Axis title
       .call(axis => axis.selectAll('line')
         .attr('stroke', this.axisColor)
       )
@@ -132,28 +102,21 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
       );
 
     const line = d3.line()
-      .defined((d: any) => !isNaN(d.value))
       .x((d: any) => xScale(d.date))
-      .y((d: any) => yScale(d.value))
-      .curve(d3.curveBasis);
+      .y((d: any) => yScale(d.value));
+      // .curve(d3.curveBasis);
 
     const zoom = d3.zoom()
       .extent([[0, 0], [this.width, this.height]])
       .scaleExtent([1, 8])
       .on('zoom', onZoom);
 
-    const data: any = Object.assign(this.data, {columns: ['date', 'value']}, { y: '$ Close'});
+    const bisector = d3.bisector((d: any) => d.date).left;
 
     const svg = this.initSvg();
 
-    svg.append('g')
-      .call(xAxis);
-
-    svg.append('g')
-      .call(yAxis);
-
     svg.append('path')
-      .datum(data)
+      .datum(this.data)
       .attr('fill', 'none')
       .attr('stroke-dasharray', 3)
       .attr('stroke', 'steelblue')
@@ -162,10 +125,41 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
       .attr('stroke-linecap', 'round')
       .attr('d', line);
 
-    svg.call(zoom);
+    const tooltip = svg.append('g')
+      .style('display', 'none');
+
+    tooltip.append('circle')
+      .attr('r', this.tooltip.height);
+
+    tooltip.append('text')
+      .attr('x', 15)
+      .attr('dy', '1em');
+
+    svg.append('rect')
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+      .attr('width', this.width)
+      .attr('height', this.height)
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .on('mouseover', () => { tooltip.style('display', ''); })
+      .on('mouseout', () => { tooltip.style('display', 'none'); })
+      .on('mousemove', onMouseMove);
+
+    svg.append('g').call(xAxis);
+    svg.append('g').call(yAxis);
 
     function onZoom() {
       svg.attr('transform', d3.event.transform);
+    }
+
+    function onMouseMove() {
+      const mouse = d3.mouse(this);
+      const xm = xScale.invert(mouse[0]);
+      const ym = yScale.invert(mouse[1]);
+      const i1 = bisector(that.data, xm, 1);
+      const i0 = i1 - 1;
+      tooltip.attr('transform', `translate(${xScale(xm)}, ${yScale(ym)})`);
+      tooltip.select('text').text(that.data[i1].value);
     }
   }
 

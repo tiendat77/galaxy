@@ -1,5122 +1,5136 @@
+export const MOCK_DATA = [
+  { date: '2019-01-04', value: 89},
+  { date: '2019-01-11', value: 96},
+  { date: '2019-01-18', value: 87},
+  { date: '2019-01-25', value: 99},
+  { date: '2019-02-04', value: 83},
+  { date: '2019-02-11', value: 93},
+  { date: '2019-02-18', value: 79},
+  { date: '2019-02-25', value: 94},
+  { date: '2019-03-4',  value: 89},
+  { date: '2019-03-11', value: 93},
+  { date: '2019-03-18', value: 81}
+];
+
 export const AAPL = [
   {
     date: '2007-04-23',
-    close: 93.24
+    value: 93.24
   },
   {
     date: '2007-04-24',
-    close: 95.35
+    value: 95.35
   },
   {
     date: '2007-04-25',
-    close: 98.84
+    value: 98.84
   },
   {
     date: '2007-04-26',
-    close: 99.92
+    value: 99.92
   },
   {
     date: '2007-04-29',
-    close: 99.8
+    value: 99.8
   },
   {
     date: '2007-05-01',
-    close: 99.47
+    value: 99.47
   },
   {
     date: '2007-05-02',
-    close: 100.39
+    value: 100.39
   },
   {
     date: '2007-05-03',
-    close: 100.4
+    value: 100.4
   },
   {
     date: '2007-05-04',
-    close: 100.81
+    value: 100.81
   },
   {
     date: '2007-05-07',
-    close: 103.92
+    value: 103.92
   },
   {
     date: '2007-05-08',
-    close: 105.06
+    value: 105.06
   },
   {
     date: '2007-05-09',
-    close: 106.88
+    value: 106.88
   },
   {
     date: '2007-05-09',
-    close: 107.34
+    value: 107.34
   },
   {
     date: '2007-05-10',
-    close: 108.74
+    value: 108.74
   },
   {
     date: '2007-05-13',
-    close: 109.36
+    value: 109.36
   },
   {
     date: '2007-05-14',
-    close: 107.52
+    value: 107.52
   },
   {
     date: '2007-05-15',
-    close: 107.34
+    value: 107.34
   },
   {
     date: '2007-05-16',
-    close: 109.44
+    value: 109.44
   },
   {
     date: '2007-05-17',
-    close: 110.02
+    value: 110.02
   },
   {
     date: '2007-05-20',
-    close: 111.98
+    value: 111.98
   },
   {
     date: '2007-05-21',
-    close: 113.54
+    value: 113.54
   },
   {
     date: '2007-05-22',
-    close: 112.89
+    value: 112.89
   },
   {
     date: '2007-05-23',
-    close: 110.69
+    value: 110.69
   },
   {
     date: '2007-05-24',
-    close: 113.62
+    value: 113.62
   },
   {
     date: '2007-05-28',
-    close: 114.35
+    value: 114.35
   },
   {
     date: '2007-05-29',
-    close: 118.77
+    value: 118.77
   },
   {
     date: '2007-05-30',
-    close: 121.19
+    value: 121.19
   },
   {
     date: '2007-06-01',
-    close: 118.4
+    value: 118.4
   },
   {
     date: '2007-06-04',
-    close: 121.33
+    value: 121.33
   },
   {
     date: '2007-06-05',
-    close: 122.67
+    value: 122.67
   },
   {
     date: '2007-06-06',
-    close: 123.64
+    value: 123.64
   },
   {
     date: '2007-06-07',
-    close: 124.07
+    value: 124.07
   },
   {
     date: '2007-06-08',
-    close: 124.49
+    value: 124.49
   },
   {
     date: '2007-06-10',
-    close: 120.19
+    value: 120.19
   },
   {
     date: '2007-06-11',
-    close: 120.38
+    value: 120.38
   },
   {
     date: '2007-06-12',
-    close: 117.5
+    value: 117.5
   },
   {
     date: '2007-06-13',
-    close: 118.75
+    value: 118.75
   },
   {
     date: '2007-06-14',
-    close: 120.5
+    value: 120.5
   },
   {
     date: '2007-06-17',
-    close: 125.09
+    value: 125.09
   },
   {
     date: '2007-06-18',
-    close: 123.66
+    value: 123.66
   },
   {
     date: '2007-06-19',
-    close: 121.55
+    value: 121.55
   },
   {
     date: '2007-06-20',
-    close: 123.9
+    value: 123.9
   },
   {
     date: '2007-06-21',
-    close: 123
+    value: 123
   },
   {
     date: '2007-06-24',
-    close: 122.34
+    value: 122.34
   },
   {
     date: '2007-06-25',
-    close: 119.65
+    value: 119.65
   },
   {
     date: '2007-06-26',
-    close: 121.89
+    value: 121.89
   },
   {
     date: '2007-06-27',
-    close: 120.56
+    value: 120.56
   },
   {
     date: '2007-06-28',
-    close: 122.04
+    value: 122.04
   },
   {
     date: '2007-07-02',
-    close: 121.26
+    value: 121.26
   },
   {
     date: '2007-07-03',
-    close: 127.17
+    value: 127.17
   },
   {
     date: '2007-07-05',
-    close: 132.75
+    value: 132.75
   },
   {
     date: '2007-07-06',
-    close: 132.3
+    value: 132.3
   },
   {
     date: '2007-07-09',
-    close: 130.33
+    value: 130.33
   },
   {
     date: '2007-07-09',
-    close: 132.35
+    value: 132.35
   },
   {
     date: '2007-07-10',
-    close: 132.39
+    value: 132.39
   },
   {
     date: '2007-07-11',
-    close: 134.07
+    value: 134.07
   },
   {
     date: '2007-07-12',
-    close: 137.73
+    value: 137.73
   },
   {
     date: '2007-07-15',
-    close: 138.1
+    value: 138.1
   },
   {
     date: '2007-07-16',
-    close: 138.91
+    value: 138.91
   },
   {
     date: '2007-07-17',
-    close: 138.12
+    value: 138.12
   },
   {
     date: '2007-07-18',
-    close: 140
+    value: 140
   },
   {
     date: '2007-07-19',
-    close: 143.75
+    value: 143.75
   },
   {
     date: '2007-07-22',
-    close: 143.7
+    value: 143.7
   },
   {
     date: '2007-07-23',
-    close: 134.89
+    value: 134.89
   },
   {
     date: '2007-07-24',
-    close: 137.26
+    value: 137.26
   },
   {
     date: '2007-07-25',
-    close: 146
+    value: 146
   },
   {
     date: '2007-07-26',
-    close: 143.85
+    value: 143.85
   },
   {
     date: '2007-07-29',
-    close: 141.43
+    value: 141.43
   },
   {
     date: '2007-07-30',
-    close: 131.76
+    value: 131.76
   },
   {
     date: '2007-08-01',
-    close: 135
+    value: 135
   },
   {
     date: '2007-08-02',
-    close: 136.49
+    value: 136.49
   },
   {
     date: '2007-08-03',
-    close: 131.85
+    value: 131.85
   },
   {
     date: '2007-08-06',
-    close: 135.25
+    value: 135.25
   },
   {
     date: '2007-08-07',
-    close: 135.03
+    value: 135.03
   },
   {
     date: '2007-08-08',
-    close: 134.01
+    value: 134.01
   },
   {
     date: '2007-08-09',
-    close: 126.39
+    value: 126.39
   },
   {
     date: '2007-08-09',
-    close: 125
+    value: 125
   },
   {
     date: '2007-08-12',
-    close: 127.79
+    value: 127.79
   },
   {
     date: '2007-08-13',
-    close: 124.03
+    value: 124.03
   },
   {
     date: '2007-08-14',
-    close: 119.9
+    value: 119.9
   },
   {
     date: '2007-08-15',
-    close: 117.05
+    value: 117.05
   },
   {
     date: '2007-08-16',
-    close: 122.06
+    value: 122.06
   },
   {
     date: '2007-08-19',
-    close: 122.22
+    value: 122.22
   },
   {
     date: '2007-08-20',
-    close: 127.57
+    value: 127.57
   },
   {
     date: '2007-08-21',
-    close: 132.51
+    value: 132.51
   },
   {
     date: '2007-08-22',
-    close: 131.07
+    value: 131.07
   },
   {
     date: '2007-08-23',
-    close: 135.3
+    value: 135.3
   },
   {
     date: '2007-08-26',
-    close: 132.25
+    value: 132.25
   },
   {
     date: '2007-08-27',
-    close: 126.82
+    value: 126.82
   },
   {
     date: '2007-08-28',
-    close: 134.08
+    value: 134.08
   },
   {
     date: '2007-08-29',
-    close: 136.25
+    value: 136.25
   },
   {
     date: '2007-08-30',
-    close: 138.48
+    value: 138.48
   },
   {
     date: '2007-09-04',
-    close: 144.16
+    value: 144.16
   },
   {
     date: '2007-09-05',
-    close: 136.76
+    value: 136.76
   },
   {
     date: '2007-09-06',
-    close: 135.01
+    value: 135.01
   },
   {
     date: '2007-09-07',
-    close: 131.77
+    value: 131.77
   },
   {
     date: '2007-09-09',
-    close: 136.71
+    value: 136.71
   },
   {
     date: '2007-09-10',
-    close: 135.49
+    value: 135.49
   },
   {
     date: '2007-09-11',
-    close: 136.85
+    value: 136.85
   },
   {
     date: '2007-09-12',
-    close: 137.2
+    value: 137.2
   },
   {
     date: '2007-09-13',
-    close: 138.81
+    value: 138.81
   },
   {
     date: '2007-09-16',
-    close: 138.41
+    value: 138.41
   },
   {
     date: '2007-09-17',
-    close: 140.92
+    value: 140.92
   },
   {
     date: '2007-09-18',
-    close: 140.77
+    value: 140.77
   },
   {
     date: '2007-09-19',
-    close: 140.31
+    value: 140.31
   },
   {
     date: '2007-09-20',
-    close: 144.15
+    value: 144.15
   },
   {
     date: '2007-09-23',
-    close: 148.28
+    value: 148.28
   },
   {
     date: '2007-09-24',
-    close: 153.18
+    value: 153.18
   },
   {
     date: '2007-09-25',
-    close: 152.77
+    value: 152.77
   },
   {
     date: '2007-09-26',
-    close: 154.5
+    value: 154.5
   },
   {
     date: '2007-09-27',
-    close: 153.47
+    value: 153.47
   },
   {
     date: '2007-10-01',
-    close: 156.34
+    value: 156.34
   },
   {
     date: '2007-10-02',
-    close: 158.45
+    value: 158.45
   },
   {
     date: '2007-10-03',
-    close: 157.92
+    value: 157.92
   },
   {
     date: '2007-10-04',
-    close: 156.24
+    value: 156.24
   },
   {
     date: '2007-10-05',
-    close: 161.45
+    value: 161.45
   },
   {
     date: '2007-10-08',
-    close: 167.91
+    value: 167.91
   },
   {
     date: '2007-10-09',
-    close: 167.86
+    value: 167.86
   },
   {
     date: '2007-10-09',
-    close: 166.79
+    value: 166.79
   },
   {
     date: '2007-10-10',
-    close: 162.23
+    value: 162.23
   },
   {
     date: '2007-10-11',
-    close: 167.25
+    value: 167.25
   },
   {
     date: '2007-10-14',
-    close: 166.98
+    value: 166.98
   },
   {
     date: '2007-10-15',
-    close: 169.58
+    value: 169.58
   },
   {
     date: '2007-10-16',
-    close: 172.75
+    value: 172.75
   },
   {
     date: '2007-10-17',
-    close: 173.5
+    value: 173.5
   },
   {
     date: '2007-10-18',
-    close: 170.42
+    value: 170.42
   },
   {
     date: '2007-10-21',
-    close: 174.36
+    value: 174.36
   },
   {
     date: '2007-10-22',
-    close: 186.16
+    value: 186.16
   },
   {
     date: '2007-10-23',
-    close: 185.93
+    value: 185.93
   },
   {
     date: '2007-10-24',
-    close: 182.78
+    value: 182.78
   },
   {
     date: '2007-10-25',
-    close: 184.7
+    value: 184.7
   },
   {
     date: '2007-10-28',
-    close: 185.09
+    value: 185.09
   },
   {
     date: '2007-10-29',
-    close: 187
+    value: 187
   },
   {
     date: '2007-10-30',
-    close: 189.95
+    value: 189.95
   },
   {
     date: '2007-11-01',
-    close: 187.44
+    value: 187.44
   },
   {
     date: '2007-11-02',
-    close: 187.87
+    value: 187.87
   },
   {
     date: '2007-11-05',
-    close: 186.18
+    value: 186.18
   },
   {
     date: '2007-11-06',
-    close: 191.79
+    value: 191.79
   },
   {
     date: '2007-11-07',
-    close: 186.3
+    value: 186.3
   },
   {
     date: '2007-11-08',
-    close: 175.47
+    value: 175.47
   },
   {
     date: '2007-11-09',
-    close: 165.37
+    value: 165.37
   },
   {
     date: '2007-11-11',
-    close: 153.76
+    value: 153.76
   },
   {
     date: '2007-11-12',
-    close: 169.96
+    value: 169.96
   },
   {
     date: '2007-11-13',
-    close: 166.11
+    value: 166.11
   },
   {
     date: '2007-11-14',
-    close: 164.3
+    value: 164.3
   },
   {
     date: '2007-11-15',
-    close: 166.39
+    value: 166.39
   },
   {
     date: '2007-11-18',
-    close: 163.95
+    value: 163.95
   },
   {
     date: '2007-11-19',
-    close: 168.85
+    value: 168.85
   },
   {
     date: '2007-11-20',
-    close: 168.46
+    value: 168.46
   },
   {
     date: '2007-11-22',
-    close: 171.54
+    value: 171.54
   },
   {
     date: '2007-11-25',
-    close: 172.54
+    value: 172.54
   },
   {
     date: '2007-11-26',
-    close: 174.81
+    value: 174.81
   },
   {
     date: '2007-11-27',
-    close: 180.22
+    value: 180.22
   },
   {
     date: '2007-11-28',
-    close: 184.29
+    value: 184.29
   },
   {
     date: '2007-11-29',
-    close: 182.22
+    value: 182.22
   },
   {
     date: '2007-12-03',
-    close: 178.86
+    value: 178.86
   },
   {
     date: '2007-12-04',
-    close: 179.81
+    value: 179.81
   },
   {
     date: '2007-12-05',
-    close: 185.5
+    value: 185.5
   },
   {
     date: '2007-12-06',
-    close: 189.95
+    value: 189.95
   },
   {
     date: '2007-12-07',
-    close: 194.3
+    value: 194.3
   },
   {
     date: '2007-12-09',
-    close: 194.21
+    value: 194.21
   },
   {
     date: '2007-12-10',
-    close: 188.54
+    value: 188.54
   },
   {
     date: '2007-12-11',
-    close: 190.86
+    value: 190.86
   },
   {
     date: '2007-12-12',
-    close: 191.83
+    value: 191.83
   },
   {
     date: '2007-12-13',
-    close: 190.39
+    value: 190.39
   },
   {
     date: '2007-12-16',
-    close: 184.4
+    value: 184.4
   },
   {
     date: '2007-12-17',
-    close: 182.98
+    value: 182.98
   },
   {
     date: '2007-12-18',
-    close: 183.12
+    value: 183.12
   },
   {
     date: '2007-12-19',
-    close: 187.21
+    value: 187.21
   },
   {
     date: '2007-12-20',
-    close: 193.91
+    value: 193.91
   },
   {
     date: '2007-12-23',
-    close: 198.8
+    value: 198.8
   },
   {
     date: '2007-12-25',
-    close: 198.95
+    value: 198.95
   },
   {
     date: '2007-12-26',
-    close: 198.57
+    value: 198.57
   },
   {
     date: '2007-12-27',
-    close: 199.83
+    value: 199.83
   },
   {
     date: '2007-12-30',
-    close: 198.08
+    value: 198.08
   },
   {
     date: '2008-01-02',
-    close: 194.84
+    value: 194.84
   },
   {
     date: '2008-01-03',
-    close: 194.93
+    value: 194.93
   },
   {
     date: '2008-01-04',
-    close: 180.05
+    value: 180.05
   },
   {
     date: '2008-01-07',
-    close: 177.64
+    value: 177.64
   },
   {
     date: '2008-01-08',
-    close: 171.25
+    value: 171.25
   },
   {
     date: '2008-01-09',
-    close: 179.4
+    value: 179.4
   },
   {
     date: '2008-01-09',
-    close: 178.02
+    value: 178.02
   },
   {
     date: '2008-01-10',
-    close: 172.69
+    value: 172.69
   },
   {
     date: '2008-01-13',
-    close: 178.78
+    value: 178.78
   },
   {
     date: '2008-01-14',
-    close: 169.04
+    value: 169.04
   },
   {
     date: '2008-01-15',
-    close: 159.64
+    value: 159.64
   },
   {
     date: '2008-01-16',
-    close: 160.89
+    value: 160.89
   },
   {
     date: '2008-01-17',
-    close: 161.36
+    value: 161.36
   },
   {
     date: '2008-01-21',
-    close: 155.64
+    value: 155.64
   },
   {
     date: '2008-01-22',
-    close: 139.07
+    value: 139.07
   },
   {
     date: '2008-01-23',
-    close: 135.6
+    value: 135.6
   },
   {
     date: '2008-01-24',
-    close: 130.01
+    value: 130.01
   },
   {
     date: '2008-01-27',
-    close: 130.01
+    value: 130.01
   },
   {
     date: '2008-01-28',
-    close: 131.54
+    value: 131.54
   },
   {
     date: '2008-01-29',
-    close: 132.18
+    value: 132.18
   },
   {
     date: '2008-01-30',
-    close: 135.36
+    value: 135.36
   },
   {
     date: '2008-02-01',
-    close: 133.75
+    value: 133.75
   },
   {
     date: '2008-02-04',
-    close: 131.65
+    value: 131.65
   },
   {
     date: '2008-02-05',
-    close: 129.36
+    value: 129.36
   },
   {
     date: '2008-02-06',
-    close: 122
+    value: 122
   },
   {
     date: '2008-02-07',
-    close: 121.24
+    value: 121.24
   },
   {
     date: '2008-02-08',
-    close: 125.48
+    value: 125.48
   },
   {
     date: '2008-02-10',
-    close: 129.45
+    value: 129.45
   },
   {
     date: '2008-02-11',
-    close: 124.86
+    value: 124.86
   },
   {
     date: '2008-02-12',
-    close: 129.4
+    value: 129.4
   },
   {
     date: '2008-02-13',
-    close: 127.46
+    value: 127.46
   },
   {
     date: '2008-02-14',
-    close: 124.63
+    value: 124.63
   },
   {
     date: '2008-02-18',
-    close: 122.18
+    value: 122.18
   },
   {
     date: '2008-02-19',
-    close: 123.82
+    value: 123.82
   },
   {
     date: '2008-02-20',
-    close: 121.54
+    value: 121.54
   },
   {
     date: '2008-02-21',
-    close: 119.46
+    value: 119.46
   },
   {
     date: '2008-02-24',
-    close: 119.74
+    value: 119.74
   },
   {
     date: '2008-02-25',
-    close: 119.15
+    value: 119.15
   },
   {
     date: '2008-02-26',
-    close: 122.96
+    value: 122.96
   },
   {
     date: '2008-02-27',
-    close: 129.91
+    value: 129.91
   },
   {
     date: '2008-02-28',
-    close: 125.02
+    value: 125.02
   },
   {
     date: '2008-03-03',
-    close: 121.73
+    value: 121.73
   },
   {
     date: '2008-03-04',
-    close: 124.62
+    value: 124.62
   },
   {
     date: '2008-03-05',
-    close: 124.49
+    value: 124.49
   },
   {
     date: '2008-03-06',
-    close: 120.93
+    value: 120.93
   },
   {
     date: '2008-03-07',
-    close: 122.25
+    value: 122.25
   },
   {
     date: '2008-03-09',
-    close: 119.69
+    value: 119.69
   },
   {
     date: '2008-03-10',
-    close: 127.35
+    value: 127.35
   },
   {
     date: '2008-03-11',
-    close: 126.03
+    value: 126.03
   },
   {
     date: '2008-03-12',
-    close: 127.94
+    value: 127.94
   },
   {
     date: '2008-03-13',
-    close: 126.61
+    value: 126.61
   },
   {
     date: '2008-03-16',
-    close: 126.73
+    value: 126.73
   },
   {
     date: '2008-03-17',
-    close: 132.82
+    value: 132.82
   },
   {
     date: '2008-03-18',
-    close: 129.67
+    value: 129.67
   },
   {
     date: '2008-03-19',
-    close: 133.27
+    value: 133.27
   },
   {
     date: '2008-03-23',
-    close: 139.53
+    value: 139.53
   },
   {
     date: '2008-03-24',
-    close: 140.98
+    value: 140.98
   },
   {
     date: '2008-03-25',
-    close: 145.06
+    value: 145.06
   },
   {
     date: '2008-03-26',
-    close: 140.25
+    value: 140.25
   },
   {
     date: '2008-03-27',
-    close: 143.01
+    value: 143.01
   },
   {
     date: '2008-03-30',
-    close: 143.5
+    value: 143.5
   },
   {
     date: '2008-04-01',
-    close: 149.53
+    value: 149.53
   },
   {
     date: '2008-04-02',
-    close: 147.49
+    value: 147.49
   },
   {
     date: '2008-04-03',
-    close: 151.61
+    value: 151.61
   },
   {
     date: '2008-04-04',
-    close: 153.08
+    value: 153.08
   },
   {
     date: '2008-04-07',
-    close: 155.89
+    value: 155.89
   },
   {
     date: '2008-04-08',
-    close: 152.84
+    value: 152.84
   },
   {
     date: '2008-04-09',
-    close: 151.44
+    value: 151.44
   },
   {
     date: '2008-04-09',
-    close: 154.55
+    value: 154.55
   },
   {
     date: '2008-04-10',
-    close: 147.14
+    value: 147.14
   },
   {
     date: '2008-04-13',
-    close: 147.78
+    value: 147.78
   },
   {
     date: '2008-04-14',
-    close: 148.38
+    value: 148.38
   },
   {
     date: '2008-04-15',
-    close: 153.7
+    value: 153.7
   },
   {
     date: '2008-04-16',
-    close: 154.49
+    value: 154.49
   },
   {
     date: '2008-04-17',
-    close: 161.04
+    value: 161.04
   },
   {
     date: '2008-04-20',
-    close: 168.16
+    value: 168.16
   },
   {
     date: '2008-04-21',
-    close: 160.2
+    value: 160.2
   },
   {
     date: '2008-04-22',
-    close: 162.89
+    value: 162.89
   },
   {
     date: '2008-04-23',
-    close: 168.94
+    value: 168.94
   },
   {
     date: '2008-04-24',
-    close: 169.73
+    value: 169.73
   },
   {
     date: '2008-04-27',
-    close: 172.24
+    value: 172.24
   },
   {
     date: '2008-04-28',
-    close: 175.05
+    value: 175.05
   },
   {
     date: '2008-04-29',
-    close: 173.95
+    value: 173.95
   },
   {
     date: '2008-05-01',
-    close: 180
+    value: 180
   },
   {
     date: '2008-05-02',
-    close: 180.94
+    value: 180.94
   },
   {
     date: '2008-05-05',
-    close: 184.73
+    value: 184.73
   },
   {
     date: '2008-05-06',
-    close: 186.66
+    value: 186.66
   },
   {
     date: '2008-05-07',
-    close: 182.59
+    value: 182.59
   },
   {
     date: '2008-05-08',
-    close: 185.06
+    value: 185.06
   },
   {
     date: '2008-05-09',
-    close: 183.45
+    value: 183.45
   },
   {
     date: '2008-05-11',
-    close: 188.16
+    value: 188.16
   },
   {
     date: '2008-05-12',
-    close: 189.96
+    value: 189.96
   },
   {
     date: '2008-05-13',
-    close: 186.26
+    value: 186.26
   },
   {
     date: '2008-05-14',
-    close: 189.73
+    value: 189.73
   },
   {
     date: '2008-05-15',
-    close: 187.62
+    value: 187.62
   },
   {
     date: '2008-05-18',
-    close: 183.6
+    value: 183.6
   },
   {
     date: '2008-05-19',
-    close: 185.9
+    value: 185.9
   },
   {
     date: '2008-05-20',
-    close: 178.19
+    value: 178.19
   },
   {
     date: '2008-05-21',
-    close: 177.05
+    value: 177.05
   },
   {
     date: '2008-05-22',
-    close: 181.17
+    value: 181.17
   },
   {
     date: '2008-05-26',
-    close: 186.43
+    value: 186.43
   },
   {
     date: '2008-05-27',
-    close: 187.01
+    value: 187.01
   },
   {
     date: '2008-05-28',
-    close: 186.69
+    value: 186.69
   },
   {
     date: '2008-05-29',
-    close: 188.75
+    value: 188.75
   },
   {
     date: '2008-06-02',
-    close: 186.1
+    value: 186.1
   },
   {
     date: '2008-06-03',
-    close: 185.37
+    value: 185.37
   },
   {
     date: '2008-06-04',
-    close: 185.19
+    value: 185.19
   },
   {
     date: '2008-06-05',
-    close: 189.43
+    value: 189.43
   },
   {
     date: '2008-06-06',
-    close: 185.64
+    value: 185.64
   },
   {
     date: '2008-06-09',
-    close: 181.61
+    value: 181.61
   },
   {
     date: '2008-06-09',
-    close: 185.64
+    value: 185.64
   },
   {
     date: '2008-06-10',
-    close: 180.81
+    value: 180.81
   },
   {
     date: '2008-06-11',
-    close: 173.26
+    value: 173.26
   },
   {
     date: '2008-06-12',
-    close: 172.37
+    value: 172.37
   },
   {
     date: '2008-06-15',
-    close: 176.84
+    value: 176.84
   },
   {
     date: '2008-06-16',
-    close: 181.43
+    value: 181.43
   },
   {
     date: '2008-06-17',
-    close: 178.75
+    value: 178.75
   },
   {
     date: '2008-06-18',
-    close: 180.9
+    value: 180.9
   },
   {
     date: '2008-06-19',
-    close: 175.27
+    value: 175.27
   },
   {
     date: '2008-06-22',
-    close: 173.16
+    value: 173.16
   },
   {
     date: '2008-06-23',
-    close: 173.25
+    value: 173.25
   },
   {
     date: '2008-06-24',
-    close: 177.39
+    value: 177.39
   },
   {
     date: '2008-06-25',
-    close: 168.26
+    value: 168.26
   },
   {
     date: '2008-06-26',
-    close: 170.09
+    value: 170.09
   },
   {
     date: '2008-06-29',
-    close: 167.44
+    value: 167.44
   },
   {
     date: '2008-07-01',
-    close: 174.68
+    value: 174.68
   },
   {
     date: '2008-07-02',
-    close: 168.18
+    value: 168.18
   },
   {
     date: '2008-07-03',
-    close: 170.12
+    value: 170.12
   },
   {
     date: '2008-07-07',
-    close: 175.16
+    value: 175.16
   },
   {
     date: '2008-07-08',
-    close: 179.55
+    value: 179.55
   },
   {
     date: '2008-07-09',
-    close: 174.25
+    value: 174.25
   },
   {
     date: '2008-07-09',
-    close: 176.63
+    value: 176.63
   },
   {
     date: '2008-07-10',
-    close: 172.58
+    value: 172.58
   },
   {
     date: '2008-07-13',
-    close: 173.88
+    value: 173.88
   },
   {
     date: '2008-07-14',
-    close: 169.64
+    value: 169.64
   },
   {
     date: '2008-07-15',
-    close: 172.81
+    value: 172.81
   },
   {
     date: '2008-07-16',
-    close: 171.81
+    value: 171.81
   },
   {
     date: '2008-07-17',
-    close: 165.15
+    value: 165.15
   },
   {
     date: '2008-07-20',
-    close: 166.29
+    value: 166.29
   },
   {
     date: '2008-07-21',
-    close: 162.02
+    value: 162.02
   },
   {
     date: '2008-07-22',
-    close: 166.26
+    value: 166.26
   },
   {
     date: '2008-07-23',
-    close: 159.03
+    value: 159.03
   },
   {
     date: '2008-07-24',
-    close: 162.12
+    value: 162.12
   },
   {
     date: '2008-07-27',
-    close: 154.4
+    value: 154.4
   },
   {
     date: '2008-07-28',
-    close: 157.08
+    value: 157.08
   },
   {
     date: '2008-07-29',
-    close: 159.88
+    value: 159.88
   },
   {
     date: '2008-07-30',
-    close: 158.95
+    value: 158.95
   },
   {
     date: '2008-08-01',
-    close: 156.66
+    value: 156.66
   },
   {
     date: '2008-08-04',
-    close: 153.23
+    value: 153.23
   },
   {
     date: '2008-08-05',
-    close: 160.64
+    value: 160.64
   },
   {
     date: '2008-08-06',
-    close: 164.19
+    value: 164.19
   },
   {
     date: '2008-08-07',
-    close: 163.57
+    value: 163.57
   },
   {
     date: '2008-08-08',
-    close: 169.55
+    value: 169.55
   },
   {
     date: '2008-08-10',
-    close: 173.56
+    value: 173.56
   },
   {
     date: '2008-08-11',
-    close: 176.73
+    value: 176.73
   },
   {
     date: '2008-08-12',
-    close: 179.3
+    value: 179.3
   },
   {
     date: '2008-08-13',
-    close: 179.32
+    value: 179.32
   },
   {
     date: '2008-08-14',
-    close: 175.74
+    value: 175.74
   },
   {
     date: '2008-08-17',
-    close: 175.39
+    value: 175.39
   },
   {
     date: '2008-08-18',
-    close: 173.53
+    value: 173.53
   },
   {
     date: '2008-08-19',
-    close: 175.84
+    value: 175.84
   },
   {
     date: '2008-08-20',
-    close: 174.29
+    value: 174.29
   },
   {
     date: '2008-08-21',
-    close: 176.79
+    value: 176.79
   },
   {
     date: '2008-08-24',
-    close: 172.55
+    value: 172.55
   },
   {
     date: '2008-08-25',
-    close: 173.64
+    value: 173.64
   },
   {
     date: '2008-08-26',
-    close: 174.67
+    value: 174.67
   },
   {
     date: '2008-08-27',
-    close: 173.74
+    value: 173.74
   },
   {
     date: '2008-08-28',
-    close: 169.53
+    value: 169.53
   },
   {
     date: '2008-09-02',
-    close: 166.19
+    value: 166.19
   },
   {
     date: '2008-09-03',
-    close: 166.96
+    value: 166.96
   },
   {
     date: '2008-09-04',
-    close: 161.22
+    value: 161.22
   },
   {
     date: '2008-09-05',
-    close: 160.18
+    value: 160.18
   },
   {
     date: '2008-09-08',
-    close: 157.92
+    value: 157.92
   },
   {
     date: '2008-09-09',
-    close: 151.68
+    value: 151.68
   },
   {
     date: '2008-09-09',
-    close: 151.61
+    value: 151.61
   },
   {
     date: '2008-09-10',
-    close: 152.65
+    value: 152.65
   },
   {
     date: '2008-09-11',
-    close: 148.94
+    value: 148.94
   },
   {
     date: '2008-09-14',
-    close: 140.36
+    value: 140.36
   },
   {
     date: '2008-09-15',
-    close: 139.88
+    value: 139.88
   },
   {
     date: '2008-09-16',
-    close: 127.83
+    value: 127.83
   },
   {
     date: '2008-09-17',
-    close: 134.09
+    value: 134.09
   },
   {
     date: '2008-09-18',
-    close: 140.91
+    value: 140.91
   },
   {
     date: '2008-09-21',
-    close: 131.05
+    value: 131.05
   },
   {
     date: '2008-09-22',
-    close: 126.84
+    value: 126.84
   },
   {
     date: '2008-09-23',
-    close: 128.71
+    value: 128.71
   },
   {
     date: '2008-09-24',
-    close: 131.93
+    value: 131.93
   },
   {
     date: '2008-09-25',
-    close: 128.24
+    value: 128.24
   },
   {
     date: '2008-09-28',
-    close: 105.26
+    value: 105.26
   },
   {
     date: '2008-09-29',
-    close: 113.66
+    value: 113.66
   },
   {
     date: '2008-10-01',
-    close: 109.12
+    value: 109.12
   },
   {
     date: '2008-10-02',
-    close: 100.1
+    value: 100.1
   },
   {
     date: '2008-10-03',
-    close: 97.07
+    value: 97.07
   },
   {
     date: '2008-10-06',
-    close: 98.14
+    value: 98.14
   },
   {
     date: '2008-10-07',
-    close: 89.16
+    value: 89.16
   },
   {
     date: '2008-10-08',
-    close: 89.79
+    value: 89.79
   },
   {
     date: '2008-10-09',
-    close: 88.74
+    value: 88.74
   },
   {
     date: '2008-10-09',
-    close: 96.8
+    value: 96.8
   },
   {
     date: '2008-10-12',
-    close: 110.26
+    value: 110.26
   },
   {
     date: '2008-10-13',
-    close: 104.08
+    value: 104.08
   },
   {
     date: '2008-10-14',
-    close: 97.95
+    value: 97.95
   },
   {
     date: '2008-10-15',
-    close: 101.89
+    value: 101.89
   },
   {
     date: '2008-10-16',
-    close: 97.4
+    value: 97.4
   },
   {
     date: '2008-10-19',
-    close: 98.44
+    value: 98.44
   },
   {
     date: '2008-10-20',
-    close: 91.49
+    value: 91.49
   },
   {
     date: '2008-10-21',
-    close: 96.87
+    value: 96.87
   },
   {
     date: '2008-10-22',
-    close: 98.23
+    value: 98.23
   },
   {
     date: '2008-10-23',
-    close: 96.38
+    value: 96.38
   },
   {
     date: '2008-10-26',
-    close: 92.09
+    value: 92.09
   },
   {
     date: '2008-10-27',
-    close: 99.91
+    value: 99.91
   },
   {
     date: '2008-10-28',
-    close: 104.55
+    value: 104.55
   },
   {
     date: '2008-10-29',
-    close: 111.04
+    value: 111.04
   },
   {
     date: '2008-10-30',
-    close: 107.59
+    value: 107.59
   },
   {
     date: '2008-11-03',
-    close: 106.96
+    value: 106.96
   },
   {
     date: '2008-11-04',
-    close: 110.99
+    value: 110.99
   },
   {
     date: '2008-11-05',
-    close: 103.3
+    value: 103.3
   },
   {
     date: '2008-11-06',
-    close: 99.1
+    value: 99.1
   },
   {
     date: '2008-11-07',
-    close: 98.24
+    value: 98.24
   },
   {
     date: '2008-11-09',
-    close: 95.88
+    value: 95.88
   },
   {
     date: '2008-11-10',
-    close: 94.77
+    value: 94.77
   },
   {
     date: '2008-11-11',
-    close: 90.12
+    value: 90.12
   },
   {
     date: '2008-11-12',
-    close: 96.44
+    value: 96.44
   },
   {
     date: '2008-11-13',
-    close: 90.24
+    value: 90.24
   },
   {
     date: '2008-11-16',
-    close: 88.14
+    value: 88.14
   },
   {
     date: '2008-11-17',
-    close: 89.91
+    value: 89.91
   },
   {
     date: '2008-11-18',
-    close: 86.29
+    value: 86.29
   },
   {
     date: '2008-11-19',
-    close: 80.49
+    value: 80.49
   },
   {
     date: '2008-11-20',
-    close: 82.58
+    value: 82.58
   },
   {
     date: '2008-11-23',
-    close: 92.95
+    value: 92.95
   },
   {
     date: '2008-11-24',
-    close: 90.8
+    value: 90.8
   },
   {
     date: '2008-11-25',
-    close: 95
+    value: 95
   },
   {
     date: '2008-11-26',
-    close: 95
+    value: 95
   },
   {
     date: '2008-11-27',
-    close: 92.67
+    value: 92.67
   },
   {
     date: '2008-12-01',
-    close: 88.93
+    value: 88.93
   },
   {
     date: '2008-12-02',
-    close: 92.47
+    value: 92.47
   },
   {
     date: '2008-12-03',
-    close: 95.9
+    value: 95.9
   },
   {
     date: '2008-12-04',
-    close: 91.41
+    value: 91.41
   },
   {
     date: '2008-12-05',
-    close: 94
+    value: 94
   },
   {
     date: '2008-12-08',
-    close: 99.72
+    value: 99.72
   },
   {
     date: '2008-12-09',
-    close: 100.06
+    value: 100.06
   },
   {
     date: '2008-12-09',
-    close: 98.21
+    value: 98.21
   },
   {
     date: '2008-12-10',
-    close: 95
+    value: 95
   },
   {
     date: '2008-12-11',
-    close: 98.27
+    value: 98.27
   },
   {
     date: '2008-12-14',
-    close: 94.75
+    value: 94.75
   },
   {
     date: '2008-12-15',
-    close: 95.43
+    value: 95.43
   },
   {
     date: '2008-12-16',
-    close: 89.16
+    value: 89.16
   },
   {
     date: '2008-12-17',
-    close: 89.43
+    value: 89.43
   },
   {
     date: '2008-12-18',
-    close: 90
+    value: 90
   },
   {
     date: '2008-12-21',
-    close: 85.74
+    value: 85.74
   },
   {
     date: '2008-12-22',
-    close: 86.38
+    value: 86.38
   },
   {
     date: '2008-12-23',
-    close: 85.04
+    value: 85.04
   },
   {
     date: '2008-12-24',
-    close: 85.04
+    value: 85.04
   },
   {
     date: '2008-12-25',
-    close: 85.81
+    value: 85.81
   },
   {
     date: '2008-12-28',
-    close: 86.61
+    value: 86.61
   },
   {
     date: '2008-12-29',
-    close: 86.29
+    value: 86.29
   },
   {
     date: '2008-12-30',
-    close: 85.35
+    value: 85.35
   },
   {
     date: '2009-01-01',
-    close: 85.35
+    value: 85.35
   },
   {
     date: '2009-01-02',
-    close: 90.75
+    value: 90.75
   },
   {
     date: '2009-01-05',
-    close: 94.58
+    value: 94.58
   },
   {
     date: '2009-01-06',
-    close: 93.02
+    value: 93.02
   },
   {
     date: '2009-01-07',
-    close: 91.01
+    value: 91.01
   },
   {
     date: '2009-01-08',
-    close: 92.7
+    value: 92.7
   },
   {
     date: '2009-01-09',
-    close: 90.58
+    value: 90.58
   },
   {
     date: '2009-01-11',
-    close: 88.66
+    value: 88.66
   },
   {
     date: '2009-01-12',
-    close: 87.71
+    value: 87.71
   },
   {
     date: '2009-01-13',
-    close: 85.33
+    value: 85.33
   },
   {
     date: '2009-01-14',
-    close: 83.38
+    value: 83.38
   },
   {
     date: '2009-01-15',
-    close: 82.33
+    value: 82.33
   },
   {
     date: '2009-01-19',
-    close: 78.2
+    value: 78.2
   },
   {
     date: '2009-01-20',
-    close: 82.83
+    value: 82.83
   },
   {
     date: '2009-01-21',
-    close: 88.36
+    value: 88.36
   },
   {
     date: '2009-01-22',
-    close: 88.36
+    value: 88.36
   },
   {
     date: '2009-01-25',
-    close: 89.64
+    value: 89.64
   },
   {
     date: '2009-01-26',
-    close: 90.73
+    value: 90.73
   },
   {
     date: '2009-01-27',
-    close: 94.2
+    value: 94.2
   },
   {
     date: '2009-01-28',
-    close: 93
+    value: 93
   },
   {
     date: '2009-01-29',
-    close: 90.13
+    value: 90.13
   },
   {
     date: '2009-02-02',
-    close: 91.51
+    value: 91.51
   },
   {
     date: '2009-02-03',
-    close: 92.98
+    value: 92.98
   },
   {
     date: '2009-02-04',
-    close: 93.55
+    value: 93.55
   },
   {
     date: '2009-02-05',
-    close: 96.46
+    value: 96.46
   },
   {
     date: '2009-02-06',
-    close: 99.72
+    value: 99.72
   },
   {
     date: '2009-02-09',
-    close: 102.51
+    value: 102.51
   },
   {
     date: '2009-02-09',
-    close: 97.83
+    value: 97.83
   },
   {
     date: '2009-02-10',
-    close: 96.82
+    value: 96.82
   },
   {
     date: '2009-02-11',
-    close: 99.27
+    value: 99.27
   },
   {
     date: '2009-02-12',
-    close: 99.16
+    value: 99.16
   },
   {
     date: '2009-02-16',
-    close: 94.53
+    value: 94.53
   },
   {
     date: '2009-02-17',
-    close: 94.37
+    value: 94.37
   },
   {
     date: '2009-02-18',
-    close: 90.64
+    value: 90.64
   },
   {
     date: '2009-02-19',
-    close: 91.2
+    value: 91.2
   },
   {
     date: '2009-02-22',
-    close: 86.95
+    value: 86.95
   },
   {
     date: '2009-02-23',
-    close: 90.25
+    value: 90.25
   },
   {
     date: '2009-02-24',
-    close: 91.16
+    value: 91.16
   },
   {
     date: '2009-02-25',
-    close: 89.19
+    value: 89.19
   },
   {
     date: '2009-02-26',
-    close: 89.31
+    value: 89.31
   },
   {
     date: '2009-03-02',
-    close: 87.94
+    value: 87.94
   },
   {
     date: '2009-03-03',
-    close: 88.37
+    value: 88.37
   },
   {
     date: '2009-03-04',
-    close: 91.17
+    value: 91.17
   },
   {
     date: '2009-03-05',
-    close: 88.84
+    value: 88.84
   },
   {
     date: '2009-03-06',
-    close: 85.3
+    value: 85.3
   },
   {
     date: '2009-03-09',
-    close: 83.11
+    value: 83.11
   },
   {
     date: '2009-03-09',
-    close: 88.63
+    value: 88.63
   },
   {
     date: '2009-03-10',
-    close: 92.68
+    value: 92.68
   },
   {
     date: '2009-03-11',
-    close: 96.35
+    value: 96.35
   },
   {
     date: '2009-03-12',
-    close: 95.93
+    value: 95.93
   },
   {
     date: '2009-03-15',
-    close: 95.42
+    value: 95.42
   },
   {
     date: '2009-03-16',
-    close: 99.66
+    value: 99.66
   },
   {
     date: '2009-03-17',
-    close: 101.52
+    value: 101.52
   },
   {
     date: '2009-03-18',
-    close: 101.62
+    value: 101.62
   },
   {
     date: '2009-03-19',
-    close: 101.59
+    value: 101.59
   },
   {
     date: '2009-03-22',
-    close: 107.66
+    value: 107.66
   },
   {
     date: '2009-03-23',
-    close: 106.5
+    value: 106.5
   },
   {
     date: '2009-03-24',
-    close: 106.49
+    value: 106.49
   },
   {
     date: '2009-03-25',
-    close: 109.87
+    value: 109.87
   },
   {
     date: '2009-03-26',
-    close: 106.85
+    value: 106.85
   },
   {
     date: '2009-03-29',
-    close: 104.49
+    value: 104.49
   },
   {
     date: '2009-03-30',
-    close: 105.12
+    value: 105.12
   },
   {
     date: '2009-04-01',
-    close: 108.69
+    value: 108.69
   },
   {
     date: '2009-04-02',
-    close: 112.71
+    value: 112.71
   },
   {
     date: '2009-04-03',
-    close: 115.99
+    value: 115.99
   },
   {
     date: '2009-04-06',
-    close: 118.45
+    value: 118.45
   },
   {
     date: '2009-04-07',
-    close: 115
+    value: 115
   },
   {
     date: '2009-04-08',
-    close: 116.32
+    value: 116.32
   },
   {
     date: '2009-04-09',
-    close: 119.57
+    value: 119.57
   },
   {
     date: '2009-04-09',
-    close: 119.57
+    value: 119.57
   },
   {
     date: '2009-04-12',
-    close: 120.22
+    value: 120.22
   },
   {
     date: '2009-04-13',
-    close: 118.31
+    value: 118.31
   },
   {
     date: '2009-04-14',
-    close: 117.64
+    value: 117.64
   },
   {
     date: '2009-04-15',
-    close: 121.45
+    value: 121.45
   },
   {
     date: '2009-04-16',
-    close: 123.42
+    value: 123.42
   },
   {
     date: '2009-04-19',
-    close: 120.5
+    value: 120.5
   },
   {
     date: '2009-04-20',
-    close: 121.76
+    value: 121.76
   },
   {
     date: '2009-04-21',
-    close: 121.51
+    value: 121.51
   },
   {
     date: '2009-04-22',
-    close: 125.4
+    value: 125.4
   },
   {
     date: '2009-04-23',
-    close: 123.9
+    value: 123.9
   },
   {
     date: '2009-04-26',
-    close: 124.73
+    value: 124.73
   },
   {
     date: '2009-04-27',
-    close: 123.9
+    value: 123.9
   },
   {
     date: '2009-04-28',
-    close: 125.14
+    value: 125.14
   },
   {
     date: '2009-04-29',
-    close: 125.83
+    value: 125.83
   },
   {
     date: '2009-05-01',
-    close: 127.24
+    value: 127.24
   },
   {
     date: '2009-05-04',
-    close: 132.07
+    value: 132.07
   },
   {
     date: '2009-05-05',
-    close: 132.71
+    value: 132.71
   },
   {
     date: '2009-05-06',
-    close: 132.5
+    value: 132.5
   },
   {
     date: '2009-05-07',
-    close: 129.06
+    value: 129.06
   },
   {
     date: '2009-05-08',
-    close: 129.19
+    value: 129.19
   },
   {
     date: '2009-05-10',
-    close: 129.57
+    value: 129.57
   },
   {
     date: '2009-05-11',
-    close: 124.42
+    value: 124.42
   },
   {
     date: '2009-05-12',
-    close: 119.49
+    value: 119.49
   },
   {
     date: '2009-05-13',
-    close: 122.95
+    value: 122.95
   },
   {
     date: '2009-05-14',
-    close: 122.42
+    value: 122.42
   },
   {
     date: '2009-05-17',
-    close: 126.65
+    value: 126.65
   },
   {
     date: '2009-05-18',
-    close: 127.45
+    value: 127.45
   },
   {
     date: '2009-05-19',
-    close: 125.87
+    value: 125.87
   },
   {
     date: '2009-05-20',
-    close: 124.18
+    value: 124.18
   },
   {
     date: '2009-05-21',
-    close: 122.5
+    value: 122.5
   },
   {
     date: '2009-05-25',
-    close: 130.78
+    value: 130.78
   },
   {
     date: '2009-05-26',
-    close: 133.05
+    value: 133.05
   },
   {
     date: '2009-05-27',
-    close: 135.07
+    value: 135.07
   },
   {
     date: '2009-05-28',
-    close: 135.81
+    value: 135.81
   },
   {
     date: '2009-06-01',
-    close: 139.35
+    value: 139.35
   },
   {
     date: '2009-06-02',
-    close: 139.49
+    value: 139.49
   },
   {
     date: '2009-06-03',
-    close: 140.95
+    value: 140.95
   },
   {
     date: '2009-06-04',
-    close: 143.74
+    value: 143.74
   },
   {
     date: '2009-06-05',
-    close: 144.67
+    value: 144.67
   },
   {
     date: '2009-06-08',
-    close: 143.85
+    value: 143.85
   },
   {
     date: '2009-06-09',
-    close: 142.72
+    value: 142.72
   },
   {
     date: '2009-06-09',
-    close: 140.25
+    value: 140.25
   },
   {
     date: '2009-06-10',
-    close: 139.95
+    value: 139.95
   },
   {
     date: '2009-06-11',
-    close: 136.97
+    value: 136.97
   },
   {
     date: '2009-06-14',
-    close: 136.09
+    value: 136.09
   },
   {
     date: '2009-06-15',
-    close: 136.35
+    value: 136.35
   },
   {
     date: '2009-06-16',
-    close: 135.58
+    value: 135.58
   },
   {
     date: '2009-06-17',
-    close: 135.88
+    value: 135.88
   },
   {
     date: '2009-06-18',
-    close: 139.48
+    value: 139.48
   },
   {
     date: '2009-06-21',
-    close: 137.37
+    value: 137.37
   },
   {
     date: '2009-06-22',
-    close: 134.01
+    value: 134.01
   },
   {
     date: '2009-06-23',
-    close: 136.22
+    value: 136.22
   },
   {
     date: '2009-06-24',
-    close: 139.86
+    value: 139.86
   },
   {
     date: '2009-06-25',
-    close: 142.44
+    value: 142.44
   },
   {
     date: '2009-06-28',
-    close: 141.97
+    value: 141.97
   },
   {
     date: '2009-06-29',
-    close: 142.43
+    value: 142.43
   },
   {
     date: '2009-07-01',
-    close: 142.83
+    value: 142.83
   },
   {
     date: '2009-07-02',
-    close: 140.02
+    value: 140.02
   },
   {
     date: '2009-07-03',
-    close: 140.02
+    value: 140.02
   },
   {
     date: '2009-07-06',
-    close: 138.61
+    value: 138.61
   },
   {
     date: '2009-07-07',
-    close: 135.4
+    value: 135.4
   },
   {
     date: '2009-07-08',
-    close: 137.22
+    value: 137.22
   },
   {
     date: '2009-07-09',
-    close: 136.36
+    value: 136.36
   },
   {
     date: '2009-07-09',
-    close: 138.52
+    value: 138.52
   },
   {
     date: '2009-07-12',
-    close: 142.34
+    value: 142.34
   },
   {
     date: '2009-07-13',
-    close: 142.27
+    value: 142.27
   },
   {
     date: '2009-07-14',
-    close: 146.88
+    value: 146.88
   },
   {
     date: '2009-07-15',
-    close: 147.52
+    value: 147.52
   },
   {
     date: '2009-07-16',
-    close: 151.75
+    value: 151.75
   },
   {
     date: '2009-07-19',
-    close: 152.91
+    value: 152.91
   },
   {
     date: '2009-07-20',
-    close: 151.51
+    value: 151.51
   },
   {
     date: '2009-07-21',
-    close: 156.74
+    value: 156.74
   },
   {
     date: '2009-07-22',
-    close: 157.82
+    value: 157.82
   },
   {
     date: '2009-07-23',
-    close: 159.99
+    value: 159.99
   },
   {
     date: '2009-07-26',
-    close: 160.1
+    value: 160.1
   },
   {
     date: '2009-07-27',
-    close: 160
+    value: 160
   },
   {
     date: '2009-07-28',
-    close: 160.03
+    value: 160.03
   },
   {
     date: '2009-07-29',
-    close: 162.79
+    value: 162.79
   },
   {
     date: '2009-07-30',
-    close: 163.39
+    value: 163.39
   },
   {
     date: '2009-08-03',
-    close: 166.43
+    value: 166.43
   },
   {
     date: '2009-08-04',
-    close: 165.55
+    value: 165.55
   },
   {
     date: '2009-08-05',
-    close: 165.11
+    value: 165.11
   },
   {
     date: '2009-08-06',
-    close: 163.91
+    value: 163.91
   },
   {
     date: '2009-08-07',
-    close: 165.51
+    value: 165.51
   },
   {
     date: '2009-08-09',
-    close: 164.72
+    value: 164.72
   },
   {
     date: '2009-08-11',
-    close: 165.31
+    value: 165.31
   },
   {
     date: '2009-08-12',
-    close: 168.42
+    value: 168.42
   },
   {
     date: '2009-08-13',
-    close: 166.78
+    value: 166.78
   },
   {
     date: '2009-08-16',
-    close: 159.59
+    value: 159.59
   },
   {
     date: '2009-08-17',
-    close: 164
+    value: 164
   },
   {
     date: '2009-08-18',
-    close: 164.6
+    value: 164.6
   },
   {
     date: '2009-08-19',
-    close: 166.33
+    value: 166.33
   },
   {
     date: '2009-08-20',
-    close: 169.22
+    value: 169.22
   },
   {
     date: '2009-08-23',
-    close: 169.06
+    value: 169.06
   },
   {
     date: '2009-08-24',
-    close: 169.4
+    value: 169.4
   },
   {
     date: '2009-08-25',
-    close: 167.41
+    value: 167.41
   },
   {
     date: '2009-08-26',
-    close: 169.45
+    value: 169.45
   },
   {
     date: '2009-08-27',
-    close: 170.05
+    value: 170.05
   },
   {
     date: '2009-08-30',
-    close: 168.21
+    value: 168.21
   },
   {
     date: '2009-09-01',
-    close: 165.3
+    value: 165.3
   },
   {
     date: '2009-09-02',
-    close: 165.18
+    value: 165.18
   },
   {
     date: '2009-09-03',
-    close: 166.55
+    value: 166.55
   },
   {
     date: '2009-09-04',
-    close: 170.31
+    value: 170.31
   },
   {
     date: '2009-09-08',
-    close: 172.93
+    value: 172.93
   },
   {
     date: '2009-09-09',
-    close: 171.14
+    value: 171.14
   },
   {
     date: '2009-09-09',
-    close: 172.56
+    value: 172.56
   },
   {
     date: '2009-09-10',
-    close: 172.16
+    value: 172.16
   },
   {
     date: '2009-09-13',
-    close: 173.72
+    value: 173.72
   },
   {
     date: '2009-09-14',
-    close: 175.16
+    value: 175.16
   },
   {
     date: '2009-09-15',
-    close: 181.87
+    value: 181.87
   },
   {
     date: '2009-09-16',
-    close: 184.55
+    value: 184.55
   },
   {
     date: '2009-09-17',
-    close: 185.02
+    value: 185.02
   },
   {
     date: '2009-09-20',
-    close: 184.02
+    value: 184.02
   },
   {
     date: '2009-09-21',
-    close: 184.48
+    value: 184.48
   },
   {
     date: '2009-09-22',
-    close: 185.5
+    value: 185.5
   },
   {
     date: '2009-09-23',
-    close: 183.82
+    value: 183.82
   },
   {
     date: '2009-09-24',
-    close: 182.37
+    value: 182.37
   },
   {
     date: '2009-09-27',
-    close: 186.15
+    value: 186.15
   },
   {
     date: '2009-09-28',
-    close: 185.38
+    value: 185.38
   },
   {
     date: '2009-09-29',
-    close: 185.35
+    value: 185.35
   },
   {
     date: '2009-10-01',
-    close: 180.86
+    value: 180.86
   },
   {
     date: '2009-10-02',
-    close: 184.9
+    value: 184.9
   },
   {
     date: '2009-10-05',
-    close: 186.02
+    value: 186.02
   },
   {
     date: '2009-10-06',
-    close: 190.01
+    value: 190.01
   },
   {
     date: '2009-10-07',
-    close: 190.25
+    value: 190.25
   },
   {
     date: '2009-10-08',
-    close: 189.27
+    value: 189.27
   },
   {
     date: '2009-10-09',
-    close: 190.47
+    value: 190.47
   },
   {
     date: '2009-10-11',
-    close: 190.81
+    value: 190.81
   },
   {
     date: '2009-10-12',
-    close: 190.02
+    value: 190.02
   },
   {
     date: '2009-10-13',
-    close: 191.29
+    value: 191.29
   },
   {
     date: '2009-10-14',
-    close: 190.56
+    value: 190.56
   },
   {
     date: '2009-10-15',
-    close: 188.05
+    value: 188.05
   },
   {
     date: '2009-10-18',
-    close: 189.86
+    value: 189.86
   },
   {
     date: '2009-10-19',
-    close: 198.76
+    value: 198.76
   },
   {
     date: '2009-10-20',
-    close: 204.92
+    value: 204.92
   },
   {
     date: '2009-10-21',
-    close: 205.2
+    value: 205.2
   },
   {
     date: '2009-10-22',
-    close: 203.94
+    value: 203.94
   },
   {
     date: '2009-10-25',
-    close: 202.48
+    value: 202.48
   },
   {
     date: '2009-10-26',
-    close: 197.37
+    value: 197.37
   },
   {
     date: '2009-10-27',
-    close: 192.4
+    value: 192.4
   },
   {
     date: '2009-10-28',
-    close: 196.35
+    value: 196.35
   },
   {
     date: '2009-10-29',
-    close: 188.5
+    value: 188.5
   },
   {
     date: '2009-11-02',
-    close: 189.31
+    value: 189.31
   },
   {
     date: '2009-11-03',
-    close: 188.75
+    value: 188.75
   },
   {
     date: '2009-11-04',
-    close: 190.81
+    value: 190.81
   },
   {
     date: '2009-11-05',
-    close: 194.03
+    value: 194.03
   },
   {
     date: '2009-11-06',
-    close: 194.34
+    value: 194.34
   },
   {
     date: '2009-11-09',
-    close: 201.46
+    value: 201.46
   },
   {
     date: '2009-11-09',
-    close: 202.98
+    value: 202.98
   },
   {
     date: '2009-11-10',
-    close: 203.25
+    value: 203.25
   },
   {
     date: '2009-11-11',
-    close: 201.99
+    value: 201.99
   },
   {
     date: '2009-11-12',
-    close: 204.45
+    value: 204.45
   },
   {
     date: '2009-11-15',
-    close: 206.63
+    value: 206.63
   },
   {
     date: '2009-11-16',
-    close: 207
+    value: 207
   },
   {
     date: '2009-11-17',
-    close: 205.96
+    value: 205.96
   },
   {
     date: '2009-11-18',
-    close: 200.51
+    value: 200.51
   },
   {
     date: '2009-11-19',
-    close: 199.92
+    value: 199.92
   },
   {
     date: '2009-11-22',
-    close: 205.88
+    value: 205.88
   },
   {
     date: '2009-11-23',
-    close: 204.44
+    value: 204.44
   },
   {
     date: '2009-11-24',
-    close: 204.19
+    value: 204.19
   },
   {
     date: '2009-11-25',
-    close: 204.19
+    value: 204.19
   },
   {
     date: '2009-11-26',
-    close: 200.59
+    value: 200.59
   },
   {
     date: '2009-11-29',
-    close: 199.91
+    value: 199.91
   },
   {
     date: '2009-12-01',
-    close: 196.97
+    value: 196.97
   },
   {
     date: '2009-12-02',
-    close: 196.23
+    value: 196.23
   },
   {
     date: '2009-12-03',
-    close: 196.48
+    value: 196.48
   },
   {
     date: '2009-12-04',
-    close: 193.32
+    value: 193.32
   },
   {
     date: '2009-12-07',
-    close: 188.95
+    value: 188.95
   },
   {
     date: '2009-12-08',
-    close: 189.87
+    value: 189.87
   },
   {
     date: '2009-12-09',
-    close: 197.8
+    value: 197.8
   },
   {
     date: '2009-12-09',
-    close: 196.43
+    value: 196.43
   },
   {
     date: '2009-12-10',
-    close: 194.67
+    value: 194.67
   },
   {
     date: '2009-12-13',
-    close: 196.98
+    value: 196.98
   },
   {
     date: '2009-12-14',
-    close: 194.17
+    value: 194.17
   },
   {
     date: '2009-12-15',
-    close: 195.03
+    value: 195.03
   },
   {
     date: '2009-12-16',
-    close: 191.86
+    value: 191.86
   },
   {
     date: '2009-12-17',
-    close: 195.43
+    value: 195.43
   },
   {
     date: '2009-12-20',
-    close: 198.23
+    value: 198.23
   },
   {
     date: '2009-12-21',
-    close: 200.36
+    value: 200.36
   },
   {
     date: '2009-12-22',
-    close: 202.1
+    value: 202.1
   },
   {
     date: '2009-12-23',
-    close: 209.04
+    value: 209.04
   },
   {
     date: '2009-12-24',
-    close: 209.04
+    value: 209.04
   },
   {
     date: '2009-12-27',
-    close: 211.61
+    value: 211.61
   },
   {
     date: '2009-12-28',
-    close: 209.1
+    value: 209.1
   },
   {
     date: '2009-12-29',
-    close: 211.64
+    value: 211.64
   },
   {
     date: '2009-12-30',
-    close: 210.73
+    value: 210.73
   },
   {
     date: '2010-01-01',
-    close: 210.73
+    value: 210.73
   },
   {
     date: '2010-01-04',
-    close: 214.01
+    value: 214.01
   },
   {
     date: '2010-01-05',
-    close: 214.38
+    value: 214.38
   },
   {
     date: '2010-01-06',
-    close: 210.97
+    value: 210.97
   },
   {
     date: '2010-01-07',
-    close: 210.58
+    value: 210.58
   },
   {
     date: '2010-01-08',
-    close: 211.98
+    value: 211.98
   },
   {
     date: '2010-01-10',
-    close: 210.11
+    value: 210.11
   },
   {
     date: '2010-01-11',
-    close: 207.72
+    value: 207.72
   },
   {
     date: '2010-01-12',
-    close: 210.65
+    value: 210.65
   },
   {
     date: '2010-01-13',
-    close: 209.43
+    value: 209.43
   },
   {
     date: '2010-01-14',
-    close: 205.93
+    value: 205.93
   },
   {
     date: '2010-01-17',
-    close: 205.93
+    value: 205.93
   },
   {
     date: '2010-01-18',
-    close: 215.04
+    value: 215.04
   },
   {
     date: '2010-01-19',
-    close: 211.72
+    value: 211.72
   },
   {
     date: '2010-01-20',
-    close: 208.07
+    value: 208.07
   },
   {
     date: '2010-01-21',
-    close: 197.75
+    value: 197.75
   },
   {
     date: '2010-01-24',
-    close: 203.08
+    value: 203.08
   },
   {
     date: '2010-01-25',
-    close: 205.94
+    value: 205.94
   },
   {
     date: '2010-01-26',
-    close: 207.88
+    value: 207.88
   },
   {
     date: '2010-01-27',
-    close: 199.29
+    value: 199.29
   },
   {
     date: '2010-01-28',
-    close: 192.06
+    value: 192.06
   },
   {
     date: '2010-02-01',
-    close: 194.73
+    value: 194.73
   },
   {
     date: '2010-02-02',
-    close: 195.86
+    value: 195.86
   },
   {
     date: '2010-02-03',
-    close: 199.23
+    value: 199.23
   },
   {
     date: '2010-02-04',
-    close: 192.05
+    value: 192.05
   },
   {
     date: '2010-02-05',
-    close: 195.46
+    value: 195.46
   },
   {
     date: '2010-02-08',
-    close: 194.12
+    value: 194.12
   },
   {
     date: '2010-02-09',
-    close: 196.19
+    value: 196.19
   },
   {
     date: '2010-02-09',
-    close: 195.12
+    value: 195.12
   },
   {
     date: '2010-02-10',
-    close: 198.67
+    value: 198.67
   },
   {
     date: '2010-02-11',
-    close: 200.38
+    value: 200.38
   },
   {
     date: '2010-02-14',
-    close: 200.38
+    value: 200.38
   },
   {
     date: '2010-02-15',
-    close: 203.4
+    value: 203.4
   },
   {
     date: '2010-02-16',
-    close: 202.55
+    value: 202.55
   },
   {
     date: '2010-02-17',
-    close: 202.93
+    value: 202.93
   },
   {
     date: '2010-02-18',
-    close: 201.67
+    value: 201.67
   },
   {
     date: '2010-02-21',
-    close: 200.42
+    value: 200.42
   },
   {
     date: '2010-02-22',
-    close: 197.06
+    value: 197.06
   },
   {
     date: '2010-02-23',
-    close: 200.66
+    value: 200.66
   },
   {
     date: '2010-02-24',
-    close: 202
+    value: 202
   },
   {
     date: '2010-02-25',
-    close: 204.62
+    value: 204.62
   },
   {
     date: '2010-03-01',
-    close: 208.99
+    value: 208.99
   },
   {
     date: '2010-03-02',
-    close: 208.85
+    value: 208.85
   },
   {
     date: '2010-03-03',
-    close: 209.33
+    value: 209.33
   },
   {
     date: '2010-03-04',
-    close: 210.71
+    value: 210.71
   },
   {
     date: '2010-03-05',
-    close: 218.95
+    value: 218.95
   },
   {
     date: '2010-03-08',
-    close: 219.08
+    value: 219.08
   },
   {
     date: '2010-03-09',
-    close: 223.02
+    value: 223.02
   },
   {
     date: '2010-03-09',
-    close: 224.84
+    value: 224.84
   },
   {
     date: '2010-03-10',
-    close: 225.5
+    value: 225.5
   },
   {
     date: '2010-03-11',
-    close: 226.6
+    value: 226.6
   },
   {
     date: '2010-03-14',
-    close: 223.84
+    value: 223.84
   },
   {
     date: '2010-03-15',
-    close: 224.45
+    value: 224.45
   },
   {
     date: '2010-03-16',
-    close: 224.12
+    value: 224.12
   },
   {
     date: '2010-03-17',
-    close: 224.65
+    value: 224.65
   },
   {
     date: '2010-03-18',
-    close: 222.25
+    value: 222.25
   },
   {
     date: '2010-03-21',
-    close: 224.75
+    value: 224.75
   },
   {
     date: '2010-03-22',
-    close: 228.36
+    value: 228.36
   },
   {
     date: '2010-03-23',
-    close: 229.37
+    value: 229.37
   },
   {
     date: '2010-03-24',
-    close: 226.65
+    value: 226.65
   },
   {
     date: '2010-03-25',
-    close: 230.9
+    value: 230.9
   },
   {
     date: '2010-03-28',
-    close: 232.39
+    value: 232.39
   },
   {
     date: '2010-03-29',
-    close: 235.84
+    value: 235.84
   },
   {
     date: '2010-03-30',
-    close: 235
+    value: 235
   },
   {
     date: '2010-04-01',
-    close: 235.97
+    value: 235.97
   },
   {
     date: '2010-04-02',
-    close: 235.97
+    value: 235.97
   },
   {
     date: '2010-04-05',
-    close: 238.49
+    value: 238.49
   },
   {
     date: '2010-04-06',
-    close: 239.54
+    value: 239.54
   },
   {
     date: '2010-04-07',
-    close: 240.6
+    value: 240.6
   },
   {
     date: '2010-04-08',
-    close: 239.95
+    value: 239.95
   },
   {
     date: '2010-04-09',
-    close: 241.79
+    value: 241.79
   },
   {
     date: '2010-04-11',
-    close: 242.29
+    value: 242.29
   },
   {
     date: '2010-04-12',
-    close: 242.43
+    value: 242.43
   },
   {
     date: '2010-04-13',
-    close: 245.69
+    value: 245.69
   },
   {
     date: '2010-04-14',
-    close: 248.92
+    value: 248.92
   },
   {
     date: '2010-04-15',
-    close: 247.4
+    value: 247.4
   },
   {
     date: '2010-04-18',
-    close: 247.07
+    value: 247.07
   },
   {
     date: '2010-04-19',
-    close: 244.59
+    value: 244.59
   },
   {
     date: '2010-04-20',
-    close: 259.22
+    value: 259.22
   },
   {
     date: '2010-04-21',
-    close: 266.47
+    value: 266.47
   },
   {
     date: '2010-04-22',
-    close: 270.83
+    value: 270.83
   },
   {
     date: '2010-04-25',
-    close: 269.5
+    value: 269.5
   },
   {
     date: '2010-04-26',
-    close: 262.04
+    value: 262.04
   },
   {
     date: '2010-04-27',
-    close: 261.6
+    value: 261.6
   },
   {
     date: '2010-04-28',
-    close: 268.64
+    value: 268.64
   },
   {
     date: '2010-04-29',
-    close: 261.09
+    value: 261.09
   },
   {
     date: '2010-05-03',
-    close: 266.35
+    value: 266.35
   },
   {
     date: '2010-05-04',
-    close: 258.68
+    value: 258.68
   },
   {
     date: '2010-05-05',
-    close: 255.98
+    value: 255.98
   },
   {
     date: '2010-05-06',
-    close: 246.25
+    value: 246.25
   },
   {
     date: '2010-05-07',
-    close: 235.86
+    value: 235.86
   },
   {
     date: '2010-05-09',
-    close: 253.99
+    value: 253.99
   },
   {
     date: '2010-05-10',
-    close: 256.52
+    value: 256.52
   },
   {
     date: '2010-05-11',
-    close: 262.09
+    value: 262.09
   },
   {
     date: '2010-05-12',
-    close: 258.36
+    value: 258.36
   },
   {
     date: '2010-05-13',
-    close: 253.82
+    value: 253.82
   },
   {
     date: '2010-05-16',
-    close: 254.22
+    value: 254.22
   },
   {
     date: '2010-05-17',
-    close: 252.36
+    value: 252.36
   },
   {
     date: '2010-05-18',
-    close: 248.34
+    value: 248.34
   },
   {
     date: '2010-05-19',
-    close: 237.76
+    value: 237.76
   },
   {
     date: '2010-05-20',
-    close: 242.32
+    value: 242.32
   },
   {
     date: '2010-05-23',
-    close: 246.76
+    value: 246.76
   },
   {
     date: '2010-05-24',
-    close: 245.22
+    value: 245.22
   },
   {
     date: '2010-05-25',
-    close: 244.11
+    value: 244.11
   },
   {
     date: '2010-05-26',
-    close: 253.35
+    value: 253.35
   },
   {
     date: '2010-05-27',
-    close: 256.88
+    value: 256.88
   },
   {
     date: '2010-05-30',
-    close: 256.88
+    value: 256.88
   },
   {
     date: '2010-06-01',
-    close: 260.83
+    value: 260.83
   },
   {
     date: '2010-06-02',
-    close: 263.95
+    value: 263.95
   },
   {
     date: '2010-06-03',
-    close: 263.12
+    value: 263.12
   },
   {
     date: '2010-06-04',
-    close: 255.96
+    value: 255.96
   },
   {
     date: '2010-06-07',
-    close: 250.94
+    value: 250.94
   },
   {
     date: '2010-06-08',
-    close: 249.33
+    value: 249.33
   },
   {
     date: '2010-06-09',
-    close: 243.2
+    value: 243.2
   },
   {
     date: '2010-06-09',
-    close: 250.51
+    value: 250.51
   },
   {
     date: '2010-06-10',
-    close: 253.51
+    value: 253.51
   },
   {
     date: '2010-06-13',
-    close: 254.28
+    value: 254.28
   },
   {
     date: '2010-06-14',
-    close: 259.69
+    value: 259.69
   },
   {
     date: '2010-06-15',
-    close: 267.25
+    value: 267.25
   },
   {
     date: '2010-06-16',
-    close: 271.87
+    value: 271.87
   },
   {
     date: '2010-06-17',
-    close: 274.07
+    value: 274.07
   },
   {
     date: '2010-06-20',
-    close: 270.17
+    value: 270.17
   },
   {
     date: '2010-06-21',
-    close: 273.85
+    value: 273.85
   },
   {
     date: '2010-06-22',
-    close: 270.97
+    value: 270.97
   },
   {
     date: '2010-06-23',
-    close: 269
+    value: 269
   },
   {
     date: '2010-06-24',
-    close: 266.7
+    value: 266.7
   },
   {
     date: '2010-06-27',
-    close: 268.3
+    value: 268.3
   },
   {
     date: '2010-06-28',
-    close: 256.17
+    value: 256.17
   },
   {
     date: '2010-06-29',
-    close: 251.53
+    value: 251.53
   },
   {
     date: '2010-07-01',
-    close: 248.48
+    value: 248.48
   },
   {
     date: '2010-07-02',
-    close: 246.94
+    value: 246.94
   },
   {
     date: '2010-07-05',
-    close: 246.94
+    value: 246.94
   },
   {
     date: '2010-07-06',
-    close: 248.63
+    value: 248.63
   },
   {
     date: '2010-07-07',
-    close: 258.66
+    value: 258.66
   },
   {
     date: '2010-07-08',
-    close: 258.09
+    value: 258.09
   },
   {
     date: '2010-07-09',
-    close: 259.62
+    value: 259.62
   },
   {
     date: '2010-07-11',
-    close: 257.28
+    value: 257.28
   },
   {
     date: '2010-07-12',
-    close: 251.8
+    value: 251.8
   },
   {
     date: '2010-07-13',
-    close: 252.73
+    value: 252.73
   },
   {
     date: '2010-07-14',
-    close: 251.45
+    value: 251.45
   },
   {
     date: '2010-07-15',
-    close: 249.9
+    value: 249.9
   },
   {
     date: '2010-07-18',
-    close: 245.58
+    value: 245.58
   },
   {
     date: '2010-07-19',
-    close: 251.89
+    value: 251.89
   },
   {
     date: '2010-07-20',
-    close: 254.24
+    value: 254.24
   },
   {
     date: '2010-07-21',
-    close: 259.02
+    value: 259.02
   },
   {
     date: '2010-07-22',
-    close: 259.94
+    value: 259.94
   },
   {
     date: '2010-07-25',
-    close: 259.28
+    value: 259.28
   },
   {
     date: '2010-07-26',
-    close: 264.08
+    value: 264.08
   },
   {
     date: '2010-07-27',
-    close: 260.96
+    value: 260.96
   },
   {
     date: '2010-07-28',
-    close: 258.11
+    value: 258.11
   },
   {
     date: '2010-07-29',
-    close: 257.25
+    value: 257.25
   },
   {
     date: '2010-08-02',
-    close: 261.85
+    value: 261.85
   },
   {
     date: '2010-08-03',
-    close: 261.93
+    value: 261.93
   },
   {
     date: '2010-08-04',
-    close: 262.98
+    value: 262.98
   },
   {
     date: '2010-08-05',
-    close: 261.7
+    value: 261.7
   },
   {
     date: '2010-08-06',
-    close: 260.09
+    value: 260.09
   },
   {
     date: '2010-08-09',
-    close: 261.75
+    value: 261.75
   },
   {
     date: '2010-08-09',
-    close: 259.41
+    value: 259.41
   },
   {
     date: '2010-08-10',
-    close: 250.19
+    value: 250.19
   },
   {
     date: '2010-08-11',
-    close: 251.79
+    value: 251.79
   },
   {
     date: '2010-08-12',
-    close: 249.1
+    value: 249.1
   },
   {
     date: '2010-08-15',
-    close: 247.64
+    value: 247.64
   },
   {
     date: '2010-08-16',
-    close: 251.97
+    value: 251.97
   },
   {
     date: '2010-08-17',
-    close: 253.07
+    value: 253.07
   },
   {
     date: '2010-08-18',
-    close: 249.88
+    value: 249.88
   },
   {
     date: '2010-08-19',
-    close: 249.64
+    value: 249.64
   },
   {
     date: '2010-08-22',
-    close: 245.8
+    value: 245.8
   },
   {
     date: '2010-08-23',
-    close: 239.93
+    value: 239.93
   },
   {
     date: '2010-08-24',
-    close: 242.89
+    value: 242.89
   },
   {
     date: '2010-08-25',
-    close: 240.28
+    value: 240.28
   },
   {
     date: '2010-08-26',
-    close: 241.62
+    value: 241.62
   },
   {
     date: '2010-08-29',
-    close: 242.5
+    value: 242.5
   },
   {
     date: '2010-08-30',
-    close: 243.1
+    value: 243.1
   },
   {
     date: '2010-09-01',
-    close: 250.33
+    value: 250.33
   },
   {
     date: '2010-09-02',
-    close: 252.17
+    value: 252.17
   },
   {
     date: '2010-09-03',
-    close: 258.77
+    value: 258.77
   },
   {
     date: '2010-09-06',
-    close: 258.77
+    value: 258.77
   },
   {
     date: '2010-09-07',
-    close: 257.81
+    value: 257.81
   },
   {
     date: '2010-09-08',
-    close: 262.92
+    value: 262.92
   },
   {
     date: '2010-09-09',
-    close: 263.07
+    value: 263.07
   },
   {
     date: '2010-09-09',
-    close: 263.41
+    value: 263.41
   },
   {
     date: '2010-09-12',
-    close: 267.04
+    value: 267.04
   },
   {
     date: '2010-09-13',
-    close: 268.06
+    value: 268.06
   },
   {
     date: '2010-09-14',
-    close: 270.22
+    value: 270.22
   },
   {
     date: '2010-09-15',
-    close: 276.57
+    value: 276.57
   },
   {
     date: '2010-09-16',
-    close: 275.37
+    value: 275.37
   },
   {
     date: '2010-09-19',
-    close: 283.23
+    value: 283.23
   },
   {
     date: '2010-09-20',
-    close: 283.77
+    value: 283.77
   },
   {
     date: '2010-09-21',
-    close: 287.75
+    value: 287.75
   },
   {
     date: '2010-09-22',
-    close: 288.92
+    value: 288.92
   },
   {
     date: '2010-09-23',
-    close: 292.32
+    value: 292.32
   },
   {
     date: '2010-09-26',
-    close: 291.16
+    value: 291.16
   },
   {
     date: '2010-09-27',
-    close: 286.86
+    value: 286.86
   },
   {
     date: '2010-09-28',
-    close: 287.37
+    value: 287.37
   },
   {
     date: '2010-09-29',
-    close: 283.75
+    value: 283.75
   },
   {
     date: '2010-10-01',
-    close: 282.52
+    value: 282.52
   },
   {
     date: '2010-10-04',
-    close: 278.64
+    value: 278.64
   },
   {
     date: '2010-10-05',
-    close: 288.94
+    value: 288.94
   },
   {
     date: '2010-10-06',
-    close: 289.19
+    value: 289.19
   },
   {
     date: '2010-10-07',
-    close: 289.22
+    value: 289.22
   },
   {
     date: '2010-10-08',
-    close: 294.07
+    value: 294.07
   },
   {
     date: '2010-10-10',
-    close: 295.36
+    value: 295.36
   },
   {
     date: '2010-10-11',
-    close: 298.54
+    value: 298.54
   },
   {
     date: '2010-10-12',
-    close: 300.14
+    value: 300.14
   },
   {
     date: '2010-10-13',
-    close: 302.31
+    value: 302.31
   },
   {
     date: '2010-10-14',
-    close: 314.74
+    value: 314.74
   },
   {
     date: '2010-10-17',
-    close: 318
+    value: 318
   },
   {
     date: '2010-10-18',
-    close: 309.49
+    value: 309.49
   },
   {
     date: '2010-10-19',
-    close: 310.53
+    value: 310.53
   },
   {
     date: '2010-10-20',
-    close: 309.52
+    value: 309.52
   },
   {
     date: '2010-10-21',
-    close: 307.47
+    value: 307.47
   },
   {
     date: '2010-10-24',
-    close: 308.84
+    value: 308.84
   },
   {
     date: '2010-10-25',
-    close: 308.05
+    value: 308.05
   },
   {
     date: '2010-10-26',
-    close: 307.83
+    value: 307.83
   },
   {
     date: '2010-10-27',
-    close: 305.24
+    value: 305.24
   },
   {
     date: '2010-10-28',
-    close: 300.98
+    value: 300.98
   },
   {
     date: '2010-11-01',
-    close: 304.18
+    value: 304.18
   },
   {
     date: '2010-11-02',
-    close: 309.36
+    value: 309.36
   },
   {
     date: '2010-11-03',
-    close: 312.8
+    value: 312.8
   },
   {
     date: '2010-11-04',
-    close: 318.27
+    value: 318.27
   },
   {
     date: '2010-11-05',
-    close: 317.13
+    value: 317.13
   },
   {
     date: '2010-11-08',
-    close: 318.62
+    value: 318.62
   },
   {
     date: '2010-11-09',
-    close: 316.08
+    value: 316.08
   },
   {
     date: '2010-11-09',
-    close: 318.03
+    value: 318.03
   },
   {
     date: '2010-11-10',
-    close: 316.66
+    value: 316.66
   },
   {
     date: '2010-11-11',
-    close: 308.03
+    value: 308.03
   },
   {
     date: '2010-11-14',
-    close: 307.04
+    value: 307.04
   },
   {
     date: '2010-11-15',
-    close: 301.59
+    value: 301.59
   },
   {
     date: '2010-11-16',
-    close: 300.5
+    value: 300.5
   },
   {
     date: '2010-11-17',
-    close: 308.43
+    value: 308.43
   },
   {
     date: '2010-11-18',
-    close: 306.73
+    value: 306.73
   },
   {
     date: '2010-11-21',
-    close: 313.36
+    value: 313.36
   },
   {
     date: '2010-11-22',
-    close: 308.73
+    value: 308.73
   },
   {
     date: '2010-11-23',
-    close: 314.8
+    value: 314.8
   },
   {
     date: '2010-11-25',
-    close: 315
+    value: 315
   },
   {
     date: '2010-11-28',
-    close: 316.87
+    value: 316.87
   },
   {
     date: '2010-11-29',
-    close: 311.15
+    value: 311.15
   },
   {
     date: '2010-12-01',
-    close: 316.4
+    value: 316.4
   },
   {
     date: '2010-12-02',
-    close: 318.15
+    value: 318.15
   },
   {
     date: '2010-12-03',
-    close: 317.44
+    value: 317.44
   },
   {
     date: '2010-12-06',
-    close: 320.15
+    value: 320.15
   },
   {
     date: '2010-12-07',
-    close: 318.21
+    value: 318.21
   },
   {
     date: '2010-12-08',
-    close: 321.01
+    value: 321.01
   },
   {
     date: '2010-12-09',
-    close: 319.76
+    value: 319.76
   },
   {
     date: '2010-12-09',
-    close: 320.56
+    value: 320.56
   },
   {
     date: '2010-12-12',
-    close: 321.67
+    value: 321.67
   },
   {
     date: '2010-12-13',
-    close: 320.29
+    value: 320.29
   },
   {
     date: '2010-12-14',
-    close: 320.36
+    value: 320.36
   },
   {
     date: '2010-12-15',
-    close: 321.25
+    value: 321.25
   },
   {
     date: '2010-12-16',
-    close: 320.61
+    value: 320.61
   },
   {
     date: '2010-12-19',
-    close: 322.21
+    value: 322.21
   },
   {
     date: '2010-12-20',
-    close: 324.2
+    value: 324.2
   },
   {
     date: '2010-12-21',
-    close: 325.16
+    value: 325.16
   },
   {
     date: '2010-12-22',
-    close: 323.6
+    value: 323.6
   },
   {
     date: '2010-12-26',
-    close: 324.68
+    value: 324.68
   },
   {
     date: '2010-12-27',
-    close: 325.47
+    value: 325.47
   },
   {
     date: '2010-12-28',
-    close: 325.29
+    value: 325.29
   },
   {
     date: '2010-12-29',
-    close: 323.66
+    value: 323.66
   },
   {
     date: '2010-12-30',
-    close: 322.56
+    value: 322.56
   },
   {
     date: '2011-01-03',
-    close: 329.57
+    value: 329.57
   },
   {
     date: '2011-01-04',
-    close: 331.29
+    value: 331.29
   },
   {
     date: '2011-01-05',
-    close: 334
+    value: 334
   },
   {
     date: '2011-01-06',
-    close: 333.73
+    value: 333.73
   },
   {
     date: '2011-01-07',
-    close: 336.12
+    value: 336.12
   },
   {
     date: '2011-01-09',
-    close: 342.46
+    value: 342.46
   },
   {
     date: '2011-01-10',
-    close: 341.64
+    value: 341.64
   },
   {
     date: '2011-01-11',
-    close: 344.42
+    value: 344.42
   },
   {
     date: '2011-01-12',
-    close: 345.68
+    value: 345.68
   },
   {
     date: '2011-01-13',
-    close: 348.48
+    value: 348.48
   },
   {
     date: '2011-01-17',
-    close: 340.65
+    value: 340.65
   },
   {
     date: '2011-01-18',
-    close: 338.84
+    value: 338.84
   },
   {
     date: '2011-01-19',
-    close: 332.68
+    value: 332.68
   },
   {
     date: '2011-01-20',
-    close: 326.72
+    value: 326.72
   },
   {
     date: '2011-01-23',
-    close: 337.45
+    value: 337.45
   },
   {
     date: '2011-01-24',
-    close: 341.4
+    value: 341.4
   },
   {
     date: '2011-01-25',
-    close: 343.85
+    value: 343.85
   },
   {
     date: '2011-01-26',
-    close: 343.21
+    value: 343.21
   },
   {
     date: '2011-01-27',
-    close: 336.1
+    value: 336.1
   },
   {
     date: '2011-01-30',
-    close: 339.32
+    value: 339.32
   },
   {
     date: '2011-02-01',
-    close: 345.03
+    value: 345.03
   },
   {
     date: '2011-02-02',
-    close: 344.32
+    value: 344.32
   },
   {
     date: '2011-02-03',
-    close: 343.44
+    value: 343.44
   },
   {
     date: '2011-02-04',
-    close: 346.5
+    value: 346.5
   },
   {
     date: '2011-02-07',
-    close: 351.88
+    value: 351.88
   },
   {
     date: '2011-02-08',
-    close: 355.2
+    value: 355.2
   },
   {
     date: '2011-02-09',
-    close: 358.16
+    value: 358.16
   },
   {
     date: '2011-02-09',
-    close: 354.54
+    value: 354.54
   },
   {
     date: '2011-02-10',
-    close: 356.85
+    value: 356.85
   },
   {
     date: '2011-02-13',
-    close: 359.18
+    value: 359.18
   },
   {
     date: '2011-02-14',
-    close: 359.9
+    value: 359.9
   },
   {
     date: '2011-02-15',
-    close: 363.13
+    value: 363.13
   },
   {
     date: '2011-02-16',
-    close: 358.3
+    value: 358.3
   },
   {
     date: '2011-02-17',
-    close: 350.56
+    value: 350.56
   },
   {
     date: '2011-02-21',
-    close: 338.61
+    value: 338.61
   },
   {
     date: '2011-02-22',
-    close: 342.62
+    value: 342.62
   },
   {
     date: '2011-02-23',
-    close: 342.88
+    value: 342.88
   },
   {
     date: '2011-02-24',
-    close: 348.16
+    value: 348.16
   },
   {
     date: '2011-02-27',
-    close: 353.21
+    value: 353.21
   },
   {
     date: '2011-03-01',
-    close: 349.31
+    value: 349.31
   },
   {
     date: '2011-03-02',
-    close: 352.12
+    value: 352.12
   },
   {
     date: '2011-03-03',
-    close: 359.56
+    value: 359.56
   },
   {
     date: '2011-03-04',
-    close: 360
+    value: 360
   },
   {
     date: '2011-03-07',
-    close: 355.36
+    value: 355.36
   },
   {
     date: '2011-03-08',
-    close: 355.76
+    value: 355.76
   },
   {
     date: '2011-03-09',
-    close: 352.47
+    value: 352.47
   },
   {
     date: '2011-03-09',
-    close: 346.67
+    value: 346.67
   },
   {
     date: '2011-03-10',
-    close: 351.99
+    value: 351.99
   },
   {
     date: '2011-03-13',
-    close: 353.56
+    value: 353.56
   },
   {
     date: '2011-03-14',
-    close: 345.43
+    value: 345.43
   },
   {
     date: '2011-03-15',
-    close: 330.01
+    value: 330.01
   },
   {
     date: '2011-03-16',
-    close: 334.64
+    value: 334.64
   },
   {
     date: '2011-03-17',
-    close: 330.67
+    value: 330.67
   },
   {
     date: '2011-03-20',
-    close: 339.3
+    value: 339.3
   },
   {
     date: '2011-03-21',
-    close: 341.2
+    value: 341.2
   },
   {
     date: '2011-03-22',
-    close: 339.19
+    value: 339.19
   },
   {
     date: '2011-03-23',
-    close: 344.97
+    value: 344.97
   },
   {
     date: '2011-03-24',
-    close: 351.54
+    value: 351.54
   },
   {
     date: '2011-03-27',
-    close: 350.44
+    value: 350.44
   },
   {
     date: '2011-03-28',
-    close: 350.96
+    value: 350.96
   },
   {
     date: '2011-03-29',
-    close: 348.63
+    value: 348.63
   },
   {
     date: '2011-03-30',
-    close: 348.51
+    value: 348.51
   },
   {
     date: '2011-04-01',
-    close: 344.56
+    value: 344.56
   },
   {
     date: '2011-04-04',
-    close: 341.19
+    value: 341.19
   },
   {
     date: '2011-04-05',
-    close: 338.89
+    value: 338.89
   },
   {
     date: '2011-04-06',
-    close: 338.04
+    value: 338.04
   },
   {
     date: '2011-04-07',
-    close: 338.08
+    value: 338.08
   },
   {
     date: '2011-04-08',
-    close: 335.06
+    value: 335.06
   },
   {
     date: '2011-04-10',
-    close: 330.8
+    value: 330.8
   },
   {
     date: '2011-04-11',
-    close: 332.4
+    value: 332.4
   },
   {
     date: '2011-04-12',
-    close: 336.13
+    value: 336.13
   },
   {
     date: '2011-04-13',
-    close: 332.42
+    value: 332.42
   },
   {
     date: '2011-04-14',
-    close: 327.46
+    value: 327.46
   },
   {
     date: '2011-04-17',
-    close: 331.85
+    value: 331.85
   },
   {
     date: '2011-04-18',
-    close: 337.86
+    value: 337.86
   },
   {
     date: '2011-04-19',
-    close: 342.41
+    value: 342.41
   },
   {
     date: '2011-04-20',
-    close: 350.7
+    value: 350.7
   },
   {
     date: '2011-04-24',
-    close: 353.01
+    value: 353.01
   },
   {
     date: '2011-04-25',
-    close: 350.42
+    value: 350.42
   },
   {
     date: '2011-04-26',
-    close: 350.15
+    value: 350.15
   },
   {
     date: '2011-04-27',
-    close: 346.75
+    value: 346.75
   },
   {
     date: '2011-04-28',
-    close: 350.13
+    value: 350.13
   },
   {
     date: '2011-05-02',
-    close: 346.28
+    value: 346.28
   },
   {
     date: '2011-05-03',
-    close: 348.2
+    value: 348.2
   },
   {
     date: '2011-05-04',
-    close: 349.57
+    value: 349.57
   },
   {
     date: '2011-05-05',
-    close: 346.75
+    value: 346.75
   },
   {
     date: '2011-05-06',
-    close: 346.66
+    value: 346.66
   },
   {
     date: '2011-05-09',
-    close: 347.6
+    value: 347.6
   },
   {
     date: '2011-05-09',
-    close: 349.45
+    value: 349.45
   },
   {
     date: '2011-05-10',
-    close: 347.23
+    value: 347.23
   },
   {
     date: '2011-05-11',
-    close: 346.57
+    value: 346.57
   },
   {
     date: '2011-05-12',
-    close: 340.5
+    value: 340.5
   },
   {
     date: '2011-05-15',
-    close: 333.3
+    value: 333.3
   },
   {
     date: '2011-05-16',
-    close: 336.14
+    value: 336.14
   },
   {
     date: '2011-05-17',
-    close: 339.87
+    value: 339.87
   },
   {
     date: '2011-05-18',
-    close: 340.53
+    value: 340.53
   },
   {
     date: '2011-05-19',
-    close: 335.22
+    value: 335.22
   },
   {
     date: '2011-05-22',
-    close: 334.4
+    value: 334.4
   },
   {
     date: '2011-05-23',
-    close: 332.19
+    value: 332.19
   },
   {
     date: '2011-05-24',
-    close: 336.78
+    value: 336.78
   },
   {
     date: '2011-05-25',
-    close: 335
+    value: 335
   },
   {
     date: '2011-05-26',
-    close: 337.41
+    value: 337.41
   },
   {
     date: '2011-05-30',
-    close: 347.83
+    value: 347.83
   },
   {
     date: '2011-06-01',
-    close: 345.51
+    value: 345.51
   },
   {
     date: '2011-06-02',
-    close: 346.1
+    value: 346.1
   },
   {
     date: '2011-06-03',
-    close: 343.44
+    value: 343.44
   },
   {
     date: '2011-06-06',
-    close: 338.04
+    value: 338.04
   },
   {
     date: '2011-06-07',
-    close: 332.04
+    value: 332.04
   },
   {
     date: '2011-06-08',
-    close: 332.24
+    value: 332.24
   },
   {
     date: '2011-06-09',
-    close: 331.49
+    value: 331.49
   },
   {
     date: '2011-06-09',
-    close: 325.9
+    value: 325.9
   },
   {
     date: '2011-06-12',
-    close: 326.6
+    value: 326.6
   },
   {
     date: '2011-06-13',
-    close: 332.44
+    value: 332.44
   },
   {
     date: '2011-06-14',
-    close: 326.75
+    value: 326.75
   },
   {
     date: '2011-06-15',
-    close: 325.16
+    value: 325.16
   },
   {
     date: '2011-06-16',
-    close: 320.26
+    value: 320.26
   },
   {
     date: '2011-06-19',
-    close: 315.32
+    value: 315.32
   },
   {
     date: '2011-06-20',
-    close: 325.3
+    value: 325.3
   },
   {
     date: '2011-06-21',
-    close: 322.61
+    value: 322.61
   },
   {
     date: '2011-06-22',
-    close: 331.23
+    value: 331.23
   },
   {
     date: '2011-06-23',
-    close: 326.35
+    value: 326.35
   },
   {
     date: '2011-06-26',
-    close: 332.04
+    value: 332.04
   },
   {
     date: '2011-06-27',
-    close: 335.26
+    value: 335.26
   },
   {
     date: '2011-06-28',
-    close: 334.04
+    value: 334.04
   },
   {
     date: '2011-06-29',
-    close: 335.67
+    value: 335.67
   },
   {
     date: '2011-07-01',
-    close: 343.26
+    value: 343.26
   },
   {
     date: '2011-07-05',
-    close: 349.43
+    value: 349.43
   },
   {
     date: '2011-07-06',
-    close: 351.76
+    value: 351.76
   },
   {
     date: '2011-07-07',
-    close: 357.2
+    value: 357.2
   },
   {
     date: '2011-07-08',
-    close: 359.71
+    value: 359.71
   },
   {
     date: '2011-07-10',
-    close: 354
+    value: 354
   },
   {
     date: '2011-07-11',
-    close: 353.75
+    value: 353.75
   },
   {
     date: '2011-07-12',
-    close: 358.02
+    value: 358.02
   },
   {
     date: '2011-07-13',
-    close: 357.77
+    value: 357.77
   },
   {
     date: '2011-07-14',
-    close: 364.92
+    value: 364.92
   },
   {
     date: '2011-07-17',
-    close: 373.8
+    value: 373.8
   },
   {
     date: '2011-07-18',
-    close: 376.85
+    value: 376.85
   },
   {
     date: '2011-07-19',
-    close: 386.9
+    value: 386.9
   },
   {
     date: '2011-07-20',
-    close: 387.29
+    value: 387.29
   },
   {
     date: '2011-07-21',
-    close: 393.3
+    value: 393.3
   },
   {
     date: '2011-07-24',
-    close: 398.5
+    value: 398.5
   },
   {
     date: '2011-07-25',
-    close: 403.41
+    value: 403.41
   },
   {
     date: '2011-07-26',
-    close: 392.59
+    value: 392.59
   },
   {
     date: '2011-07-27',
-    close: 391.82
+    value: 391.82
   },
   {
     date: '2011-07-28',
-    close: 390.48
+    value: 390.48
   },
   {
     date: '2011-08-01',
-    close: 396.75
+    value: 396.75
   },
   {
     date: '2011-08-02',
-    close: 388.91
+    value: 388.91
   },
   {
     date: '2011-08-03',
-    close: 392.57
+    value: 392.57
   },
   {
     date: '2011-08-04',
-    close: 377.37
+    value: 377.37
   },
   {
     date: '2011-08-05',
-    close: 373.62
+    value: 373.62
   },
   {
     date: '2011-08-08',
-    close: 353.21
+    value: 353.21
   },
   {
     date: '2011-08-09',
-    close: 374.01
+    value: 374.01
   },
   {
     date: '2011-08-09',
-    close: 363.69
+    value: 363.69
   },
   {
     date: '2011-08-10',
-    close: 373.7
+    value: 373.7
   },
   {
     date: '2011-08-11',
-    close: 376.99
+    value: 376.99
   },
   {
     date: '2011-08-14',
-    close: 383.41
+    value: 383.41
   },
   {
     date: '2011-08-15',
-    close: 380.48
+    value: 380.48
   },
   {
     date: '2011-08-16',
-    close: 380.44
+    value: 380.44
   },
   {
     date: '2011-08-17',
-    close: 366.05
+    value: 366.05
   },
   {
     date: '2011-08-18',
-    close: 356.03
+    value: 356.03
   },
   {
     date: '2011-08-21',
-    close: 356.44
+    value: 356.44
   },
   {
     date: '2011-08-22',
-    close: 373.6
+    value: 373.6
   },
   {
     date: '2011-08-23',
-    close: 376.18
+    value: 376.18
   },
   {
     date: '2011-08-24',
-    close: 373.72
+    value: 373.72
   },
   {
     date: '2011-08-25',
-    close: 383.58
+    value: 383.58
   },
   {
     date: '2011-08-28',
-    close: 389.97
+    value: 389.97
   },
   {
     date: '2011-08-29',
-    close: 389.99
+    value: 389.99
   },
   {
     date: '2011-08-30',
-    close: 384.83
+    value: 384.83
   },
   {
     date: '2011-09-01',
-    close: 381.03
+    value: 381.03
   },
   {
     date: '2011-09-02',
-    close: 374.05
+    value: 374.05
   },
   {
     date: '2011-09-06',
-    close: 379.74
+    value: 379.74
   },
   {
     date: '2011-09-07',
-    close: 383.93
+    value: 383.93
   },
   {
     date: '2011-09-08',
-    close: 384.14
+    value: 384.14
   },
   {
     date: '2011-09-09',
-    close: 377.48
+    value: 377.48
   },
   {
     date: '2011-09-11',
-    close: 379.94
+    value: 379.94
   },
   {
     date: '2011-09-12',
-    close: 384.62
+    value: 384.62
   },
   {
     date: '2011-09-13',
-    close: 389.3
+    value: 389.3
   },
   {
     date: '2011-09-14',
-    close: 392.96
+    value: 392.96
   },
   {
     date: '2011-09-15',
-    close: 400.5
+    value: 400.5
   },
   {
     date: '2011-09-18',
-    close: 411.63
+    value: 411.63
   },
   {
     date: '2011-09-19',
-    close: 413.45
+    value: 413.45
   },
   {
     date: '2011-09-20',
-    close: 412.14
+    value: 412.14
   },
   {
     date: '2011-09-21',
-    close: 401.82
+    value: 401.82
   },
   {
     date: '2011-09-22',
-    close: 404.3
+    value: 404.3
   },
   {
     date: '2011-09-25',
-    close: 403.17
+    value: 403.17
   },
   {
     date: '2011-09-26',
-    close: 399.26
+    value: 399.26
   },
   {
     date: '2011-09-27',
-    close: 397.01
+    value: 397.01
   },
   {
     date: '2011-09-28',
-    close: 390.57
+    value: 390.57
   },
   {
     date: '2011-09-29',
-    close: 381.32
+    value: 381.32
   },
   {
     date: '2011-10-03',
-    close: 374.6
+    value: 374.6
   },
   {
     date: '2011-10-04',
-    close: 372.5
+    value: 372.5
   },
   {
     date: '2011-10-05',
-    close: 378.25
+    value: 378.25
   },
   {
     date: '2011-10-06',
-    close: 377.37
+    value: 377.37
   },
   {
     date: '2011-10-07',
-    close: 369.8
+    value: 369.8
   },
   {
     date: '2011-10-09',
-    close: 388.81
+    value: 388.81
   },
   {
     date: '2011-10-10',
-    close: 400.29
+    value: 400.29
   },
   {
     date: '2011-10-11',
-    close: 402.19
+    value: 402.19
   },
   {
     date: '2011-10-12',
-    close: 408.43
+    value: 408.43
   },
   {
     date: '2011-10-13',
-    close: 422
+    value: 422
   },
   {
     date: '2011-10-16',
-    close: 419.99
+    value: 419.99
   },
   {
     date: '2011-10-17',
-    close: 422.24
+    value: 422.24
   },
   {
     date: '2011-10-18',
-    close: 398.62
+    value: 398.62
   },
   {
     date: '2011-10-19',
-    close: 395.31
+    value: 395.31
   },
   {
     date: '2011-10-20',
-    close: 392.87
+    value: 392.87
   },
   {
     date: '2011-10-23',
-    close: 405.77
+    value: 405.77
   },
   {
     date: '2011-10-24',
-    close: 397.77
+    value: 397.77
   },
   {
     date: '2011-10-25',
-    close: 400.6
+    value: 400.6
   },
   {
     date: '2011-10-26',
-    close: 404.69
+    value: 404.69
   },
   {
     date: '2011-10-27',
-    close: 404.95
+    value: 404.95
   },
   {
     date: '2011-10-30',
-    close: 404.78
+    value: 404.78
   },
   {
     date: '2011-11-01',
-    close: 396.51
+    value: 396.51
   },
   {
     date: '2011-11-02',
-    close: 397.41
+    value: 397.41
   },
   {
     date: '2011-11-03',
-    close: 403.07
+    value: 403.07
   },
   {
     date: '2011-11-04',
-    close: 400.24
+    value: 400.24
   },
   {
     date: '2011-11-07',
-    close: 399.73
+    value: 399.73
   },
   {
     date: '2011-11-08',
-    close: 406.23
+    value: 406.23
   },
   {
     date: '2011-11-09',
-    close: 395.28
+    value: 395.28
   },
   {
     date: '2011-11-09',
-    close: 385.22
+    value: 385.22
   },
   {
     date: '2011-11-10',
-    close: 384.62
+    value: 384.62
   },
   {
     date: '2011-11-13',
-    close: 379.26
+    value: 379.26
   },
   {
     date: '2011-11-14',
-    close: 388.83
+    value: 388.83
   },
   {
     date: '2011-11-15',
-    close: 384.77
+    value: 384.77
   },
   {
     date: '2011-11-16',
-    close: 377.41
+    value: 377.41
   },
   {
     date: '2011-11-17',
-    close: 374.94
+    value: 374.94
   },
   {
     date: '2011-11-20',
-    close: 369.01
+    value: 369.01
   },
   {
     date: '2011-11-21',
-    close: 376.51
+    value: 376.51
   },
   {
     date: '2011-11-22',
-    close: 366.99
+    value: 366.99
   },
   {
     date: '2011-11-24',
-    close: 363.57
+    value: 363.57
   },
   {
     date: '2011-11-27',
-    close: 376.12
+    value: 376.12
   },
   {
     date: '2011-11-28',
-    close: 373.2
+    value: 373.2
   },
   {
     date: '2011-11-29',
-    close: 382.2
+    value: 382.2
   },
   {
     date: '2011-12-01',
-    close: 387.93
+    value: 387.93
   },
   {
     date: '2011-12-02',
-    close: 389.7
+    value: 389.7
   },
   {
     date: '2011-12-05',
-    close: 393.01
+    value: 393.01
   },
   {
     date: '2011-12-06',
-    close: 390.95
+    value: 390.95
   },
   {
     date: '2011-12-07',
-    close: 389.09
+    value: 389.09
   },
   {
     date: '2011-12-08',
-    close: 390.66
+    value: 390.66
   },
   {
     date: '2011-12-09',
-    close: 393.62
+    value: 393.62
   },
   {
     date: '2011-12-11',
-    close: 391.84
+    value: 391.84
   },
   {
     date: '2011-12-12',
-    close: 388.81
+    value: 388.81
   },
   {
     date: '2011-12-13',
-    close: 380.19
+    value: 380.19
   },
   {
     date: '2011-12-14',
-    close: 378.94
+    value: 378.94
   },
   {
     date: '2011-12-15',
-    close: 381.02
+    value: 381.02
   },
   {
     date: '2011-12-18',
-    close: 382.21
+    value: 382.21
   },
   {
     date: '2011-12-19',
-    close: 395.95
+    value: 395.95
   },
   {
     date: '2011-12-20',
-    close: 396.44
+    value: 396.44
   },
   {
     date: '2011-12-21',
-    close: 398.55
+    value: 398.55
   },
   {
     date: '2011-12-22',
-    close: 403.43
+    value: 403.43
   },
   {
     date: '2011-12-26',
-    close: 406.53
+    value: 406.53
   },
   {
     date: '2011-12-27',
-    close: 402.64
+    value: 402.64
   },
   {
     date: '2011-12-28',
-    close: 405.12
+    value: 405.12
   },
   {
     date: '2011-12-29',
-    close: 405
+    value: 405
   },
   {
     date: '2012-01-03',
-    close: 411.23
+    value: 411.23
   },
   {
     date: '2012-01-04',
-    close: 413.44
+    value: 413.44
   },
   {
     date: '2012-01-05',
-    close: 418.03
+    value: 418.03
   },
   {
     date: '2012-01-06',
-    close: 422.4
+    value: 422.4
   },
   {
     date: '2012-01-09',
-    close: 421.73
+    value: 421.73
   },
   {
     date: '2012-01-09',
-    close: 423.24
+    value: 423.24
   },
   {
     date: '2012-01-10',
-    close: 422.55
+    value: 422.55
   },
   {
     date: '2012-01-11',
-    close: 421.39
+    value: 421.39
   },
   {
     date: '2012-01-12',
-    close: 419.81
+    value: 419.81
   },
   {
     date: '2012-01-16',
-    close: 424.7
+    value: 424.7
   },
   {
     date: '2012-01-17',
-    close: 429.11
+    value: 429.11
   },
   {
     date: '2012-01-18',
-    close: 427.75
+    value: 427.75
   },
   {
     date: '2012-01-19',
-    close: 420.3
+    value: 420.3
   },
   {
     date: '2012-01-22',
-    close: 427.41
+    value: 427.41
   },
   {
     date: '2012-01-23',
-    close: 420.41
+    value: 420.41
   },
   {
     date: '2012-01-24',
-    close: 446.66
+    value: 446.66
   },
   {
     date: '2012-01-25',
-    close: 444.63
+    value: 444.63
   },
   {
     date: '2012-01-26',
-    close: 447.28
+    value: 447.28
   },
   {
     date: '2012-01-29',
-    close: 453.01
+    value: 453.01
   },
   {
     date: '2012-01-30',
-    close: 456.48
+    value: 456.48
   },
   {
     date: '2012-02-01',
-    close: 456.19
+    value: 456.19
   },
   {
     date: '2012-02-02',
-    close: 455.12
+    value: 455.12
   },
   {
     date: '2012-02-03',
-    close: 459.68
+    value: 459.68
   },
   {
     date: '2012-02-06',
-    close: 463.97
+    value: 463.97
   },
   {
     date: '2012-02-07',
-    close: 468.83
+    value: 468.83
   },
   {
     date: '2012-02-08',
-    close: 476.68
+    value: 476.68
   },
   {
     date: '2012-02-09',
-    close: 493.17
+    value: 493.17
   },
   {
     date: '2012-02-09',
-    close: 493.42
+    value: 493.42
   },
   {
     date: '2012-02-12',
-    close: 502.6
+    value: 502.6
   },
   {
     date: '2012-02-13',
-    close: 509.46
+    value: 509.46
   },
   {
     date: '2012-02-14',
-    close: 497.67
+    value: 497.67
   },
   {
     date: '2012-02-15',
-    close: 502.21
+    value: 502.21
   },
   {
     date: '2012-02-16',
-    close: 502.12
+    value: 502.12
   },
   {
     date: '2012-02-20',
-    close: 514.85
+    value: 514.85
   },
   {
     date: '2012-02-21',
-    close: 513.04
+    value: 513.04
   },
   {
     date: '2012-02-22',
-    close: 516.39
+    value: 516.39
   },
   {
     date: '2012-02-23',
-    close: 522.41
+    value: 522.41
   },
   {
     date: '2012-02-26',
-    close: 525.76
+    value: 525.76
   },
   {
     date: '2012-02-27',
-    close: 535.41
+    value: 535.41
   },
   {
     date: '2012-02-28',
-    close: 542.44
+    value: 542.44
   },
   {
     date: '2012-03-01',
-    close: 544.47
+    value: 544.47
   },
   {
     date: '2012-03-02',
-    close: 545.18
+    value: 545.18
   },
   {
     date: '2012-03-05',
-    close: 533.16
+    value: 533.16
   },
   {
     date: '2012-03-06',
-    close: 530.26
+    value: 530.26
   },
   {
     date: '2012-03-07',
-    close: 530.69
+    value: 530.69
   },
   {
     date: '2012-03-08',
-    close: 541.99
+    value: 541.99
   },
   {
     date: '2012-03-09',
-    close: 545.17
+    value: 545.17
   },
   {
     date: '2012-03-11',
-    close: 552
+    value: 552
   },
   {
     date: '2012-03-12',
-    close: 568.1
+    value: 568.1
   },
   {
     date: '2012-03-13',
-    close: 589.58
+    value: 589.58
   },
   {
     date: '2012-03-14',
-    close: 585.56
+    value: 585.56
   },
   {
     date: '2012-03-15',
-    close: 585.57
+    value: 585.57
   },
   {
     date: '2012-03-18',
-    close: 601.1
+    value: 601.1
   },
   {
     date: '2012-03-19',
-    close: 605.96
+    value: 605.96
   },
   {
     date: '2012-03-20',
-    close: 602.5
+    value: 602.5
   },
   {
     date: '2012-03-21',
-    close: 599.34
+    value: 599.34
   },
   {
     date: '2012-03-22',
-    close: 596.05
+    value: 596.05
   },
   {
     date: '2012-03-25',
-    close: 606.98
+    value: 606.98
   },
   {
     date: '2012-03-26',
-    close: 614.48
+    value: 614.48
   },
   {
     date: '2012-03-27',
-    close: 617.62
+    value: 617.62
   },
   {
     date: '2012-03-28',
-    close: 609.86
+    value: 609.86
   },
   {
     date: '2012-03-29',
-    close: 599.55
+    value: 599.55
   },
   {
     date: '2012-04-02',
-    close: 618.63
+    value: 618.63
   },
   {
     date: '2012-04-03',
-    close: 629.32
+    value: 629.32
   },
   {
     date: '2012-04-04',
-    close: 624.31
+    value: 624.31
   },
   {
     date: '2012-04-05',
-    close: 633.68
+    value: 633.68
   },
   {
     date: '2012-04-09',
-    close: 636.23
+    value: 636.23
   },
   {
     date: '2012-04-09',
-    close: 628.44
+    value: 628.44
   },
   {
     date: '2012-04-10',
-    close: 626.2
+    value: 626.2
   },
   {
     date: '2012-04-11',
-    close: 622.77
+    value: 622.77
   },
   {
     date: '2012-04-12',
-    close: 605.23
+    value: 605.23
   },
   {
     date: '2012-04-15',
-    close: 580.13
+    value: 580.13
   },
   {
     date: '2012-04-16',
-    close: 609.7
+    value: 609.7
   },
   {
     date: '2012-04-17',
-    close: 608.34
+    value: 608.34
   },
   {
     date: '2012-04-18',
-    close: 587.44
+    value: 587.44
   },
   {
     date: '2012-04-19',
-    close: 572.98
+    value: 572.98
   },
   {
     date: '2012-04-22',
-    close: 571.7
+    value: 571.7
   },
   {
     date: '2012-04-23',
-    close: 560.28
+    value: 560.28
   },
   {
     date: '2012-04-24',
-    close: 610
+    value: 610
   },
   {
     date: '2012-04-25',
-    close: 607.7
+    value: 607.7
   },
   {
     date: '2012-04-26',
-    close: 603
+    value: 603
   },
   {
     date: '2012-04-29',
-    close: 583.98
+    value: 583.98
   },
   {
     date: '2012-05-01',
-    close: 582.13
+    value: 582.13
   }
 ];

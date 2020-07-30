@@ -182,7 +182,6 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
       .append('text')
         .attr('x', borderPadding + size + itemPadding)
         .attr('y', (d, i) => borderPadding + i * (size + itemPadding) + (size / 2) + textOffset)
-        // .style("fill", (d) => color(d))
         .text((d) => d)
         .attr('text-anchor', 'left')
         .style('alignment-baseline', 'middle')
