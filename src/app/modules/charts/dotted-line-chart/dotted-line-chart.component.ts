@@ -75,7 +75,7 @@ export class DottedLineChartComponent implements OnInit, AfterViewInit {
 
     const xAxis = g => g
       .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(xScale).tickSizeOuter(0))
+      .call(d3.axisBottom(xScale).ticks(5).tickSizeOuter(0))
       .call(axis => axis.select('.domain')
         .attr('stroke', this.axisColor)
       )
@@ -88,13 +88,9 @@ export class DottedLineChartComponent implements OnInit, AfterViewInit {
 
     const yAxis = g => g
       .attr('transform', `translate(${this.margin.left}, 0)`)
-      .call(d3.axisLeft(yScale))
-      .call(axis => axis.select('.domain')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('line')
-        .attr('stroke', this.axisColor)
-      )
+      .call(d3.axisLeft(yScale).ticks(5))
+      .call(axis => axis.select('.domain').remove())
+      .call(axis => axis.selectAll('line').remove())
       .call(axis => axis.selectAll('text')
         .attr('fill', this.axisColor)
       );

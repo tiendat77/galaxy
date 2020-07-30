@@ -135,15 +135,15 @@ export class DashedLineChartComponent implements OnInit, AfterViewInit {
       .attr('x', 15)
       .attr('dy', '1em');
 
-    svg.append('rect')
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-      .attr('width', this.width)
-      .attr('height', this.height)
-      .attr('fill', 'none')
-      .attr('pointer-events', 'all')
-      .on('mouseover', () => { tooltip.style('display', ''); })
-      .on('mouseout', () => { tooltip.style('display', 'none'); })
-      .on('mousemove', onMouseMove);
+    // svg.append('rect')
+    //   .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+    //   .attr('width', this.width)
+    //   .attr('height', this.height)
+    //   .attr('fill', 'none')
+    //   .attr('pointer-events', 'all')
+    //   .on('mouseover', () => { tooltip.style('display', ''); })
+    //   .on('mouseout', () => { tooltip.style('display', 'none'); })
+    //   .on('mousemove', onMouseMove);
 
     svg.append('g').call(xAxis);
     svg.append('g').call(yAxis);

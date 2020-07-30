@@ -10,6 +10,7 @@ import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
 import { BoardComponent } from './board/board.component';
 import { DottedLineChartComponent } from './dotted-line-chart/dotted-line-chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/chart/bar-chart' },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'line-bar-chart', component: LineBarChartComponent },
   { path: 'bullet-chart', component: BulletChartComponent },
   { path: 'dashed-line-chart', component: DashedLineChartComponent },
-  { path: 'dotted-line-chart', component: DottedLineChartComponent }
+  { path: 'dotted-line-chart', component: DottedLineChartComponent },
+  { path: 'pie-chart', component: PieChartComponent }
 ];
 
 @NgModule({
