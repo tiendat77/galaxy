@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
-import { BehaviorSubject, fromEvent } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { TEST_DATA } from './mock';
@@ -16,25 +16,22 @@ import * as d3 from 'd3';
 export class BulletChartComponent implements OnInit, AfterViewInit {
   @ViewChild('bulletContainer') bulletContainer: ElementRef;
 
-  @Input() data;
-  @Input() title: string;
-  @Input() subtitle: string;
+  @Input() data: any[] = [];
 
   chartID = '#BULLET_CHART';
   margin = {top: 5, right: 40, bottom: 20, left: 160};
-  width = 960 - this.margin.left - this.margin.right;
+  width = 800 - this.margin.left - this.margin.right;
   height = 70 - this.margin.top - this.margin.bottom;
 
   domains = ['range 1', 'range 2', 'range 3'];
   rangeColor: string[] = ['#0570b0', '#74a9cf', '#bdc9e1'];
   measureColor = ['#9fa5af', '#666869'];
 
-  debounce: BehaviorSubject<any> = new BehaviorSubject(0);
-
   constructor() { }
 
   ngOnInit(): void {
     this.initStyle();
+    this.initData(TEST_DATA);
 
     fromEvent(window, 'resize').pipe(
       debounceTime(600)
@@ -44,8 +41,6 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.debounce.next(0);
-    this.data = this.initData(TEST_DATA);
     this.draw();
   }
 
@@ -64,7 +59,7 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
       }
     }
 
-    return data;
+    this.data = data;
   }
 
   initStyle() {
@@ -95,15 +90,16 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
     const element = this.bulletContainer.nativeElement;
 
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
-    this.height = element.offsetHeight / this.data.length - 2 * (this.margin.top + this.margin.bottom);
-  }
-
-  draw() {
-    this.initSvg();
+    this.height = Math.floor((element.offsetHeight / this.data.length) * 6 / 7 - this.margin.top - this.margin.bottom);
+    // Crazy math, huh?
 
     d3.select(this.chartID)
       .selectAll('svg')
       .remove();
+  }
+
+  draw() {
+    this.initSvg();
 
     const bullletChart = createBulletChart(d3);
     const chart = bullletChart.bullet()
@@ -116,10 +112,9 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
       .enter()
       .append('svg')
         .attr('class', 'bullet')
-        .style('font-size', '12px')
-        .style('margin-bottom', '10px')
+        .style('font-size', '1.2em')
         .attr('width', this.width + this.margin.left + this.margin.right)
-        .attr('height', this.height + this.margin.top + this.margin.bottom)
+        .attr('height', Math.floor(this.height * 7 / 6 + this.margin.top + this.margin.bottom)) // crazy math, huh?
       .append('g')
         .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
         .call(chart);

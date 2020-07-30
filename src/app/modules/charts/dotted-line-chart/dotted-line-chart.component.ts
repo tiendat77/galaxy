@@ -32,7 +32,7 @@ export class DottedLineChartComponent implements OnInit, AfterViewInit {
     this.initData();
 
     fromEvent(window, 'resize').pipe(
-      debounceTime(1000)
+      debounceTime(500)
     ).subscribe((event) => {
       this.draw();
     });
@@ -189,15 +189,13 @@ export class DottedLineChartComponent implements OnInit, AfterViewInit {
         .attr('x2', xScale(mouseDateSnap))
         .attr('y2', that.height - that.margin.bottom)
         .attr('stroke', '#147F90')
-        .attr('fill', '#A6E8F2')
-      ;
+        .attr('fill', '#A6E8F2');
 
       circle
         .attr('cx', xScale(mouseDateSnap))
         .attr('cy', yScale(mousePopulation))
         .attr('r', '7')
-        .attr('fill', '#147F90')
-      ;
+        .attr('fill', '#147F90');
 
       const isLessThanHalf = xIndex > that.data.length / 2;
       const hoverTextX = isLessThanHalf ? '-0.75em' : '0.75em';

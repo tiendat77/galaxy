@@ -107,8 +107,10 @@ export function createBulletChart(d3) {
         // Compute the tick format.
         var format = tickFormat || x1.tickFormat(6);
 
+        var axis = g.append('g');
+
         // Update the tick groups.
-        var tick = g.selectAll('g.tick')
+        var tick = axis.selectAll('g.tick')
           .data(x1.ticks(6), function(d) {
             return this.textContent || format(d);
           });
