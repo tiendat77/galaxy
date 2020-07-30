@@ -23,13 +23,13 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   @Input() conerRadius = 0;
   @Input() innerRadius = 0;
   @Input() showValueOnChart = false;
-  @Input() labelHeight = 38;
+  @Input() labelHeight = 28;
   @Input() uom = 'pcs';
 
   chartId = '#PIE_CHART';
   width = 500;
   height = 500;
-  margin = { top: 40, bottom: 0, left: 30, right: 30 };
+  margin = { top: 40, bottom: 0, left: 30, right: 20 };
   colors = ['#9B82FA', '#BB00FF', '#5719F8', '#4285F4', '#EA4335', '#34A853', '#FBBC04', '#FA7B17', '#F53BA0', '#A142F4', '#24C1E0' ];
 
   constructor() { }
@@ -148,10 +148,10 @@ export class PieChartComponent implements OnInit, AfterViewInit {
     // Draw legend
     const legendPadding = 1.8;
     const legendHeight = this.data.length * (this.labelHeight * legendPadding);
-    const legendTextWidth = width * 0.5;
+    const legendTextWidth = width * 0.35;
 
     const legend = svg.append('g')
-      .attr('transform', `translate(${width + this.margin.left + this.margin.right}, ${(height - legendHeight) / 2 + this.margin.top})`);
+      .attr('transform', `translate(${width + this.margin.left}, ${(height - legendHeight) / 2})`);
 
     legend.append('g')
       .selectAll('rect')
@@ -172,10 +172,10 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .attr('x', this.labelHeight * legendPadding)
         .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
         .attr('text-anchor', 'start')
-        // .attr('alignment-baseline', 'middle')
         .style('fill', this.textColor)
         .style('font-size', `${this.labelHeight}px`)
-        .text((d: any) => truncateText(d.data.id))
+        .text((d: any) => d.data.id)
+        .each(wrap)
         .append('title')
           .text((d: any) => `${d.data.id}: ${d.data.value} ${this.uom}`);
 
@@ -191,9 +191,15 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .style('fill', '#1E7A82')
         .text((d: any) => d.data.value + ' ' + this.uom);
 
-    function truncateText(text: string) {
-      
-      return '';
+    function wrap() {
+      const self = d3.select(this);
+      let textLength = self.node().getComputedTextLength();
+      let text = self.text();
+      while (textLength > (legendTextWidth) && text.length > 0) {
+          text = text.slice(0, -1);
+          self.text(text + '...');
+          textLength = self.node().getComputedTextLength();
+      }
     }
   }
 
