@@ -1,9 +1,10 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 // Libraries
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export function HttpLoaderFactory(http: HttpClient) {
@@ -27,6 +28,7 @@ import { HeaderComponent } from './header/header.component';
     CommonModule,
     RouterModule,
     HttpClientModule,
+    FlexLayoutModule,
 
     TranslateModule.forRoot({
       loader: {

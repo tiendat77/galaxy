@@ -13,18 +13,23 @@ export const MENU_ITEMS: MenuItem[] = [
     name: 'Charts',
     url: '/chart',
     children: [
-      { name: 'Line Chart', url: '/chart/line-chart' },
-      { name: 'Bar Chart', url: '/chart/bar-chart' },
-      { name: 'Pie Chart', url: '/chart/pie-chart' },
-      { name: 'Bullet Chart', url: '/chart/bullet-chart' },
-      { name: 'Smooth Zoom', url: '/chart/smooth-zoom' },
-      { name: 'Tooltip', url: '/chart/tooltip' },
+      { name: 'Board', url: '/chart/board' },
       { name: 'Line Bar Chart', url: '/chart/line-bar-chart' },
       { name: 'Clock', url: '/chart/clock' },
+      { name: 'Bullet Chart', url: '/chart/bullet-chart' },
+      { name: 'Tooltip', url: '/chart/tooltip' },
     ]
   },
   {
-    name: 'Board',
-    url: '/chart/board'
+    name: 'Effects',
+    url: '/effect',
+    children: [
+      { name: 'Magic Button', url: '/effect/magic-button' },
+      { name: 'Type Writter', url: '/effect/type-writter' }
+    ]
+  },
+  {
+    name: 'Error',
+    url: '/not-found'
   }
 ];

@@ -4,8 +4,6 @@ import { ContainerComponent } from './core/container/container.component';
 import { DashboardComponent } from './core/dashboard/dashboard.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 
-// Components
-
 const routes: Routes = [
   {
     path: '',
@@ -13,7 +11,8 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'chart', loadChildren: () => import('./modules/charts/charts.module').then(m => m.ChartsModule) }
+      { path: 'chart', loadChildren: () => import('./modules/charts/charts.module').then(m => m.ChartsModule) },
+      { path: 'effect', loadChildren: () => import('./modules/effects/effects.module').then(m => m.EffectsModule) }
     ]
   },
   { path: 'not-found', component: NotFoundComponent },
