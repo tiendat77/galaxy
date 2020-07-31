@@ -1,47 +1,54 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { MOCK_DATA } from './mock';
 import * as d3 from 'd3';
 
 @Component({
-  selector: 'app-pie-chart',
+  selector: '[kpiPieChart]',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss']
 })
-export class PieChartComponent implements OnInit, AfterViewInit {
+export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('pieChartContainer') chartContainer: ElementRef;
 
   @Input() data: any[] = [];
-  @Input() title: string;
-  @Input() subtitle: string;
-  @Input() axisCorlor = 'rgba(0, 0, 0, 0.68)';
-  @Input() textColor = 'rgba(0, 0, 0, 0.78)';
+  @Input() axisCorlor = 'rgba(255, 255, 255, 0.68)';
+  @Input() textColor = 'rgba(255, 255, 255, 0.78)';
+  @Input() valueColor = '#05F6FF';
+  @Input() colors = ['#4285F4', '#EA4335', '#34A853', '#FBBC04', '#FA7B17', '#F53BA0', '#A142F4', '#9B82FA', '#BB00FF', '#5719F8' ];
   @Input() arcPadding = 0;
   @Input() conerRadius = 0;
   @Input() innerRadius = 0;
-  @Input() showValueOnChart = false;
   @Input() labelHeight = 28;
-  @Input() uom = 'pcs';
+  @Input() fontSize = '1.3em';
+  @Input() valueUom = 'pcs';
+  @Input() showValueOnChart = false;
 
   chartId = '#PIE_CHART';
   width = 500;
   height = 500;
   margin = { top: 40, bottom: 0, left: 30, right: 20 };
-  colors = ['#9B82FA', '#BB00FF', '#5719F8', '#4285F4', '#EA4335', '#34A853', '#FBBC04', '#FA7B17', '#F53BA0', '#A142F4', '#24C1E0' ];
+  colorScale;
+
+  resizeSub: Subscription;
 
   constructor() { }
 
   ngOnInit(): void {
     this.initData();
 
-    fromEvent(window, 'resize').pipe(
-      debounceTime(1000)
-    ).subscribe((event) => {
+    fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe((event) => {
       this.draw();
     });
+  }
+
+  ngOnDestroy() {
+    if (this.resizeSub) {
+      this.resizeSub.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {
@@ -50,6 +57,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
 
   initData() {
     this.data = MOCK_DATA.slice();
+    this.colorScale = this.initColorScale();
   }
 
   initColorScale() {
@@ -58,32 +66,43 @@ export class PieChartComponent implements OnInit, AfterViewInit {
   }
 
   initSvg() {
-    if (this.chartContainer) {
-      const element = this.chartContainer.nativeElement;
-      this.width = element.offsetWidth - this.margin.right - this.margin.left;
-      this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
-    }
-
-    d3.select(this.chartId)
-      .selectAll('svg')
-      .remove();
-
     const svg = d3.select(this.chartId)
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('viewBox', `0, 0, ${this.width}, ${this.height}`);
 
+    svg.append('defs')
+      .html(`<filter id="pieChartDropshadow" x="-1" y="-3" width="120" height="185" > <feOffset result="offOut" in="SourceAlpha" dx="4" dy="4" /> <feColorMatrix result="matrixOut" in="offOut" type="matrix" values="0.88 0 0 0 0 0 0.85 0 0 0 0 0 0.85 0 0 0 0 0 0.36 0" /> <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="8" /> <feBlend in="SourceGraphic" in2="blurOut" mode="normal" /> </filter>`);
+
     return svg;
   }
 
   draw() {
+    const that = this;
+    d3.select(this.chartId)
+      .selectAll('svg')
+      .remove();
+
+    // if (this.chartContainer) {
+    //   const element = this.chartContainer.nativeElement;
+    //   this.width = element.parentNode.clientWidth;
+    //   this.height = element.parentNode.clientHeight;
+    // }
+
+    if (this.chartContainer) {
+      const element = this.chartContainer.nativeElement;
+      this.width = element.clientWidth;
+      this.height = element.clientHeight;
+
+      this.fontSize = this.width * 1.3 / (600) + 'em';
+    }
+
     const svg = this.initSvg();
 
-    const colorScale = this.initColorScale();
-
-    const width = (this.width - this.margin.left - this.margin.right) / 2;
-    const height = (this.height - this.margin.top - this.margin.bottom);
+    const isHorizontal = getHorizontalDirection();
+    const width = calcWidth(isHorizontal);
+    const height = calcHeight(isHorizontal);
     const radius = Math.min(width, height) / 2;
 
     const arc = d3.arc()
@@ -102,13 +121,16 @@ export class PieChartComponent implements OnInit, AfterViewInit {
     const pieArcs: any = pie(this.data);
 
     // Draw pie
+    const translateX = isHorizontal ? (width / 2) : (width / 2 + this.margin.left);
     svg.append('g')
-        .attr('transform', `translate(${width / 2}, ${height / 2})`)
+        .attr('transform', `translate(${translateX}, ${height / 2})`)
       .selectAll('path')
       .data(pieArcs)
       .join('path')
-        .style('fill', (d: any) => colorScale(d.data.id))
-        .attr('d', arc);
+        .style('fill', (d: any) => this.colorScale(d.data.id))
+        .attr('d', arc)
+        .on('mouseover', onMouseOver)
+        .on('mouseout', onMouseOut);
 
     // Draw value
     if (this.showValueOnChart) {
@@ -117,7 +139,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .selectAll('text')
         .data(pieArcs)
         .join('text')
-          .style('color', this.textColor)
+          .style('fill', this.textColor)
           .attr('transform', (d: any) => `translate(${labelArcs.centroid(d)})`)
           .attr('text-anchor', 'middle');
 
@@ -129,7 +151,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .join('tspan')
           .attr('x', 0)
           .style('font-family', 'sans-serif')
-          .style('font-size', 12)
+          .style('font-size', this.fontSize)
           .style('font-weight', (d, i) => i ? undefined : 'bold')
           .style('fill', '#222')
           .attr('dy', (d, i) => i ? '1.2em' : 0)
@@ -138,11 +160,11 @@ export class PieChartComponent implements OnInit, AfterViewInit {
 
     // Draw seperator line
     svg.append('line')
-      .attr('x1', width)
-      .attr('x2', width)
-      .attr('y1', 10)
-      .attr('y2', height - 10)
-      .style('stroke', 'rgba(0, 0, 0, 0.38)')
+      .attr('x1', isHorizontal ? width : this.labelHeight)
+      .attr('x2', isHorizontal ? width : Math.abs(this.width - this.labelHeight))
+      .attr('y1', isHorizontal ? this.labelHeight : height)
+      .attr('y2', isHorizontal ? Math.abs(this.height - this.labelHeight) : height)
+      .style('stroke', '#474B52')
       .style('stroke-width', 1);
 
     // Draw legend
@@ -150,8 +172,10 @@ export class PieChartComponent implements OnInit, AfterViewInit {
     const legendHeight = this.data.length * (this.labelHeight * legendPadding);
     const legendTextWidth = width * 0.35;
 
+    const legendX = isHorizontal ? (width + this.margin.left) : (this.margin.left);
+    const legendY = isHorizontal ? ((height - legendHeight) / 2) : (height + (height - legendHeight) / 2);
     const legend = svg.append('g')
-      .attr('transform', `translate(${width + this.margin.left}, ${(height - legendHeight) / 2})`);
+      .attr('transform', `translate(${legendX}, ${legendY})`);
 
     legend.append('g')
       .selectAll('rect')
@@ -161,7 +185,7 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .attr('y', (d: any) => this.labelHeight * d.index * legendPadding)
         .attr('width', this.labelHeight)
         .attr('height', this.labelHeight)
-        .attr('fill', (d: any) => colorScale(d.data.id))
+        .attr('fill', (d: any) => this.colorScale(d.data.id))
         .attr('stroke', 'grey')
         .attr('strole-width', '1px');
 
@@ -173,11 +197,11 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
         .attr('text-anchor', 'start')
         .style('fill', this.textColor)
-        .style('font-size', `${this.labelHeight}px`)
+        .style('font-size', this.fontSize)
         .text((d: any) => d.data.id)
         .each(wrap)
         .append('title')
-          .text((d: any) => `${d.data.id}: ${d.data.value} ${this.uom}`);
+          .text((d: any) => `${d.data.id}: ${d.data.value} ${this.valueUom}`);
 
     legend.append('g')
       .selectAll('text')
@@ -187,14 +211,50 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
         .attr('text-anchor', 'end')
         .style('color', this.textColor)
-        .style('font-size', `${this.labelHeight}px`)
-        .style('fill', '#1E7A82')
-        .text((d: any) => d.data.value + ' ' + this.uom);
+        .style('font-size', this.fontSize)
+        .style('fill', this.valueColor)
+        .text((d: any) => d.data.value + ' ' + this.valueUom);
+
+    function getHorizontalDirection(): boolean {
+      if (that.width < 860) {
+        return false;
+
+      } else {
+        return true;
+      }
+    }
+
+    function calcWidth(horizontal?: boolean): number {
+      if (!horizontal) {
+        return (that.width - that.margin.left - that.margin.right);
+      }
+
+      return (that.width - that.margin.left - that.margin.right) / 2;
+    }
+
+    function calcHeight(horizontal?: boolean): number {
+      if (!horizontal) {
+        return (that.height - that.margin.top - that.margin.bottom) / 2;
+      }
+
+      return (that.height - that.margin.top - that.margin.bottom);
+    }
+
+    function onMouseOver() {
+      const self = d3.select(this);
+      self.style('filter', 'url("#pieChartDropshadow")');
+    }
+
+    function onMouseOut() {
+      const self = d3.select(this);
+      self.style('filter', 'none');
+    }
 
     function wrap() {
       const self = d3.select(this);
       let textLength = self.node().getComputedTextLength();
       let text = self.text();
+
       while (textLength > (legendTextWidth) && text.length > 0) {
           text = text.slice(0, -1);
           self.text(text + '...');
@@ -202,5 +262,4 @@ export class PieChartComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
 }

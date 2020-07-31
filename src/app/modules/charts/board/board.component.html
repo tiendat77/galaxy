@@ -2,12 +2,8 @@
   <div style="width: 100%;" fxLayout="column" fxFlex>
     <div fxLayoutAlign="space-between stretch" fxFlex="50">
       <div class="card" fxFlex="50">
-        <app-pie-chart
-            title="Yearly avg overtime hours"
-            subtitle="(Per employee)"
-            [labelHeight]="20"
-            [arcPadding]="0.01">
-        </app-pie-chart>
+        <div kpiPieChart [labelHeight]="20" [arcPadding]="0.01">
+        </div>
       </div>
 
       <div class="card" fxFlex="50">
