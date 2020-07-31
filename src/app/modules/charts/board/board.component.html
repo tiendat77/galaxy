@@ -2,7 +2,7 @@
   <div style="width: 100%;" fxLayout="column" fxFlex>
     <div fxLayoutAlign="space-between stretch" fxFlex="50">
       <div class="card" fxFlex="50">
-        <div kpiPieChart [labelHeight]="20" [arcPadding]="0.01"></div>
+        <div kpiPieChart [arcPadding]="0.01"></div>
       </div>
 
       <div class="card" fxFlex="50">
@@ -12,11 +12,12 @@
 
     <div fxLayoutAlign="space-between stretch" fxFlex="50">
       <div class="card" fxFlex="50">
-        <div kpiBarChart></div>
+        <app-bullet-chart (itemClick)="clickRoiNe($event)">
+        </app-bullet-chart>
       </div>
 
       <div class="card" fxFlex="50">
-        <div kpiBarChart></div>
+        <!-- <div kpiBarChart></div> -->
       </div>
     </div>
   </div>

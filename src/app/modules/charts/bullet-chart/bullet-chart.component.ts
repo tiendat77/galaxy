@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Input, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { TEST_DATA } from './mock';
@@ -13,19 +13,22 @@ import * as d3 from 'd3';
   templateUrl: './bullet-chart.component.html',
   styleUrls: ['./bullet-chart.component.scss']
 })
-export class BulletChartComponent implements OnInit, AfterViewInit {
+export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('bulletContainer') bulletContainer: ElementRef;
 
   @Input() data: any[] = [];
+  @Input() rangeColor: string[] = ['#0570b0', '#74a9cf', '#bdc9e1'];
+  @Input() measureColor = ['#9fa5af', '#666869'];
+  @Output() itemClick: EventEmitter<any> = new EventEmitter();
 
-  chartID = '#BULLET_CHART';
+  chartID = 'BULLET_CHART';
   margin = {top: 5, right: 40, bottom: 20, left: 160};
   width = 800 - this.margin.left - this.margin.right;
   height = 70 - this.margin.top - this.margin.bottom;
 
   domains = ['range 1', 'range 2', 'range 3'];
-  rangeColor: string[] = ['#0570b0', '#74a9cf', '#bdc9e1'];
-  measureColor = ['#9fa5af', '#666869'];
+
+  resizeSub: Subscription;
 
   constructor() { }
 
@@ -33,15 +36,25 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
     this.initStyle();
     this.initData(TEST_DATA);
 
-    fromEvent(window, 'resize').pipe(
-      debounceTime(600)
-    ).subscribe((event) => {
+    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(600)).subscribe((event) => {
       this.draw();
     });
   }
 
+  ngOnDestroy() {
+    if (this.resizeSub) {
+      this.resizeSub.unsubscribe();
+    }
+  }
+
   ngAfterViewInit() {
     this.draw();
+  }
+
+  initID() {
+    const rand = () => Math.floor(1000 + (9990 - 1000) * Math.random());
+
+    return 'BULLET_CHART_' + rand() + '_' + rand();
   }
 
   initData(data: any[]) {
@@ -87,7 +100,7 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
   }
 
   initSvg() {
-    d3.select(this.chartID)
+    d3.select('#' + this.chartID)
       .selectAll('svg')
       .remove();
 
@@ -105,7 +118,7 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
       .width(this.width)
       .height(this.height);
 
-    const svg = d3.select(this.chartID)
+    const svg = d3.select('#' + this.chartID)
       .selectAll('svg')
       .data(this.data)
       .enter()
@@ -116,7 +129,10 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
         .attr('height', Math.floor(this.height * 7 / 6 + this.margin.top + this.margin.bottom)) // crazy math, huh?
       .append('g')
         .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-        .call(chart);
+        .call(chart)
+        .on('click', (d, i) => {
+          this.itemClick.next(d);
+        });
 
     const title = svg.append('g')
         .style('text-anchor', 'end')
@@ -136,8 +152,8 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
         .text((d: any) => d.subtitle);
   }
 
-  initLegend() {
-    const svg = d3.select(this.chartID).append('svg')
+  initLegend() { // TODO
+    const svg = d3.select('#' + this.chartID).append('svg')
       .attr('width', this.width + this.margin.left + this.margin.right)
       .attr('height', 125);
 

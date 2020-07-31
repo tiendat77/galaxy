@@ -22,7 +22,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() arcPadding = 0;
   @Input() conerRadius = 0;
   @Input() innerRadius = 0;
-  @Input() labelHeight = 28;
+  @Input() labelHeight = 20;
   @Input() fontSize = '1.3em';
   @Input() valueUom = 'pcs';
   @Input() showValueOnChart = false;
@@ -86,7 +86,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.width = element.clientWidth;
       // this.height = element.clientHeight;
 
-      this.fontSize = this.width * 1.3 / (600) + 'em';
+      this.fontSize = this.width * 0.9 / (600) + 'em';
     }
 
     const svg = d3.select('#' + this.chartId)
@@ -127,8 +127,10 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Draw pie
     const translateX = isHorizontal ? (width / 2) : (width / 2 + this.margin.left);
+    const translateY = isHorizontal ? (height / 2 + this.margin.top) : (height / 2);
+
     svg.append('g')
-        .attr('transform', `translate(${translateX}, ${height / 2})`)
+        .attr('transform', `translate(${translateX}, ${translateY})`)
       .selectAll('path')
       .data(pieArcs)
       .join('path')
@@ -164,13 +166,15 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // Draw seperator line
-    svg.append('line')
+    if (false) {
+      svg.append('line')
       .attr('x1', isHorizontal ? width : this.labelHeight)
       .attr('x2', isHorizontal ? width : Math.abs(this.width - this.labelHeight))
       .attr('y1', isHorizontal ? this.labelHeight : height)
       .attr('y2', isHorizontal ? Math.abs(this.height - this.labelHeight) : height)
       .style('stroke', '#474B52')
       .style('stroke-width', 1);
+    }
 
     // Draw legend
     const legendPadding = 1.8;

@@ -12,4 +12,8 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clickRoiNe(event) {
+    console.log('click roi ne', event);
+  }
+
 }
