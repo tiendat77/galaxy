@@ -26,14 +26,16 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() showGradient = true;
   @Input() showTooltip = false;
 
-  chartID = '#LINE_CHART';
+  chartID = 'LINE_CHART';
   margin = { top: 20, right: 16, bottom: 30, left: 40 };
   width = 800 - this.margin.left - this.margin.right;
   height = 600 - this.margin.top - this.margin.bottom;
 
   resizeSub: Subscription;
 
-  constructor() { }
+  constructor() {
+    this.chartID = this.initID();
+  }
 
   ngOnInit(): void {
     this.initData();
@@ -52,20 +54,30 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
     this.draw();
   }
 
+  initID() {
+    const rand = () => Math.floor(1000 + (9999 - 1000) * Math.random());
+
+    return 'LINE_CHART_' + rand() + '_' + rand();
+  }
+
   initData() {
     this.data = MOCK_DATA.map(({date, value}) => ({ date: d3.timeParse('%Y-%m-%d')(date), value: +value }));
   }
 
   initSvg() {
-    d3.select(this.chartID)
+    d3.select('#' + this.chartID)
       .select('svg')
       .remove();
 
     const element = this.chartContainer.nativeElement;
+
+    // this.width = element.offsetWidth;
+    // this.height = element.offsetHeight;
+
     this.width = element.parentNode.clientWidth;
     this.height = element.parentNode.clientHeight;
 
-    const svg = d3.select(this.chartID)
+    const svg = d3.select('#' + this.chartID)
       .append('svg')
         .attr('width', this.width)
         .attr('height', this.height);
@@ -115,12 +127,12 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const line = d3.line()
-      .curve(d3.curveCatmullRom.alpha(0.5))
+      .curve(d3.curveCatmullRom.alpha(0.25))
       .x((d: any) => xScale(d.date))
       .y((d: any) => yScale(d.value));
 
     const area = d3.area()
-      .curve(d3.curveCatmullRom.alpha(0.5))
+      .curve(d3.curveCatmullRom.alpha(0.25))
       .x((d: any) => xScale(d.date))
       .y0(yScale(d3.min(this.data, (d: any) => d.value)))
       .y1((d: any) => yScale(d.value));

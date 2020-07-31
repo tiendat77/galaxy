@@ -1,58 +1,67 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { MOCK_DATA, MOCK_OLE } from './mock';
+import { MOCK_OLE } from './mock';
 import * as d3 from 'd3';
 
 @Component({
-  selector: 'app-bar-chart',
+  selector: '[kpiBarChart]',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss']
 })
-export class BarChartComponent implements OnInit, AfterViewInit {
+export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('barChartContainer') chartContainer: ElementRef;
 
   @Input() data: any[] = [];
-  @Input() title: string;
-  @Input() subtitle: string;
-  @Input() yLabel = '';
-  @Input() showValueOnBar = false;
-  @Input() showYAxis = true;
+  @Input() showValueOnBar = true;
   @Input() showXAxis = true;
-  @Input() barColor = 'steelblue';
-  @Input() axisColor = 'rgba(0, 0, 0, 0.68)';
+  @Input() showYAxis = true;
+  @Input() showXLabel = true;
+  @Input() showYLabel = false;
+  @Input() showGradient = true;
+  @Input() yLabel = '';
+  @Input() barColor = '#3195f5';
+  @Input() axisColor = 'rgba(250, 250, 250, 0.4)';
+  @Input() axisLabelColor = 'rgba(255, 255, 255, 0.68)';
+  @Input() gradientColors = ['rgba(49,149,245,0.2)', 'rgba(49,149,245,0.04)', 'transparent'];
+  @Input() fontSize = '1.3em';
+  @Input() valueUom = '%';
 
-  chartID = '#BAR_CHART';
-  margin = { top: 10, right: 30, bottom: 30, left: 40 };
-  width = 460 - this.margin.left - this.margin.right;
-  height = 400 - this.margin.top - this.margin.bottom;
+  chartID = 'BAR_CHART';
+  margin = { top: 20, right: 20, bottom: 30, left: 40 };
+  width = 460;
+  height = 400;
 
-  scale = {
-    xScale: undefined,
-    yScale: undefined,
-  };
+  resizeSub: Subscription;
 
-  axis = {
-    xAxis: undefined,
-    yAxis: undefined
-  };
-
-  constructor() { }
+  constructor() {
+    this.chartID = this.initID();
+  }
 
   ngOnInit(): void {
     this.initData();
 
-    fromEvent(window, 'resize').pipe(
-      debounceTime(1000)
-    ).subscribe((event) => {
+    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe((event) => {
       this.draw();
     });
   }
 
+  ngOnDestroy() {
+    if (this.resizeSub) {
+      this.resizeSub.unsubscribe();
+    }
+  }
+
   ngAfterViewInit() {
     this.draw();
+  }
+
+  initID() {
+    const rand = () => Math.floor(1000 + (9990 - 1000) * Math.random());
+
+    return 'BAR_CHART_' + rand() + '_' + rand();
   }
 
   initData() {
@@ -60,24 +69,40 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   }
 
   initSvg() {
-    d3.select(this.chartID)
+    d3.select('#' + this.chartID)
       .selectAll('svg')
       .remove();
 
-    const svg = d3.select(this.chartID)
+    if (this.chartContainer) {
+      const element = this.chartContainer.nativeElement;
+
+      // this.width = element.offsetWidth;
+      // this.height = element.offsetHeight;
+
+      this.width = element.parentNode.clientWidth;
+      this.height = element.parentNode.clientHeight;
+
+      this.fontSize = this.width * 1.1 / (600) + 'em';
+    }
+
+    const svg = d3.select('#' + this.chartID)
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height);
+
+    svg.append('defs')
+      .html(`
+        <linearGradient id="barChartGradient" gradientTransform="rotate(90)">
+          <stop offset="0%" stop-color="${this.gradientColors[0]}"/>
+          <stop offset="45%" stop-color="${this.gradientColors[1]}"/>
+          <stop offset="70%" stop-color="${this.gradientColors[2]}"/>
+        </linearGradient>
+      `);
 
     return svg;
   }
 
   draw() {
-    const element = this.chartContainer.nativeElement;
-
-    this.width = element.offsetWidth - this.margin.left - this.margin.right;
-    this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
-
     const svg = this.initSvg();
 
     const xScale = d3.scaleBand()
@@ -99,18 +124,18 @@ export class BarChartComponent implements OnInit, AfterViewInit {
         .attr('stroke', this.axisColor)
       )
       .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisColor)
+        .attr('fill', this.axisLabelColor)
+        .attr('font-size', this.fontSize)
       );
 
     const yAxis = g => g
       .attr('transform', `translate(${this.margin.left}, 0)`)
       .call(d3.axisLeft(yScale))
       .call(axis => axis.select('.domain').remove())
-      .call(axis => axis.selectAll('line')
-        .attr('stroke', this.axisColor)
-      )
+      .call(axis => axis.selectAll('line').remove())
       .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisColor)
+        .attr('fill', this.axisLabelColor)
+        .attr('font-size', this.fontSize)
       )
       .call(axis => axis.append('text')
         .attr('x', 20)
@@ -120,16 +145,20 @@ export class BarChartComponent implements OnInit, AfterViewInit {
         .text(this.yLabel)
       );
 
+    // Draw bar
     svg.append('g')
-        .attr('fill', this.barColor)
+        .attr('fill', this.showGradient ? 'url(#barChartGradient)' : this.barColor)
       .selectAll('rect')
       .data(this.data)
       .join('rect')
         .attr('x', (d: any) => xScale(d.id))
         .attr('y', (d: any) => yScale(d.value))
         .attr('width', xScale.bandwidth())
-        .attr('height', (d: any) => yScale(0) - yScale(d.value));
+        .attr('height', (d: any) => yScale(0) - yScale(d.value))
+        .attr('stroke', this.barColor)
+        .attr('stroke-width', 2);
 
+    // Draw title
     svg.append('g')
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
@@ -143,21 +172,23 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       .append('title')
         .text((d: any) => d.value);
 
+    // Draw value on top of bar
     if (this.showValueOnBar) {
       svg.append('g')
-          .attr('fill', this.axisColor)
+          .attr('fill', this.axisLabelColor)
           .attr('text-anchor', 'middle')
-          .attr('font-size', '0.8em')
         .selectAll('text')
         .data(this.data)
         .join('text')
+          .attr('font-size', this.fontSize)
           .attr('x', (d: any) => xScale(d.id))
           .attr('y', (d: any) => yScale(d.value))
           .attr('dx', xScale.bandwidth() / 2)
           .attr('dy', -8)
-          .text((d: any) => d.value + '%');
+          .text((d: any) => d.value + this.valueUom);
     }
 
+    // Draw axises
     if (this.showXAxis) {
       svg.append('g').call(xAxis);
     }

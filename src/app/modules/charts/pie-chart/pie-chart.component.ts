@@ -27,7 +27,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() valueUom = 'pcs';
   @Input() showValueOnChart = false;
 
-  chartId = '#PIE_CHART';
+  chartId = 'PIE_CHART';
   width = 500;
   height = 500;
   margin = { top: 40, bottom: 0, left: 30, right: 20 };
@@ -35,12 +35,14 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
   resizeSub: Subscription;
 
-  constructor() { }
+  constructor() {
+    this.chartId = this.initID();
+  }
 
   ngOnInit(): void {
     this.initData();
 
-    fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe((event) => {
+    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe((event) => {
       this.draw();
     });
   }
@@ -55,6 +57,12 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
     this.draw();
   }
 
+  initID() {
+    const rand = () => Math.floor(1000 + (9999 - 1000) * Math.random());
+
+    return 'PIE_CHART_' + rand() + '_' + rand();
+  }
+
   initData() {
     this.data = MOCK_DATA.slice();
     this.colorScale = this.initColorScale();
@@ -66,7 +74,22 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   initSvg() {
-    const svg = d3.select(this.chartId)
+    d3.select('#' + this.chartId)
+      .selectAll('svg')
+      .remove();
+
+    if (this.chartContainer) {
+      const element = this.chartContainer.nativeElement;
+      this.width = element.parentNode.clientWidth;
+      this.height = element.parentNode.clientHeight;
+
+      // this.width = element.clientWidth;
+      // this.height = element.clientHeight;
+
+      this.fontSize = this.width * 1.3 / (600) + 'em';
+    }
+
+    const svg = d3.select('#' + this.chartId)
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
@@ -80,24 +103,6 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
   draw() {
     const that = this;
-    d3.select(this.chartId)
-      .selectAll('svg')
-      .remove();
-
-    // if (this.chartContainer) {
-    //   const element = this.chartContainer.nativeElement;
-    //   this.width = element.parentNode.clientWidth;
-    //   this.height = element.parentNode.clientHeight;
-    // }
-
-    if (this.chartContainer) {
-      const element = this.chartContainer.nativeElement;
-      this.width = element.clientWidth;
-      this.height = element.clientHeight;
-
-      this.fontSize = this.width * 1.3 / (600) + 'em';
-    }
-
     const svg = this.initSvg();
 
     const isHorizontal = getHorizontalDirection();
