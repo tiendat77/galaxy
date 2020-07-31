@@ -7,9 +7,7 @@ import { ClockComponent } from './clock/clock.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
-import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
 import { BoardComponent } from './board/board.component';
-import { DottedLineChartComponent } from './dotted-line-chart/dotted-line-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 const routes: Routes = [
@@ -22,8 +20,6 @@ const routes: Routes = [
   { path: 'tooltip', component: TooltipComponent },
   { path: 'line-bar-chart', component: LineBarChartComponent },
   { path: 'bullet-chart', component: BulletChartComponent },
-  { path: 'dashed-line-chart', component: DashedLineChartComponent },
-  { path: 'dotted-line-chart', component: DottedLineChartComponent },
   { path: 'pie-chart', component: PieChartComponent }
 ];
 

@@ -12,9 +12,7 @@ import { SmoothZoomComponent } from './smooth-zoom/smooth-zoom.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component';
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
-import { DashedLineChartComponent } from './dashed-line-chart/dashed-line-chart.component';
 import { BoardComponent } from './board/board.component';
-import { DottedLineChartComponent } from './dotted-line-chart/dotted-line-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 
@@ -27,9 +25,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     TooltipComponent,
     LineBarChartComponent,
     BulletChartComponent,
-    DashedLineChartComponent,
     BoardComponent,
-    DottedLineChartComponent,
     PieChartComponent
   ],
   imports: [

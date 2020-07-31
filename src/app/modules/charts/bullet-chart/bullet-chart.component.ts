@@ -87,15 +87,14 @@ export class BulletChartComponent implements OnInit, AfterViewInit {
   }
 
   initSvg() {
+    d3.select(this.chartID)
+      .selectAll('svg')
+      .remove();
+
     const element = this.bulletContainer.nativeElement;
 
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = Math.floor((element.offsetHeight / this.data.length) * 6 / 7 - this.margin.top - this.margin.bottom);
-    // Crazy math, huh?
-
-    d3.select(this.chartID)
-      .selectAll('svg')
-      .remove();
   }
 
   draw() {
