@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: calc(100vh - 64px);
+
+  .terminal {
+    width: 500px;
+    height: 200px;
+    background: #1d1e22;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    place-content: stretch center;
+    box-sizing: border-box;
+    max-width: 100%;
+
+    header {
+      display: grid;
+      align-items: center;
+      grid-template-columns: auto 80px;
+      height: 28px;
+      border-bottom: 1px solid rgba(176, 176, 176, 0.12);
+
+      .title {
+        font-size: 16px;
+        font-family: monospace;
+        color: #fff;
+        padding-left: 8px;
+      }
+
+      .dot-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin-right: 8px;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .2);
+        box-sizing: border-box;
+        background: #fff;
+
+        &:hover {
+          border: 1px solid rgba(#000, .05);
+          box-shadow: 1px 1px 2px rgba(#fff, .2);
+          transition: all 250ms linear;
+        }
+
+        &:nth-child(1) {
+          background: #ff6057;
+        }
+
+        &:nth-child(2) {
+          background: #ffc22e;
+        }
+
+        &:nth-child(3) {
+          background: #28ca40;
+        }
+      }
+    }
+
+    .code {
+      flex: 1 1 1e-09px;
+      box-sizing: border-box;
+      font-size: 16px;
+      font-family: monospace;
+      letter-spacing: .1em;
+      color: #fff;
+      margin: 8px;
+
+      div {
+        margin-bottom: 6px;
+      }
+
+      p::before {
+        content: '>';
+        padding-right: 8px;
+        color: #83ff93;
+      }
+
+      .typewriter {
+        p {
+          overflow: hidden;
+          margin: 0;
+          border-right: .15em solid whitesmoke;
+          white-space: nowrap;
+          text-align: start;
+          animation: typing 4s steps(44) 0s forwards, blink-caret 1000ms steps(44) infinite normal;
+        }
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+
+        to {
+          width: 420px;
+        }
+      }
+
+      @keyframes blink-caret {
+        0% {
+          border-color: transparent;
+        }
+
+        100% {
+          border-color: whitesmoke
+        }
+      }
+    }
+  }
+}
