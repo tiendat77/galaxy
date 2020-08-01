@@ -1,11 +1,13 @@
 .container {
-  background: #bdbdbd;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  background: url('/assets/images/waves.svg') #eaeaea8a;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   .limiter {
     background: #fff;
@@ -14,7 +16,7 @@
     height: 70%;
     max-height: 70%;
     margin: auto;
-    box-shadow: 10px 10px 17px 0px rgba(0,0,0,0.2);
+    box-shadow: 10px 10px 17px 0px rgba(0, 0, 0, 0.2);
     flex: 1 1 1e-09px;
     box-sizing: border-box;
     flex-direction: row;
@@ -45,26 +47,8 @@
     align-items: flex-start;
     place-content: flex-start center;
     max-width: 50%;
-    margin-left: 8px;
-
-    .title {
-      color: #43B4BA;
-      font-family: 'Recursive', sans-serif;
-      font-size: 7em;
-      font-weight: 850;
-      margin-bottom: 16px;
-    }
-
-    .text {
-      color: rgba(0, 0, 0, 0.68);
-      font-family: 'Indie Flower', cursive;
-      font-size: 1.2em;
-      margin-bottom: 8px;
-
-      &:nth-last-child(2) {
-        margin-bottom: 32px;
-      }
-    }
+    max-height: 100%;
+    overflow: hidden;
 
     button {
       color: #fff;
@@ -79,7 +63,8 @@
       width: 180px;
       outline: none;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         box-shadow: 0 0.5em 0.5em -0.4em rgba(0, 0, 0, 0.68);
         transform: translateY(-0.25em);
       }
@@ -98,6 +83,82 @@
         background-size: 100%;
         transition: background 0s;
       }
+    }
+  }
+
+  .title {
+    color: #43B4BA;
+    font-family: 'Recursive', sans-serif;
+    font-size: 7em;
+    font-weight: 850;
+    margin-bottom: 16px;
+  }
+
+  .text {
+    color: rgba(0, 0, 0, 0.68);
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+
+    &:nth-last-child(2) {
+      margin-bottom: 32px;
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    .right {
+      margin-right: 8px !important;
+    }
+
+    .title {
+      font-size: 5em !important;
+    }
+
+    .text {
+      font-size: 1.1em !important;
+    }
+
+    button {
+      font-size: 1.1em !important;
+      width: 138px !important;
+    }
+  }
+
+  @media only screen and (max-width: 1080px) {
+    .right {
+      margin-right: 8px;
+    }
+
+    .title {
+      font-size: 7em;
+    }
+
+    .text {
+      font-size: 1.2em;
+    }
+  }
+
+  @media only screen and (min-width: 1280px) {
+    .right {
+      margin-left: 32px;
+    }
+  }
+
+  @media only screen and (min-width: 1400px) {
+    .right {
+      margin-right: 64px;
+    }
+
+    .title {
+      font-size: 9em;
+    }
+
+    .text {
+      font-size: 1.6em;
+    }
+
+    button {
+      font-size: 1.6em;
     }
   }
 }
