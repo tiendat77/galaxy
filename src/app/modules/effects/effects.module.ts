@@ -2,14 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EffectsRoutingModule } from './effects-routing.module';
-import { TypeWritterComponent } from './type-writter/type-writter.component';
 import { MagicButtonComponent } from './magic-button/magic-button.component';
-
+import { TypeWriterComponent } from './type-writer/type-writer.component';
 
 @NgModule({
   declarations: [
-    TypeWritterComponent,
-    MagicButtonComponent
+    MagicButtonComponent,
+    TypeWriterComponent
   ],
   imports: [
     CommonModule,

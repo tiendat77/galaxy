@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypeWritterComponent } from './type-writter.component';
+import { TypeWriterComponent } from './type-writer.component';
 
-describe('TypeWritterComponent', () => {
-  let component: TypeWritterComponent;
-  let fixture: ComponentFixture<TypeWritterComponent>;
+describe('TypeWriterComponent', () => {
+  let component: TypeWriterComponent;
+  let fixture: ComponentFixture<TypeWriterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TypeWritterComponent ]
+      declarations: [ TypeWriterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TypeWritterComponent);
+    fixture = TestBed.createComponent(TypeWriterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -25,7 +25,7 @@ export const MENU_ITEMS: MenuItem[] = [
     url: '/effect',
     children: [
       { name: 'Magic Button', url: '/effect/magic-button' },
-      { name: 'Type Writter', url: '/effect/type-writter' }
+      { name: 'Type Writer', url: '/effect/type-writer' }
     ]
   },
   {
