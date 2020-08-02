@@ -19,10 +19,10 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() textColor = 'rgba(255, 255, 255, 0.78)';
   @Input() valueColor = '#05F6FF';
   @Input() colors = ['#4285F4', '#EA4335', '#34A853', '#FBBC04', '#FA7B17', '#F53BA0', '#A142F4', '#9B82FA', '#BB00FF', '#5719F8' ];
-  @Input() arcPadding = 0;
+  @Input() arcPadding = 0.05;
   @Input() conerRadius = 0;
   @Input() innerRadius = 0;
-  @Input() labelHeight = 20;
+  @Input() labelHeight = 15;
   @Input() fontSize = '1.3em';
   @Input() valueUom = 'pcs';
   @Input() showValueOnChart = false;
@@ -32,6 +32,8 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   height = 500;
   margin = { top: 40, bottom: 0, left: 30, right: 20 };
   colorScale;
+
+  isPieHover = false;
 
   resizeSub: Subscription;
 
@@ -126,8 +128,8 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
     const pieArcs: any = pie(this.data);
 
     // Draw pie
-    const translateX = isHorizontal ? (width / 2) : (width / 2 + this.margin.left);
-    const translateY = isHorizontal ? (height / 2 + this.margin.top) : (height / 2);
+    const translateX = isHorizontal ? (this.width / 4) : (width / 2 + this.margin.left);
+    const translateY = isHorizontal ? (this.height / 2) : (height / 2);
 
     svg.append('g')
         .attr('transform', `translate(${translateX}, ${translateY})`)
@@ -135,6 +137,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
       .data(pieArcs)
       .join('path')
         .style('fill', (d: any) => this.colorScale(d.data.id))
+        .attr('class', 'arc')
         .attr('d', arc)
         .on('mouseover', onMouseOver)
         .on('mouseout', onMouseOut);
@@ -178,18 +181,17 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Draw legend
     const legendPadding = 1.8;
-    const legendHeight = this.data.length * (this.labelHeight * legendPadding);
     const legendTextWidth = width * 0.35;
 
-    const legendX = isHorizontal ? (width + this.margin.left) : (this.margin.left);
-    const legendY = isHorizontal ? ((height - legendHeight) / 2) : (height + (height - legendHeight) / 2);
-    const legend = svg.append('g')
-      .attr('transform', `translate(${legendX}, ${legendY})`);
+    const legendGroup = svg.append('g');
 
-    legend.append('g')
-      .selectAll('rect')
+    const legend = legendGroup.selectAll('g')
       .data(pieArcs)
-      .join('rect')
+      .join('g')
+      .attr('id', (d, i) => `legend${i}`)
+      .attr('class', 'legend');
+
+    legend.append('rect')
         .attr('x', 0)
         .attr('y', (d: any) => this.labelHeight * d.index * legendPadding)
         .attr('width', this.labelHeight)
@@ -198,34 +200,35 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
         .attr('stroke', 'grey')
         .attr('strole-width', '1px');
 
-    legend.append('g')
-      .selectAll('text')
-      .data(pieArcs)
-      .join('text')
-        .attr('x', this.labelHeight * legendPadding)
-        .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
-        .attr('text-anchor', 'start')
-        .style('fill', this.textColor)
-        .style('font-size', this.fontSize)
-        .text((d: any) => d.data.id)
-        .each(wrap)
-        .append('title')
-          .text((d: any) => `${d.data.id}: ${d.data.value} ${this.valueUom}`);
+    legend.append('text')
+      .attr('x', this.labelHeight * legendPadding)
+      .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
+      .attr('text-anchor', 'start')
+      .style('fill', this.textColor)
+      .style('font-size', this.fontSize)
+      .text((d: any) => d.data.id)
+      .each(wrap)
+      .append('title')
+        .text((d: any) => `${d.data.id}: ${d.data.value} ${this.valueUom}`);
 
-    legend.append('g')
-      .selectAll('text')
-      .data(pieArcs)
-      .join('text')
-        .attr('x', width - this.margin.right)
-        .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
-        .attr('text-anchor', 'end')
-        .style('color', this.textColor)
-        .style('font-size', this.fontSize)
-        .style('fill', this.valueColor)
-        .text((d: any) => d.data.value + ' ' + this.valueUom);
+    legend.append('text')
+      .attr('x', width - this.margin.right)
+      .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
+      .attr('text-anchor', 'end')
+      .style('color', this.textColor)
+      .style('font-size', this.fontSize)
+      .style('fill', this.valueColor)
+      .text((d: any) => d.data.value + ' ' + this.valueUom);
+
+    legendGroup.call(g => {
+      const legendHeight = g.node().getBBox().height;
+      const legendX = isHorizontal ? (width + that.margin.left) : (that.margin.left);
+      const legendY = isHorizontal ? ((that.height - legendHeight) / 2) : (height + (height - legendHeight) / 2);
+      g.attr('transform', `translate(${legendX}, ${legendY})`);
+    });
 
     function getHorizontalDirection(): boolean {
-      if (that.width < 860) {
+      if (that.width < 550) {
         return false;
 
       } else {
@@ -249,14 +252,30 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
       return (that.height - that.margin.top - that.margin.bottom);
     }
 
-    function onMouseOver() {
+    function onMouseOver(d, i) {
+      that.isPieHover = true;
       const self = d3.select(this);
       self.style('filter', 'url("#pieChartDropshadow")');
+
+      svg.selectAll('.arc').style('opacity', 0.1);
+      svg.selectAll('.legend').style('opacity', 0.1);
+
+      svg.select(`#legend${i}`).style('opacity', 1);
+      self.style('opacity', 1);
     }
 
     function onMouseOut() {
       const self = d3.select(this);
       self.style('filter', 'none');
+      that.isPieHover = false;
+
+
+      setTimeout(() => {
+        if (!that.isPieHover) {
+          svg.selectAll('.arc').style('opacity', 1);
+          svg.selectAll('.legend').style('opacity', 1);
+        }
+      }, 500);
     }
 
     function wrap() {
