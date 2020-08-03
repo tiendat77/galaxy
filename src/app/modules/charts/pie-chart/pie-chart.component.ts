@@ -76,6 +76,8 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   initSvg() {
+    const that = this;
+
     d3.select('#' + this.chartId)
       .selectAll('svg')
       .remove();
@@ -88,7 +90,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
       this.width = element.clientWidth;
       this.height = element.clientHeight;
 
-      this.fontSize = this.width * 0.9 / (600) + 'em';
+      this.fontSize = calcFontsize();
     }
 
     const svg = d3.select('#' + this.chartId)
@@ -99,6 +101,18 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     svg.append('defs')
       .html(`<filter id="pieChartDropshadow" x="-1" y="-3" width="120" height="185" > <feOffset result="offOut" in="SourceAlpha" dx="4" dy="4" /> <feColorMatrix result="matrixOut" in="offOut" type="matrix" values="0.88 0 0 0 0 0 0.85 0 0 0 0 0 0.85 0 0 0 0 0 0.36 0" /> <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="8" /> <feBlend in="SourceGraphic" in2="blurOut" mode="normal" /> </filter>`);
+
+    function calcFontsize() {
+      if (that.width > 870) {
+        return '1.5em';
+      }
+
+      if (that.width < 530) {
+        return '0.8em';
+      }
+
+      return that.width * 0.9 / (600) + 'em';
+    }
 
     return svg;
   }
@@ -181,7 +195,6 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Draw legend
     const legendPadding = calcPadding(isHorizontal);
-    console.log({legendPadding});
     const legendTextWidth = width * 0.35;
 
     const legendGroup = svg.append('g');
@@ -255,8 +268,12 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     function calcPadding(horizontal?: boolean) {
       if (horizontal) {
+        if (that.width > 1000) {
+          return 2.0;
+        }
+
         if (that.width > 850) {
-          return 2.2;
+          return 1.9;
         }
 
         if (that.width > 800) {
@@ -271,7 +288,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
         return 2;
       }
 
-      return that.height * 1.5 / 400;
+      return that.height * 1.5 / 350;
     }
 
     function onMouseOver(d, i) {
