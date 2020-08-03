@@ -7,7 +7,7 @@ import { MOCK_DATA } from './mock';
 import * as d3 from 'd3';
 
 @Component({
-  selector: '[kpiLineChart]',
+  selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.scss']
 })
@@ -24,7 +24,7 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() showXAxisLabel = true;
   @Input() showDot = false;
   @Input() showGradient = true;
-  @Input() showTooltip = false;
+  @Input() showTooltip = true;
 
   chartID = 'LINE_CHART';
   margin = { top: 20, right: 16, bottom: 30, left: 40 };
@@ -71,11 +71,11 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const element = this.chartContainer.nativeElement;
 
-    // this.width = element.offsetWidth;
-    // this.height = element.offsetHeight;
+    this.width = element.offsetWidth;
+    this.height = element.offsetHeight;
 
-    this.width = element.parentNode.clientWidth;
-    this.height = element.parentNode.clientHeight;
+    // this.width = element.parentNode.clientWidth;
+    // this.height = element.parentNode.clientHeight;
 
     const svg = d3.select('#' + this.chartID)
       .append('svg')
@@ -86,6 +86,7 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   draw() {
+    const that = this;
     const svg = this.initSvg();
 
     const xScale = d3.scaleTime()
@@ -178,6 +179,46 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     svg.append('g').call(xAxis);
     svg.append('g').call(yAxis);
+
+    // TOOLTIP
+    const bisect = d3.bisector((d: any) => d.date).left;
+
+    function mouseX(mx) {
+      const date = xScale.invert(mx);
+      const index = bisect(that.data, date, 1);
+      const a = that.data[index - 1];
+      const b = that.data[index];
+      return b && (date.getTime() - a.date.getTime() > b.date.getTime() - date.getTime()) ? b : a;
+    }
+
+    const tooltip = svg.append('g')
+        .attr('id', 'lineChartTooltip')
+        .style('pointer-events', 'none')
+        .style('visibility', 'hidden');
+
+    if (this.showTooltip) {
+      tooltip.append('circle')
+        .attr('cx', 0)
+        .attr('cy', 0)
+        .attr('r', '7')
+        .attr('fill', '#147F90');
+
+      svg.on('mousemove', onMouseMove);
+      svg.on('mouseout', onMouseOut);
+    }
+
+    function onMouseMove() {
+      const { date, value } = mouseX(d3.mouse(this)[0]);
+
+      tooltip
+        .style('visibility', 'visible')
+        .attr('transform', `translate(${xScale(date)},${yScale(value)})`);
+    }
+
+    function onMouseOut() {
+      tooltip.style('visibility', 'hidden')
+        .attr('transform', 'translate(0, 0');
+    }
   }
 
   drawTooltip(svg, xScale, yScale) {
