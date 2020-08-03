@@ -14,6 +14,10 @@ export function createBulletChart(d3) {
     let width = 380;
     let height = 30;
     let tickFormat = d3.format(',.1f');
+    let axisColor = '#rgba(0, 0, 0, 0.68)';
+    let rangeTitles = ['Range 0', 'Range 1', 'Range 2'];
+    let measureTitles = ['Measure 1', 'Measure 2', 'Measure 3'];
+    let markerTitles = ['Marker'];
 
     // For each small multiple…
     function bullet(g) {
@@ -41,11 +45,14 @@ export function createBulletChart(d3) {
           w1 = bulletWidth(x1);
 
         // Update the range rects.
-        var range = g.selectAll('rect.range')
+        var chart = g.append('g');
+
+        var range = chart.selectAll('rect.range')
           .data(rangez);
 
-        range.enter().append('rect')
-          .attr('class', function(d, i) { return 'range s' + i; }) // color range 0
+        const rectRange = range.enter().append('rect')
+
+        rectRange.attr('class', function(d, i) { return 'range s' + i; }) // color range 0
           .attr('width', w0)
           .attr('height', height)
           .attr('x', reverse ? x0 : 0)
@@ -54,6 +61,9 @@ export function createBulletChart(d3) {
           .attr('width', w1)
           .attr('x', reverse ? x1 : 0);
 
+        rectRange.append('title')
+          .text((d, i) => rangeTitles[i]);
+
         range.transition()
           .duration(duration)
           .attr('x', reverse ? x1 : 0)
@@ -61,11 +71,12 @@ export function createBulletChart(d3) {
           .attr('height', height);
 
         // Update the measure rects.
-        var measure = g.selectAll('rect.measure')
+        var measure = chart.selectAll('rect.measure')
           .data(measurez);
 
-        measure.enter().append('rect')
-          .attr('class', function(d, i) { return 'measure s' + i; })
+        var rectMeasure = measure.enter().append('rect');
+
+        rectMeasure.attr('class', function(d, i) { return 'measure s' + i; })
           .attr('width', w0)
           .attr('height', height / 3)
           .attr('x', reverse ? x0 : 0)
@@ -75,6 +86,9 @@ export function createBulletChart(d3) {
           .attr('width', w1)
           .attr('x', reverse ? x1 : 0);
 
+        rectMeasure.append('title')
+          .text((d, i) => measureTitles[i]);
+
         measure.transition()
           .duration(duration)
           .attr('width', w1)
@@ -83,11 +97,12 @@ export function createBulletChart(d3) {
           .attr('y', height / 3);
 
         // Update the marker lines.
-        var marker = g.selectAll('line.marker')
+        var marker = chart.selectAll('line.marker')
           .data(markerz);
 
-        marker.enter().append('line')
-          .attr('class', 'marker')
+        const lineMarker = marker.enter().append('line');
+
+        lineMarker.attr('class', 'marker')
           .attr('x1', x0)
           .attr('x2', x0)
           .attr('y1', height / 6)
@@ -96,6 +111,9 @@ export function createBulletChart(d3) {
           .duration(duration)
           .attr('x1', x1)
           .attr('x2', x1);
+
+        lineMarker.append('title')
+          .text((d, i) => markerTitles[i]);
 
         marker.transition()
           .duration(duration)
@@ -107,7 +125,8 @@ export function createBulletChart(d3) {
         // Compute the tick format.
         var format = tickFormat || x1.tickFormat(6);
 
-        var axis = g.append('g');
+        var axis = g.append('g')
+          .attr('fill', axisColor);
 
         // Update the tick groups.
         var tick = axis.selectAll('g.tick')
@@ -123,10 +142,13 @@ export function createBulletChart(d3) {
 
         tickEnter.append('line')
           .attr('y1', height)
-          .attr('y2', height * 7 / 6);
+          .attr('y2', height * 7 / 6)
+          .attr('stroke', axisColor)
+          .attr('stroke-width', '0.5px');
 
         tickEnter.append('text')
           .attr('text-anchor', 'middle')
+          .attr('fill', axisColor)
           .attr('dy', '1em')
           .attr('y', height * 7 / 6)
           .text(format);
@@ -212,6 +234,30 @@ export function createBulletChart(d3) {
       duration = x;
       return bullet;
     };
+
+    bullet.axisColor = function(x) {
+      if (!arguments.length) return axisColor;
+      axisColor = x;
+      return bullet;
+    }
+
+    bullet.rangeTitles = function(x) {
+      if (!arguments.length) return rangeTitles;
+      rangeTitles = x;
+      return bullet;
+    }
+
+    bullet.measureTitles = function(x) {
+      if (!arguments.length) return measureTitles;
+      measureTitles = x;
+      return bullet;
+    }
+
+    bullet.markerTitles = function(x) {
+      if (!arguments.length) return markerTitles;
+      markerTitles = x;
+      return bullet;
+    }
 
     return bullet;
   };

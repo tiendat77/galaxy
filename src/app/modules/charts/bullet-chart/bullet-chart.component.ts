@@ -19,6 +19,11 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() data: any[] = [];
   @Input() rangeColor: string[] = ['#0570b0', '#74a9cf', '#bdc9e1'];
   @Input() measureColor = ['#9fa5af', '#666869'];
+  @Input() color = '#fff';
+  @Input() subTitleColor = '#999';
+  @Input() rangeTitles = ['Range 0', 'Range 1', 'Range 2'];
+  @Input() measureTitles = ['Measure 1', 'Measure 2', 'Measure 3'];
+  @Input() markerTitles = ['Marker'];
   @Output() itemClick: EventEmitter<any> = new EventEmitter();
 
   chartID = 'BULLET_CHART';
@@ -36,7 +41,7 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
     this.initStyle();
     this.initData(TEST_DATA);
 
-    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(600)).subscribe((event) => {
+    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe((event) => {
       this.draw();
     });
   }
@@ -81,7 +86,6 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
       .text(`
         .bullet { font: 10px sans-serif; }
         .bullet .marker { stroke: #ff2839; stroke-width: 2px; }
-        .bullet .tick line { stroke: #666; stroke-width: .5px; }
         .bullet .range.s0 { fill: ${this.rangeColor[0]}; }
         .bullet .range.s1 { fill: ${this.rangeColor[1]}; }
         .bullet .range.s2 { fill: ${this.rangeColor[2]}; }
@@ -95,7 +99,6 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .bullet .subtitle { fill: #999; }
       `);
   }
 
@@ -111,10 +114,15 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   draw() {
+    const that = this;
     this.initSvg();
 
     const bullletChart = createBulletChart(d3);
     const chart = bullletChart.bullet()
+      .axisColor(this.color)
+      .rangeTitles(this.rangeTitles)
+      .measureTitles(this.measureTitles)
+      .markerTitles(this.markerTitles)
       .width(this.width)
       .height(this.height);
 
@@ -140,64 +148,17 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     title.append('text')
         .attr('class', 'title')
+        .attr('fill', this.color)
         .text((d: any) => d.truncatedTitle)
       .append('title')
         .text((d: any) => d.title);
 
     title.append('text')
-        .attr('fill', '#999')
+        .attr('fill', this.subTitleColor)
         .attr('dy', '1em')
         .text((d: any) => d.truncatedSubtitle)
       .append('title')
         .text((d: any) => d.subtitle);
-  }
-
-  initLegend() { // TODO
-    const svg = d3.select('#' + this.chartID).append('svg')
-      .attr('width', this.width + this.margin.left + this.margin.right)
-      .attr('height', 125);
-
-    const legend = svg.append('g')
-      .attr('transform', `translate(${this.width - this.margin.right}, 0)`);
-
-    // Border
-    legend
-      .append('rect')
-      .attr('width', 120)
-      .attr('height', 125)
-      .style('fill', 'none')
-      .style('stroke-width', 1)
-      .style('stroke', 'black');
-
-    const size = 20;
-    const borderPadding = 15;
-    const itemPadding = 5;
-    const textOffset = 2;
-
-    // Boxes
-    legend.selectAll('boxes')
-      .data(this.domains)
-      .enter()
-      .append('rect')
-        .attr('x', borderPadding)
-        .attr('y', (d, i) => borderPadding + (i * (size + itemPadding)))
-        .attr('width', 20)
-        .attr('height', 20)
-        .style('fill', (d, i) => this.rangeColor[i]);
-
-    // Labels
-    legend.selectAll('labels')
-      .data(this.domains)
-      .enter()
-      .append('text')
-        .attr('x', borderPadding + size + itemPadding)
-        .attr('y', (d, i) => borderPadding + i * (size + itemPadding) + (size / 2) + textOffset)
-        .text((d) => d)
-        .attr('text-anchor', 'left')
-        .style('alignment-baseline', 'middle')
-        .style('font-family', 'sans-serif');
-
-    return svg.node();
   }
 
 }
