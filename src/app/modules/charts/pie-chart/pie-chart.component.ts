@@ -255,7 +255,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     function calcPadding(horizontal?: boolean) {
       if (horizontal) {
-        if (that.width > 880) {
+        if (that.width > 850) {
           return 2.2;
         }
 
@@ -312,4 +312,5 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
+
 }
