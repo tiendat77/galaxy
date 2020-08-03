@@ -7,7 +7,7 @@ import { MOCK_DATA } from './mock';
 import * as d3 from 'd3';
 
 @Component({
-  selector: '[kpiPieChart]',
+  selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss']
 })
@@ -19,10 +19,10 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() textColor = 'rgba(255, 255, 255, 0.78)';
   @Input() valueColor = '#05F6FF';
   @Input() colors = ['#4285F4', '#EA4335', '#34A853', '#FBBC04', '#FA7B17', '#F53BA0', '#A142F4', '#9B82FA', '#BB00FF', '#5719F8' ];
-  @Input() arcPadding = 0.05;
+  @Input() arcPadding = 0.01;
   @Input() conerRadius = 0;
-  @Input() innerRadius = 0;
-  @Input() labelHeight = 15;
+  @Input() innerRadius = 0.5;
+  @Input() labelHeight = 20;
   @Input() fontSize = '1.3em';
   @Input() valueUom = 'pcs';
   @Input() showValueOnChart = false;
@@ -82,11 +82,11 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.chartContainer) {
       const element = this.chartContainer.nativeElement;
-      this.width = element.parentNode.clientWidth;
-      this.height = element.parentNode.clientHeight;
+      // this.width = element.parentNode.clientWidth;
+      // this.height = element.parentNode.clientHeight;
 
-      // this.width = element.clientWidth;
-      // this.height = element.clientHeight;
+      this.width = element.clientWidth;
+      this.height = element.clientHeight;
 
       this.fontSize = this.width * 0.9 / (600) + 'em';
     }
@@ -113,7 +113,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
     const radius = Math.min(width, height) / 2;
 
     const arc = d3.arc()
-      .innerRadius( 0.5 * radius)
+      .innerRadius( this.innerRadius * radius)
       .outerRadius( 0.85 * radius)
       .cornerRadius(this.conerRadius);
 
@@ -180,7 +180,8 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     // Draw legend
-    const legendPadding = 1.8;
+    const legendPadding = calcPadding(isHorizontal);
+    console.log({legendPadding});
     const legendTextWidth = width * 0.35;
 
     const legendGroup = svg.append('g');
@@ -201,7 +202,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
         .attr('strole-width', '1px');
 
     legend.append('text')
-      .attr('x', this.labelHeight * legendPadding)
+      .attr('x', Math.abs(this.labelHeight * legendPadding))
       .attr('y', (d: any) => this.labelHeight * d.index * legendPadding + this.labelHeight)
       .attr('text-anchor', 'start')
       .style('fill', this.textColor)
@@ -252,6 +253,27 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
       return (that.height - that.margin.top - that.margin.bottom);
     }
 
+    function calcPadding(horizontal?: boolean) {
+      if (horizontal) {
+        if (that.width > 880) {
+          return 2.2;
+        }
+
+        if (that.width > 800) {
+          return 1.8;
+        }
+
+        return that.width * 1.5 / 650;
+      }
+
+      // vertical
+      if (that.height > 600) {
+        return 2;
+      }
+
+      return that.height * 1.5 / 400;
+    }
+
     function onMouseOver(d, i) {
       that.isPieHover = true;
       const self = d3.select(this);
@@ -275,7 +297,7 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
           svg.selectAll('.arc').style('opacity', 1);
           svg.selectAll('.legend').style('opacity', 1);
         }
-      }, 500);
+      }, 300);
     }
 
     function wrap() {

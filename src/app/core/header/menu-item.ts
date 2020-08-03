@@ -15,6 +15,7 @@ export const MENU_ITEMS: MenuItem[] = [
     children: [
       { name: 'Board', url: '/chart/board' },
       { name: 'Line Bar Chart', url: '/chart/line-bar-chart' },
+      { name: 'Pie Chart', url: '/chart/pie-chart' },
       { name: 'Clock', url: '/chart/clock' },
       { name: 'Bullet Chart', url: '/chart/bullet-chart' },
       { name: 'Tooltip', url: '/chart/tooltip' },
