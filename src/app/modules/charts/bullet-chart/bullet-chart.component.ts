@@ -19,7 +19,7 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() data: any[] = [];
   @Input() rangeColor: string[] = ['#0570b0', '#74a9cf', '#bdc9e1'];
   @Input() measureColor = ['#9fa5af', '#666869'];
-  @Input() color = '#fff';
+  @Input() color = '#000';
   @Input() subTitleColor = '#999';
   @Input() rangeTitles = ['Range 0', 'Range 1', 'Range 2'];
   @Input() measureTitles = ['Measure 1', 'Measure 2', 'Measure 3'];
@@ -126,6 +126,8 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
       .width(this.width)
       .height(this.height);
 
+    const filter = '<filter id="bulletFilter" x="0" y="0" width="200" height="200" > <feOffset result="offOut" in="SourceAlpha" dx="6" dy="6" /> <feColorMatrix result="matrixOut" in="offOut" type="matrix" values=" 0.49 0 0 0 0 0 0.49 0 0 0 0 0 0.49 0 0 0 0 0 0.5 0" /> <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="11" /> <feBlend in="SourceGraphic" in2="blurOut" mode="normal" /> </filter>';
+
     const svg = d3.select('#' + this.chartID)
       .selectAll('svg')
       .data(this.data)
@@ -134,17 +136,19 @@ export class BulletChartComponent implements OnInit, OnDestroy, AfterViewInit {
         .attr('class', 'bullet')
         .style('font-size', '1.2em')
         .attr('width', this.width + this.margin.left + this.margin.right)
-        .attr('height', Math.floor(this.height * 7 / 6 + this.margin.top + this.margin.bottom)) // crazy math, huh?
-      .append('g')
+        .attr('height', Math.floor(this.height * 7 / 6 + this.margin.top + this.margin.bottom)); // crazy math, huh?
+
+    svg.append('defs').html(filter);
+    svg.append('g')
         .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
         .call(chart)
         .on('click', (d, i) => {
-          this.itemClick.next(d);
+          this.itemClick.emit(d);
         });
 
     const title = svg.append('g')
         .style('text-anchor', 'end')
-        .attr('transform', `translate(-10, ${this.height / 2})`);
+        .attr('transform', `translate(${this.margin.left - 10}, ${this.height / 2})`);
 
     title.append('text')
         .attr('class', 'title')

@@ -122,6 +122,20 @@ export function createBulletChart(d3) {
           .attr('y1', height / 6)
           .attr('y2', height * 5 / 6);
 
+        chart.style('cursor', 'pointer')
+          .on('mouseover', onMouseOver)
+          .on('mouseout', onMouseOut);
+
+        function onMouseOver(d, i) {
+          const self = d3.select(this);
+          self.style('filter', 'url(#bulletFilter)');
+        }
+
+        function onMouseOut(d, i) {
+          const self = d3.select(this);
+          self.style('filter', 'none');
+        }
+
         // Compute the tick format.
         var format = tickFormat || x1.tickFormat(6);
 
