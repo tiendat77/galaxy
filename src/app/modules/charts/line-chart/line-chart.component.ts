@@ -217,63 +217,8 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     function onMouseOut() {
       tooltip.style('visibility', 'hidden')
-        .attr('transform', 'translate(0, 0');
+        .attr('transform', 'translate(0, 0)');
     }
   }
 
-  drawTooltip(svg, xScale, yScale) {
-    const that = this;
-    svg.append('line').classed('hoverLine', true);
-    const circle = svg.append('circle').classed('hoverPoint', true);
-    const text = svg.append('text').classed('hoverText', true);
-
-    svg.on('mousemove', mouseMove);
-
-    function mouseMove() {
-      d3.event.preventDefault();
-      const mouse = d3.mouse(d3.event.target);
-      const [
-        xCoord,
-        yCoord,
-      ] = mouse;
-
-      const mouseDate = xScale.invert(xCoord);
-      const mouseDateSnap = d3.timeDay.floor(mouseDate);
-
-      if (xScale(mouseDateSnap) < that.margin.left ||
-         xScale(mouseDateSnap) > that.width - that.margin.right) {
-        return;
-      }
-
-      const bisectDate = d3.bisector((d: any) => d.date).right;
-      const xIndex = bisectDate(that.data, mouseDateSnap, 1);
-      const mousePopulation = that.data[xIndex].value;
-
-      svg.selectAll('.hoverLine')
-        .attr('x1', xScale(mouseDateSnap))
-        .attr('y1', that.margin.top)
-        .attr('x2', xScale(mouseDateSnap))
-        .attr('y2', that.height - that.margin.bottom)
-        .attr('stroke', '#147F90')
-        .attr('fill', '#A6E8F2');
-
-      circle
-        .attr('cx', xScale(mouseDateSnap))
-        .attr('cy', yScale(mousePopulation))
-        .attr('r', '7')
-        .attr('fill', '#147F90');
-
-      const isLessThanHalf = xIndex > that.data.length / 2;
-      const hoverTextX = isLessThanHalf ? '-0.75em' : '0.75em';
-      const hoverTextAnchor = isLessThanHalf ? 'end' : 'start';
-
-      text
-        .attr('x', xScale(mouseDateSnap))
-        .attr('y', yScale(mousePopulation))
-        .attr('dx', hoverTextX)
-        .attr('dy', '-1.25em')
-        .style('text-anchor', hoverTextAnchor)
-        .text(d3.format('.5s')(mousePopulation));
-    }
-  }
 }
