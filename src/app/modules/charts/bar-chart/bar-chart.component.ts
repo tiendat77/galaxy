@@ -97,8 +97,14 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
           <stop offset="45%" stop-color="${this.gradientColors[1]}"/>
           <stop offset="70%" stop-color="${this.gradientColors[2]}"/>
         </linearGradient>
+        <filter id="barChartLighten">
+          <feComponentTransfer>
+            <feFuncR type="linear" slope="2" />
+            <feFuncG type="linear" slope="2" />
+            <feFuncB type="linear" slope="2" />
+          </feComponentTransfer>
+        </filter>
       `);
-
     return svg;
   }
 
@@ -156,9 +162,13 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
         .attr('width', xScale.bandwidth())
         .attr('height', (d: any) => yScale(0) - yScale(d.value))
         .attr('stroke', this.barColor)
-        .attr('stroke-width', 2);
+        .attr('stroke-width', 2)
+        .attr('stroke-dasharray', (d: any) => `${yScale(0) - yScale(d.value) + xScale.bandwidth()} 0 0 ${xScale.bandwidth()}`)
+        .on('mouseover', onMouseOver)
+        .on('mouseout', onMouseOut);
 
     // Draw title
+    /*
     svg.append('g')
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
@@ -171,6 +181,7 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
         .attr('height', this.height)
       .append('title')
         .text((d: any) => d.value);
+    */
 
     // Draw value on top of bar
     if (this.showValueOnBar) {
@@ -195,6 +206,16 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.showYAxis) {
       svg.append('g').call(yAxis);
+    }
+
+    function onMouseOver() {
+      const self = d3.select(this);
+      self.attr('filter', 'url(#barChartLighten)');
+    }
+
+    function onMouseOut() {
+      const self = d3.select(this);
+      self.attr('filter', null);
     }
   }
 
