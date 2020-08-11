@@ -110,7 +110,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
     const maxValue = d3.max(this.data, (d: any) => d.value);
 
     const xScale = d3.scaleLinear()
-      .domain([minValue, maxValue])
+      .domain([0, maxValue])
       .range([this.margin.left, this.width - this.margin.right]);
 
     const yScale = d3.scaleBand()
@@ -162,9 +162,9 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
       .selectAll('rect')
       .data(this.data)
       .join('rect')
-        .attr('x', (d: any) => xScale(d.value))
+        .attr('x', (d: any) => xScale(0))
         .attr('y', (d: any) => yScale(d.id))
-        .attr('width', (d: any) => xScale(d.value) - xScale(minValue))
+        .attr('width', (d: any) => xScale(d.value) - xScale(0))
         .attr('height', this.barHeight)
         .attr('stroke', this.barColor)
         .on('mouseover', onMouseOver)
