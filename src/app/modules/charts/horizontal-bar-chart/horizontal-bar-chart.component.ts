@@ -15,6 +15,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
 
   @Input() data: any[] = [];
   @Input() barColor = '#3195f5';
+  @Input() barHeight = 25;
   @Input() axisColor = 'rgba(250, 250, 250, 0.4)';
   @Input() axisLabelColor = 'rgba(255, 255, 255, 0.68)';
   @Input() fontSize = '1.3em';
@@ -23,7 +24,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
   @Input() showYAxis = true;
 
   chartID = 'HORIZONTAL_BAR_CHART';
-  margin = { top: 20, right: 20, bottom: 30, left: 40 };
+  margin = { top: 20, right: 20, bottom: 30, left: 100 };
   width = 500;
   height = 500;
 
@@ -63,7 +64,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
   }
 
   initData() {
-    this.data = MOCK_DATA;
+    this.data = MOCK_DATA.map(d => ({ id: d.id, value: d.total }));
   }
 
   initSvg() {
@@ -74,11 +75,15 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
     if (this.chartContainer) {
       const element = this.chartContainer.nativeElement;
 
-      this.width = element.offsetWidth;
-      this.height = element.offsetHeight;
+      const width = element.offsetWidth;
+      const height = element.offsetHeight;
 
       // this.width = element.parentNode.clientWidth;
       // this.height = element.parentNode.clientHeight;
+
+      this.width = width - 10;
+      this.height = Math.max(height, this.data.length * this.barHeight);
+      console.log({ eHeight: height, dHeight: this.data.length * this.barHeight });
     }
 
     const svg = d3.select('#' + this.chartID)
@@ -99,13 +104,17 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
 
     const svg = this.initSvg();
 
+    console.log({width: this.width, height: this.height});
+    const minValue = d3.min(this.data, (d: any) => d.value);
+    const maxValue = d3.max(this.data, (d: any) => d.value);
+
     const xScale = d3.scaleLinear()
-      .domain(d3.extent(this.data, (d: any) => d.value))
+      .domain([minValue, maxValue])
       .range([this.margin.left, this.width - this.margin.right]);
 
     const yScale = d3.scaleBand()
       .domain(this.data.map(d => d.id))
-      .rangeRound([this.margin.top, this.height - this.margin.bottom])
+      .range([this.margin.top, this.height - this.margin.bottom])
       .padding(0.1);
 
     const xAxis = g => g
@@ -125,11 +134,17 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
     const yAxis = g => g
       .attr('transform', `translate(${this.margin.left}, 0)`)
       .call(d3.axisLeft(yScale))
-      .call(axis => axis.select('.domain').remove())
-      .call(axis => axis.selectAll('line').remove())
+      .call(axis => axis.select('.domain')
+        .attr('stroke', this.axisColor)
+      )
+      .call(axis => axis.selectAll('line')
+        .attr('stroke', this.axisColor)
+      )
       .call(axis => axis.selectAll('text')
         .attr('fill', this.axisLabelColor)
         .attr('font-size', this.fontSize)
+        .append('title')
+        .text((d, i) => this.data[i].id)
       );
 
     // Draw axises
@@ -140,6 +155,24 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
     if (this.showYAxis) {
       svg.append('g').call(yAxis);
     }
+
+    svg.append('g')
+      .attr('fill', this.barColor)
+      .selectAll('rect')
+      .data(this.data)
+      .join('rect')
+        .attr('x', (d: any) => xScale(d.value))
+        .attr('y', (d: any) => yScale(d.id))
+        .attr('width', (d: any) => xScale(d.value) - xScale(minValue))
+        .attr('height', this.barHeight)
+        .attr('stroke', this.barColor)
+        .on('mouseover', onMouseOver)
+        .on('mouseout', onMouseOut);
+
+
+    function onMouseOver() {}
+
+    function onMouseOut() {}
   }
 
   calcFontSize(width: number) {
@@ -162,7 +195,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
       }
     }
 
-    return fontSize;
+    return fontSize + 'em';
   }
 
 }
