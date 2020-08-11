@@ -22,6 +22,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
 
   @Input() showXAxis = true;
   @Input() showYAxis = true;
+  @Input() showValueOnBar = false;
 
   chartID = 'HORIZONTAL_BAR_CHART';
   margin = { top: 20, right: 20, bottom: 30, left: 100 };
@@ -169,10 +170,22 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
         .on('mouseover', onMouseOver)
         .on('mouseout', onMouseOut);
 
-
     function onMouseOver() {}
 
     function onMouseOut() {}
+
+    if (this.showValueOnBar) {
+      svg.append('g')
+        .attr('fill', this.axisColor)
+        .attr('text-anchor', 'end')
+        .attr('font-size', this.fontSize)
+        .selectAll('text')
+        .data(this.data)
+        .join('text')
+          .attr('x', (d: any) => xScale(d.value))
+          .attr('y', (d: any) => yScale(d.id) + this.barHeight / 2)
+          .text((d: any) => d.value);
+    }
   }
 
   calcFontSize(width: number) {
