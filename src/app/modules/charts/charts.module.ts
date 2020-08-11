@@ -15,6 +15,7 @@ import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 import { BoardComponent } from './board/board.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
+import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.
     BulletChartComponent,
     BoardComponent,
     PieChartComponent,
-    StackedBarChartComponent
+    StackedBarChartComponent,
+    HorizontalBarChartComponent
   ],
   imports: [
     CommonModule,
