@@ -23,6 +23,14 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
   @Input() showXAxis = true;
   @Input() showYAxis = true;
   @Input() showValueOnBar = false;
+  @Input() showGradient = true;
+  @Input() showTooltip = true;
+
+  @Input() gradientColors = [
+    'rgba(49,149,245,0.2)',
+    'rgba(49,149,245,0.04)',
+    'transparent'
+  ];
 
   chartID = 'HORIZONTAL_BAR_CHART';
   margin = { top: 20, right: 20, bottom: 30, left: 100 };
@@ -65,7 +73,13 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
   }
 
   initData() {
-    this.data = MOCK_DATA.map(d => ({ id: d.id, value: d.total }));
+    this.data = MOCK_DATA.map(d => ({ id: d.id, value: d.total })).sort((a, b) => {
+      if (a.value < b.value) { return 1; }
+
+      if (a.value > b.value) { return -1; }
+
+      return 0;
+    });
   }
 
   initSvg() {
@@ -95,6 +109,21 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
 
     const defs = svg.append('defs');
 
+    defs.html(`
+      <filter id="barChartLighten">
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="2" />
+          <feFuncG type="linear" slope="2" />
+          <feFuncB type="linear" slope="2" />
+        </feComponentTransfer>
+      </filter>
+      <linearGradient id="barChartGradient" gradientTransform="rotate(180)">
+        <stop offset="0%" stop-color="${this.gradientColors[0]}"/>
+        <stop offset="45%" stop-color="${this.gradientColors[1]}"/>
+        <stop offset="70%" stop-color="${this.gradientColors[2]}"/>
+      </linearGradient>
+    `);
+
     return svg;
   }
 
@@ -105,7 +134,6 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
 
     const svg = this.initSvg();
 
-    console.log({width: this.width, height: this.height});
     const minValue = d3.min(this.data, (d: any) => d.value);
     const maxValue = d3.max(this.data, (d: any) => d.value);
 
@@ -157,22 +185,47 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
       svg.append('g').call(yAxis);
     }
 
-    svg.append('g')
-      .attr('fill', this.barColor)
+    const rect = svg.append('g')
+      .attr('fill', this.showGradient ? 'url(#barChartGradient)' : this.barColor)
       .selectAll('rect')
       .data(this.data)
       .join('rect')
-        .attr('x', (d: any) => xScale(0))
+        .attr('id', (d, i) => `rect_${i}`)
+        .attr('x', xScale(0))
         .attr('y', (d: any) => yScale(d.id))
         .attr('width', (d: any) => xScale(d.value) - xScale(0))
         .attr('height', this.barHeight)
-        .attr('stroke', this.barColor)
+        .attr('stroke', this.barColor);
+
+    svg.append('g')
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .selectAll('rect')
+      .data(this.data)
+      .join('rect')
+        .attr('x', xScale(0))
+        .attr('y', (d: any) => yScale(d.id))
+        .attr('width', this.width - this.margin.left - this.margin.right)
+        .attr('height', this.barHeight)
         .on('mouseover', onMouseOver)
-        .on('mouseout', onMouseOut);
+        .on('mouseout', onMouseOut)
+      .append('title')
+        .text((d: any) => `Place: ${d.id}\nTotal: ${d.value}`);
 
-    function onMouseOver() {}
+    function onMouseOver(d, i) {
+      svg.select(`#rect_${i}`)
+        .attr('filter', 'url(#barChartLighten)');
+    }
 
-    function onMouseOut() {}
+    function onMouseOut(d, i) {
+      svg.select(`#rect_${i}`)
+        .attr('filter', null);
+    }
+
+    if (this.showGradient) {
+      rect.attr('stroke-width', 2)
+      .style('stroke-dasharray', (d: any) => `${xScale(d.value) - xScale(0) + this.barHeight} 0 ${xScale(d.value) - xScale(0)} ${this.barHeight}`);
+    }
 
     if (this.showValueOnBar) {
       svg.append('g')
@@ -185,6 +238,11 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
           .attr('x', (d: any) => xScale(d.value))
           .attr('y', (d: any) => yScale(d.id) + this.barHeight / 2)
           .text((d: any) => d.value);
+    }
+
+    if (this.showTooltip) {
+      // svg.append('g')
+      //   .
     }
   }
 
