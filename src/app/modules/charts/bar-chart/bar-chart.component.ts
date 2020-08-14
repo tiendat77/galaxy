@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnChanges, OnDestroy, Input, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, Input, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChartControllerService } from '../../services/chart-controller.service';
 
-import { MOCK_OLE } from './mock';
+import { MOCK_DATA } from './mock';
 import * as moment from 'moment';
 import * as d3 from 'd3';
 
@@ -22,6 +22,7 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showYLabel = false;
   @Input() showGradient = true;
   @Input() showYUOM = true;
+  @Input() showTooltip = true;
 
   @Input() yLabel = 'hours';
   @Input() valueUom = '';
@@ -78,21 +79,18 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async initData() {
+    this.data = MOCK_DATA.filter(d => d.end && d.start).map(item => {
+      const time = (item.start + item.end) / 2;
+
+      return {
+        date: moment.unix(time).toDate(),
+        value: item.value
+      };
+    });
     // this.yLabel = await this.translate.get('WORD.HOURS');
   }
 
-  parseData() {
-    const format = d3.format('.2s');
-
-    return this.data.map(d => {
-      return {
-        date: moment(d.date).format('DD-MM'),
-        value: this.round(d.value),
-        shortValue: format(d.value)
-      };
-    });
-  }
-
+  /////////////// INIT ///////////////
   initSvg() {
     d3.select('#' + this.chartID)
       .selectAll('svg')
@@ -238,6 +236,16 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
         .text(this.yLabel);
     }
 
+    if (this.showTooltip) {
+      /*
+        Id:
+        Start time:
+        End time:
+        Value:
+      */
+      svg.append('g').call(initTooltip);
+    }
+
     function onMouseOver(d, i) {
       svg.select('#rect_' + i)
         .attr('filter', 'url(#barChartLighten)');
@@ -247,6 +255,30 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
       svg.select('#rect_' + i)
         .attr('filter', null);
     }
+
+    function initTooltip(selection) {
+      selection
+        .attr('class', 'bar-chart-tooltip')
+        .attr('pointer-events', 'none')
+        .attr('opacity', 0)
+        .attr('data-z-index', 8)
+        .attr('visibility', 'hidden')
+        .style('white-space', 'nowrap')
+        .attr('trasform', 'translate(1, -99999)');
+    }
+  }
+
+  /////////////// UTILS ///////////////
+  parseData() {
+    const format = d3.format('.2s');
+
+    return this.data.map(d => {
+      return {
+        date: moment(d.date).format('DD-MM'),
+        value: this.round(d.value),
+        shortValue: format(d.value)
+      };
+    });
   }
 
   calcFontSize(width: number): string {
