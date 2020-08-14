@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
-
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Component, ChangeDetectionStrategy, OnInit, OnChanges, OnDestroy, Input, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChartControllerService } from '../../services/chart-controller.service';
 
 import { MOCK_OLE } from './mock';
+import * as moment from 'moment';
 import * as d3 from 'd3';
 
 @Component({
@@ -11,7 +11,7 @@ import * as d3 from 'd3';
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss']
 })
-export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
+export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('barChartContainer') chartContainer: ElementRef;
 
   @Input() data: any[] = [];
@@ -21,31 +21,48 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() showXLabel = true;
   @Input() showYLabel = false;
   @Input() showGradient = true;
-  @Input() yLabel = '';
-  @Input() barColor = '#3195f5';
-  @Input() axisColor = 'rgba(250, 250, 250, 0.4)';
+  @Input() showYUOM = true;
+
+  @Input() yLabel = 'hours';
+  @Input() valueUom = '';
   @Input() axisLabelColor = 'rgba(255, 255, 255, 0.68)';
-  @Input() gradientColors = ['rgba(49,149,245,0.2)', 'rgba(49,149,245,0.04)', 'transparent'];
-  @Input() fontSize = '1.3em';
-  @Input() valueUom = '%';
+  @Input() axisColor = 'rgba(250, 250, 250, 0.4)';
+  @Input() barColor = '#3195f5';
+  @Input() gradientColors = [
+    'rgba(49,149,245,0.2)',
+    'rgba(49,149,245,0.04)',
+    'transparent'
+  ];
 
   chartID = 'BAR_CHART';
-  margin = { top: 20, right: 20, bottom: 30, left: 40 };
+  margin = { top: 30, right: 20, bottom: 30, left: 50 };
   width = 460;
   height = 400;
+  fontSize = '1.3em';
 
   resizeSub: Subscription;
 
-  constructor() {
+  constructor(
+    private chartCtrl: ChartControllerService,
+    // private translate: TranslateService
+  ) {
     this.chartID = this.initID();
   }
 
   ngOnInit(): void {
     this.initData();
 
-    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(200)).subscribe((event) => {
+    this.resizeSub = this.resizeSub = this.chartCtrl.onResizeRequest$.subscribe(() => {
       this.draw();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.data){
+      setTimeout(() => {
+        this.draw();
+      }, 200);
+    }
   }
 
   ngOnDestroy() {
@@ -54,18 +71,26 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.draw();
-  }
-
   initID() {
     const rand = () => Math.floor(1000 + (9990 - 1000) * Math.random());
 
     return 'BAR_CHART_' + rand() + '_' + rand();
   }
 
-  initData() {
-    this.data = MOCK_OLE.map(({id, value}) => ({id, value: +value}));
+  async initData() {
+    // this.yLabel = await this.translate.get('WORD.HOURS');
+  }
+
+  parseData() {
+    const format = d3.format('.2s');
+
+    return this.data.map(d => {
+      return {
+        date: moment(d.date).format('DD-MM'),
+        value: this.round(d.value),
+        shortValue: format(d.value)
+      };
+    });
   }
 
   initSvg() {
@@ -76,13 +101,10 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.chartContainer) {
       const element = this.chartContainer.nativeElement;
 
-      // this.width = element.offsetWidth;
-      // this.height = element.offsetHeight;
-
       this.width = element.parentNode.clientWidth;
       this.height = element.parentNode.clientHeight;
 
-      this.fontSize = this.width * 1.1 / (600) + 'em';
+      this.margin = this.calcMargin();
     }
 
     const svg = d3.select('#' + this.chartID)
@@ -105,19 +127,21 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
           </feComponentTransfer>
         </filter>
       `);
+
     return svg;
   }
 
   draw() {
+    const data = this.parseData();
     const svg = this.initSvg();
 
     const xScale = d3.scaleBand()
-      .domain(this.data.map(d => d.id))
+      .domain(data.map(d => d.date))
       .rangeRound([this.margin.left + 10, this.width - this.margin.right])
       .padding(0.2);
 
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(this.data, (d: any) => d.value)]).nice()
+      .domain([0, d3.max(data, (d: any) => d.value)]).nice()
       .range([this.height - this.margin.bottom, this.margin.top]);
 
     const xAxis = g => g
@@ -132,56 +156,52 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
       .call(axis => axis.selectAll('text')
         .attr('fill', this.axisLabelColor)
         .attr('font-size', this.fontSize)
+        .attr('dx', data.length > 5 ? '-26px' : null)
+        .style('transform', data.length > 5 ? `rotate(-45deg)` : null)
       );
+
+    const yTick = this.calcYTick(this.height);
 
     const yAxis = g => g
       .attr('transform', `translate(${this.margin.left}, 0)`)
-      .call(d3.axisLeft(yScale))
+      .call(d3.axisLeft(yScale).ticks(yTick).tickSizeOuter(0))
       .call(axis => axis.select('.domain').remove())
       .call(axis => axis.selectAll('line').remove())
       .call(axis => axis.selectAll('text')
         .attr('fill', this.axisLabelColor)
         .attr('font-size', this.fontSize)
-      )
-      .call(axis => axis.append('text')
-        .attr('x', 20)
-        .attr('y', 10)
-        .attr('fill', this.axisColor)
-        .attr('text-anchor', 'start')
-        .text(this.yLabel)
       );
 
     // Draw bar
     svg.append('g')
         .attr('fill', this.showGradient ? 'url(#barChartGradient)' : this.barColor)
       .selectAll('rect')
-      .data(this.data)
+      .data(data)
       .join('rect')
-        .attr('x', (d: any) => xScale(d.id))
+        .attr('id', (d, i) => `rect_${i}`)
+        .attr('x', (d: any) => xScale(d.date))
         .attr('y', (d: any) => yScale(d.value))
         .attr('width', xScale.bandwidth())
         .attr('height', (d: any) => yScale(0) - yScale(d.value))
         .attr('stroke', this.barColor)
         .attr('stroke-width', 2)
-        .attr('stroke-dasharray', (d: any) => `${yScale(0) - yScale(d.value) + xScale.bandwidth()} 0 0 ${xScale.bandwidth()}`)
-        .on('mouseover', onMouseOver)
-        .on('mouseout', onMouseOut);
+        .attr('stroke-dasharray', (d: any) => `${yScale(0) - yScale(d.value) + xScale.bandwidth()} 0 0 ${xScale.bandwidth()}`);
 
     // Draw title
-    /*
     svg.append('g')
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
       .selectAll('rect')
-      .data(this.data)
+      .data(data)
       .join('rect')
-        .attr('x', (d: any) => xScale(d.id))
+        .attr('x', (d: any) => xScale(d.date))
         .attr('y', 0)
         .attr('width', xScale.bandwidth())
         .attr('height', this.height)
+        .on('mouseover', onMouseOver)
+        .on('mouseout', onMouseOut)
       .append('title')
         .text((d: any) => d.value);
-    */
 
     // Draw value on top of bar
     if (this.showValueOnBar) {
@@ -189,14 +209,14 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
           .attr('fill', this.axisLabelColor)
           .attr('text-anchor', 'middle')
         .selectAll('text')
-        .data(this.data)
+        .data(data)
         .join('text')
-          .attr('font-size', this.fontSize)
-          .attr('x', (d: any) => xScale(d.id))
+          .attr('font-size', '0.9em')
+          .attr('x', (d: any) => xScale(d.date))
           .attr('y', (d: any) => yScale(d.value))
           .attr('dx', xScale.bandwidth() / 2)
           .attr('dy', -8)
-          .text((d: any) => d.value + this.valueUom);
+          .text((d: any) => d.shortValue + this.valueUom);
     }
 
     // Draw axises
@@ -208,15 +228,84 @@ export class BarChartComponent implements OnInit, OnDestroy, AfterViewInit {
       svg.append('g').call(yAxis);
     }
 
-    function onMouseOver() {
-      const self = d3.select(this);
-      self.attr('filter', 'url(#barChartLighten)');
+    if (this.showYAxis && this.showYUOM) {
+      svg.append('text')
+        .attr('x', this.margin.left - 5)
+        .attr('y', 25)
+        .attr('fill', this.axisLabelColor)
+        // .attr('font-size', '1em')
+        .attr('text-anchor', 'end')
+        .text(this.yLabel);
     }
 
-    function onMouseOut() {
-      const self = d3.select(this);
-      self.attr('filter', null);
+    function onMouseOver(d, i) {
+      svg.select('#rect_' + i)
+        .attr('filter', 'url(#barChartLighten)');
+    }
+
+    function onMouseOut(d, i) {
+      svg.select('#rect_' + i)
+        .attr('filter', null);
     }
   }
 
+  calcFontSize(width: number): string {
+    let fontSize = 1.3;
+
+    switch (true) {
+      case (width > 600): {
+        fontSize = 1.3;
+        break;
+      }
+
+      case (width > 550): {
+        fontSize = width * 1.3 / 600;
+        break;
+      }
+
+      case (width < 400): {
+        fontSize = 1.3;
+        break;
+      }
+    }
+
+    return fontSize + 'em';
+  }
+
+  calcMargin() {
+    const margin = { top: 40, right: 20, bottom: 30, left: 50 };
+
+    if (this.data.length > 5) {
+      margin.bottom = 60;
+    }
+
+    const maxValue = d3.max(this.data, (d: any) => d.value);
+    if (maxValue) {
+      margin.left = Math.round(maxValue).toString().length * 10 + 20;
+    }
+
+    return margin;
+  }
+
+  calcYTick(height: number) {
+    let tick = 6;
+
+    switch (true) {
+      case (height > 400): {
+        tick = 5;
+        break;
+      }
+
+      case (height < 300): {
+        tick = 4;
+        break;
+      }
+    }
+
+    return tick;
+  }
+
+  round(value: number): number {
+    return Math.round(value * 100) / 100;
+  }
 }

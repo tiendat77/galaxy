@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChartControllerService } from '../../services/chart-controller.service';
+// import { TranslateService } from '../../services/translate.service';
 
 import { MOCK_DATA } from './mock';
 
@@ -11,37 +12,57 @@ import * as d3 from 'd3';
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.scss']
 })
-export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('lineChartContainer') chartContainer: ElementRef;
 
   @Input() data: any[];
   @Input() axisLabelColor = 'rgba(255, 255, 255, 0.68)';
   @Input() axisColor = 'rgba(250, 250, 250, 0.4)';
-  @Input() gradientColors: string[] = ['rgba(124,209,119,0.5)', 'rgba(45,71,141,0.2)', 'transparent'];
-  @Input() lineColor = '#7cd177';
+  @Input() gradientColors: string[][] = [
+    ['rgba(124,209,119,0.5)', 'rgba(46,46,46,0.2)'],
+    ['rgba(255,64,129,0.5)', 'rgba(46,46,46,0.2)']
+  ];
+  @Input() lineColor = ['#7cd177', '#ff4081'];
   @Input() dashedLine = false;
   @Input() showYAxisLabel = true;
   @Input() showXAxisLabel = true;
   @Input() showDot = false;
   @Input() showGradient = true;
-  @Input() showTooltip = true;
+  @Input() showTooltip = false;
+  @Input() showAxis = true;
+  @Input() numberOfLine = 1;
+  @Input() showYLabel = true;
+  @Input() yLabel = 'hours';
 
   chartID = 'LINE_CHART';
   margin = { top: 20, right: 16, bottom: 30, left: 40 };
   width = 800 - this.margin.left - this.margin.right;
   height = 600 - this.margin.top - this.margin.bottom;
+  fontSize = '1.3em';
 
   resizeSub: Subscription;
 
-  constructor() {
+  constructor(
+    private chartCtrl: ChartControllerService,
+    // private translate: TranslateService
+  ) {
     this.chartID = this.initID();
   }
 
   ngOnInit(): void {
     this.initData();
-    this.resizeSub = fromEvent(window, 'resize').pipe(debounceTime(100)).subscribe(() => {
+
+    this.resizeSub = this.chartCtrl.onResizeRequest$.subscribe(() => {
       this.draw();
     });
+  }
+
+  ngOnChanges(changes): void {
+    if (changes && changes.data) {
+      setTimeout(() => {
+        this.draw();
+      }, 200);
+    }
   }
 
   ngOnDestroy() {
@@ -50,73 +71,102 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.draw();
-  }
-
   initID() {
     const rand = () => Math.floor(1000 + (9999 - 1000) * Math.random());
 
     return 'LINE_CHART_' + rand() + '_' + rand();
   }
 
-  initData() {
-    this.data = MOCK_DATA.map(({date, value}) => ({ date: d3.timeParse('%Y-%m-%d')(date), value: +value }));
+  async initData() {
+    // this.yLabel = await this.translate.get('WORD.HOURS');
   }
 
   initSvg() {
-    d3.select('#' + this.chartID)
-      .select('svg')
-      .remove();
+    if (this.chartContainer) {
+      const element = this.chartContainer.nativeElement;
 
-    const element = this.chartContainer.nativeElement;
+      // this.width = element.offsetWidth;
+      // this.height = element.offsetHeight;
 
-    this.width = element.offsetWidth;
-    this.height = element.offsetHeight;
+      this.width = element.parentNode.clientWidth - 10;
+      this.height = element.parentNode.clientHeight - 10;
+    }
 
-    // this.width = element.parentNode.clientWidth;
-    // this.height = element.parentNode.clientHeight;
+    this.margin = this.calcMargin();
 
     const svg = d3.select('#' + this.chartID)
       .append('svg')
         .attr('width', this.width)
         .attr('height', this.height);
 
+    // Define gradient
+    svg.append('defs')
+      .html(`
+        <linearGradient id="dottedLineChartGradient0" gradientTransform="rotate(90)">
+          <stop offset="0%" stop-opacity="0.8" stop-color="${this.gradientColors[0][0]}"/>
+          <stop offset="100%" stop-opacity="0" stop-color="${this.gradientColors[0][1]}"/>
+        </linearGradient>
+        <linearGradient id="dottedLineChartGradient1" gradientTransform="rotate(90)">
+          <stop offset="0%" stop-opacity="0.8" stop-color="${this.gradientColors[1][0]}"/>
+          <stop offset="100%" stop-opacity="0" stop-color="${this.gradientColors[1][1]}"/>
+        </linearGradient>
+      `);
+
     return svg;
   }
 
-  draw() {
+  async draw() {
+    if (!this.data.length) {
+      return;
+    }
+
     const that = this;
+    await this.clean();
     const svg = this.initSvg();
 
     const xScale = d3.scaleTime()
       .domain(d3.extent(this.data, (d: any) => d.date))
       .range([this.margin.left, this.width - this.margin.right]);
 
+    const adjust = 0.05;
+
+    const y1Domain = d3.extent(this.data, (d: any) => d.value);
+    y1Domain[1] = y1Domain[1] + y1Domain[1] * adjust;
+    y1Domain[0] = y1Domain[0] - Math.max(y1Domain[0] * adjust, y1Domain[1] * adjust);
+
+    let y2Domain = y1Domain;
+
+    if (this.numberOfLine !== 1) {
+      y2Domain = d3.extent(this.data, (d: any) => d.value1);
+      y2Domain[1] = y2Domain[1] + y2Domain[1] * adjust;
+      y2Domain[0] = y2Domain[0] - Math.max(y2Domain[0] * adjust, y2Domain[1] * adjust);
+    }
+
     const yScale = d3.scaleLinear()
-      .domain(d3.extent(this.data, (d: any) => d.value))
+      .domain([Math.min(y1Domain[0], y2Domain[0]), Math.max(y1Domain[1], y2Domain[1])])
       .range([this.height - this.margin.bottom, this.margin.top]);
 
+    const tick = this.calcTicks(this.width);
     const xAxis = g => g
       .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(xScale).ticks(5).tickSizeOuter(0))
+      .call(d3.axisBottom(xScale).ticks(tick).tickSizeOuter(0))
       .call(axis => axis.select('.domain')
         .attr('stroke', this.axisColor)
       )
       .call(axis => axis.selectAll('line').remove())
       .call(axis => axis.selectAll('text')
         .attr('fill', this.axisLabelColor)
-        .attr('font-size', '1.3em')
+        .attr('font-size', this.fontSize)
       );
 
     const yAxis = g => g
       .attr('transform', `translate(${this.margin.left}, 0)`)
-      .call(d3.axisLeft(yScale).ticks(5))
+      .call(d3.axisLeft(yScale).ticks(tick))
       .call(axis => axis.select('.domain').remove())
       .call(axis => axis.selectAll('line').remove())
       .call(axis => axis.selectAll('text')
         .attr('fill', this.axisLabelColor)
-        .attr('font-size', '1.3em')
+        .attr('font-size', this.fontSize)
       );
 
     if (!this.showXAxisLabel) {
@@ -127,98 +177,111 @@ export class LineChartComponent implements OnInit, OnDestroy, AfterViewInit {
       yAxis.call(axis => axis.selectAll('text').remove());
     }
 
-    const line = d3.line()
-      .curve(d3.curveCatmullRom.alpha(0.25))
-      .x((d: any) => xScale(d.date))
-      .y((d: any) => yScale(d.value));
+    if (this.showYLabel && this.showYAxisLabel) {
+      svg.append('text')
+        .attr('x', this.margin.left - 5)
+        .attr('y', this.margin.top)
+        .attr('fill', this.axisLabelColor)
+        .attr('font-size', '0.9em')
+        .attr('text-anchor', 'end')
+        .text(this.yLabel);
+    }
 
-    const area = d3.area()
-      .curve(d3.curveCatmullRom.alpha(0.25))
-      .x((d: any) => xScale(d.date))
-      .y0(yScale(d3.min(this.data, (d: any) => d.value)))
-      .y1((d: any) => yScale(d.value));
+    drawLine();
 
-    // Define gradient
-    svg.append('defs')
-      .html(`
-        <linearGradient id="dottedLineChartGradient" gradientTransform="rotate(90)">
-          <stop offset="0%" stop-color="${this.gradientColors[0]}"/>
-          <stop offset="100%" stop-color="${this.gradientColors[1]}"/>
-        </linearGradient>
-      `);
+    if (this.numberOfLine !== 1) {
+      drawLine(1, 'value1')
+    }
 
     // Draw line
-    if (this.showGradient) {
+    function drawLine(index = 0, domain = 'value') { // TODO: clean this function
+      const line = d3.line()
+        .curve(d3.curveCatmullRom.alpha(0.5))
+        .x((d: any) => xScale(d.date))
+        .y((d: any) => yScale(d[domain]));
+
+      const area = d3.area()
+        .curve(d3.curveCatmullRom.alpha(0.5))
+        .x((d: any) => xScale(d.date))
+        .y0(yScale(d3.min(that.data, (d: any) => d[domain])))
+        .y1((d: any) => yScale(d[domain]));
+
+      if (that.showGradient) {
+        svg.append('path')
+          .datum(that.data)
+          .attr('fill', `url(#dottedLineChartGradient${index})`)
+          .attr('stroke-width', 1)
+          .attr('d', area);
+      }
+
       svg.append('path')
-        .datum(this.data)
-        .attr('fill', 'url(#dottedLineChartGradient)')
-        .attr('stroke-width', 1)
-        .attr('d', area);
+        .datum(that.data)
+        .attr('fill', 'none')
+        .attr('stroke', that.lineColor[index])
+        .attr('stroke-width', 2)
+        .attr('stroke-dasharray', that.dashedLine ? 3 : 0)
+        .attr('d', line);
+
+      // Draw circle
+      if (that.showDot) {
+        svg.append('g')
+          .selectAll('circle')
+          .data(that.data)
+          .join('circle')
+            .attr('fill', that.lineColor[index])
+            .attr('stroke', 'none')
+            .attr('cx', (d: any) => xScale(d.date))
+            .attr('cy', (d: any) => yScale(d[domain]))
+            .attr('r', 4);
+      }
     }
 
-    svg.append('path')
-      .datum(this.data)
-      .attr('fill', 'none')
-      .attr('stroke', this.lineColor)
-      .attr('stroke-width', 2)
-      .attr('stroke-dasharray', this.dashedLine ? 3 : 0)
-      .attr('d', line);
-
-    // Draw circle
-    if (this.showDot) {
-      svg.append('g')
-        .selectAll('circle')
-        .data(this.data)
-        .join('circle')
-          .attr('fill', this.lineColor)
-          .attr('stroke', 'none')
-          .attr('cx', (d: any) => xScale(d.date))
-          .attr('cy', (d: any) => yScale(d.value))
-          .attr('r', 4);
+    if (this.showAxis) {
+      svg.append('g').call(xAxis);
+      svg.append('g').call(yAxis);
     }
 
-    svg.append('g').call(xAxis);
-    svg.append('g').call(yAxis);
-
-    // TOOLTIP
-    const bisect = d3.bisector((d: any) => d.date).left;
-
-    function mouseX(mx) {
-      const date = xScale.invert(mx);
-      const index = bisect(that.data, date, 1);
-      const a = that.data[index - 1];
-      const b = that.data[index];
-      return b && (date.getTime() - a.date.getTime() > b.date.getTime() - date.getTime()) ? b : a;
-    }
-
-    const tooltip = svg.append('g')
-        .attr('id', 'lineChartTooltip')
-        .style('pointer-events', 'none')
-        .style('visibility', 'hidden');
-
-    if (this.showTooltip) {
-      tooltip.append('circle')
-        .attr('cx', 0)
-        .attr('cy', 0)
-        .attr('r', '7')
-        .attr('fill', '#147F90');
-
-      svg.on('mousemove', onMouseMove);
-      svg.on('mouseout', onMouseOut);
-    }
-
-    function onMouseMove() {
-      const { date, value } = mouseX(d3.mouse(this)[0]);
-
-      tooltip
-        .style('visibility', 'visible')
-        .attr('transform', `translate(${xScale(date)},${yScale(value)})`);
-    }
-
-    function onMouseOut() {
-      tooltip.style('visibility', 'hidden')
-        .attr('transform', 'translate(0, 0)');
-    }
   }
 
+  clean() {
+    return new Promise(resolve => {
+      d3.select('#' + this.chartID)
+          .selectAll('svg')
+          .remove();
+
+      setTimeout(() => {
+        resolve(1);
+      }, 0);
+    });
+  }
+
+  calcTicks(width: number) {
+    let tick = 5;
+    switch(true) {
+      case (width <= 450):
+        tick = 3;
+        break;
+
+      case (width < 281):
+        tick = 2;
+        break;
+    }
+
+    return tick;
+  }
+
+  calcMargin() {
+    const margin = { top: 20, right: 16, bottom: 30, left: 40 };
+
+    if (!this.showAxis) {
+      return { top: 10, right: 0, bottom: 10, left: 0 };
+    }
+
+    const maxValue = d3.max(this.data, (d: any) => d.value);
+    if (maxValue !== undefined) {
+      margin.left = Math.round(maxValue).toString().length * 10 + (maxValue > 1 ? 20 : 40);
+    }
+
+    return margin;
+  }
 }
