@@ -5,6 +5,7 @@ import { ChartControllerService } from '../../services/chart-controller.service'
 import { MOCK_DATA } from './mock';
 import * as moment from 'moment';
 import * as d3 from 'd3';
+import { style } from 'd3';
 
 @Component({
   selector: '[kpiBarChart]',
@@ -36,6 +37,7 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
   ];
 
   chartID = 'BAR_CHART';
+  tooltipID = 'TOOLTIP';
   margin = { top: 30, right: 20, bottom: 30, left: 50 };
   width = 460;
   height = 400;
@@ -84,6 +86,8 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
 
       return {
         date: moment.unix(time).toDate(),
+        start: moment.unix(item.start).toDate(),
+        end: moment.unix(item.end).toDate(),
         value: item.value
       };
     });
@@ -129,9 +133,34 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
     return svg;
   }
 
+  initTooltip() {
+    d3.select('#' + this.chartID)
+      .selectAll('.chart-tooltip')
+      .remove();
+
+    const tooltip = d3.select('#' + this.chartID)
+      .append('div')
+      .attr('class', 'chart-tooltip')
+      .style('display', 'none')
+      .style('pointer-events', 'none')
+      .style('position', 'absolute')
+      .style('text-align', 'start')
+      .style('border', 'none')
+      .style('border-radius', '8px')
+      .style('padding', '8px')
+      .style('margin-top', '-30px')
+      .style('color', 'white')
+      .style('background', 'rgba(0,0,0,0.8)')
+      .style('font', '10px sans-serif');
+
+    return tooltip;
+  }
+
   draw() {
+    const that = this;
     const data = this.parseData();
     const svg = this.initSvg();
+    const yTick = this.calcYTick(this.height);
 
     const xScale = d3.scaleBand()
       .domain(data.map(d => d.date))
@@ -142,36 +171,9 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
       .domain([0, d3.max(data, (d: any) => d.value)]).nice()
       .range([this.height - this.margin.bottom, this.margin.top]);
 
-    const xAxis = g => g
-      .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(xScale).tickSizeOuter(0))
-      .call(axis => axis.select('.domain')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('line')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', this.fontSize)
-        .attr('dx', data.length > 5 ? '-26px' : null)
-        .style('transform', data.length > 5 ? `rotate(-45deg)` : null)
-      );
-
-    const yTick = this.calcYTick(this.height);
-
-    const yAxis = g => g
-      .attr('transform', `translate(${this.margin.left}, 0)`)
-      .call(d3.axisLeft(yScale).ticks(yTick).tickSizeOuter(0))
-      .call(axis => axis.select('.domain').remove())
-      .call(axis => axis.selectAll('line').remove())
-      .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', this.fontSize)
-      );
-
     // Draw bar
     svg.append('g')
+        .attr('class', 'bar-chart')
         .attr('fill', this.showGradient ? 'url(#barChartGradient)' : this.barColor)
       .selectAll('rect')
       .data(data)
@@ -186,7 +188,8 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
         .attr('stroke-dasharray', (d: any) => `${yScale(0) - yScale(d.value) + xScale.bandwidth()} 0 0 ${xScale.bandwidth()}`);
 
     // Draw title
-    svg.append('g')
+    const title = svg.append('g')
+        .attr('class', 'chart-title')
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
       .selectAll('rect')
@@ -197,13 +200,15 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
         .attr('width', xScale.bandwidth())
         .attr('height', this.height)
         .on('mouseover', onMouseOver)
-        .on('mouseout', onMouseOut)
-      .append('title')
-        .text((d: any) => d.value);
+        .on('mousemove', onMouseMove)
+        .on('mouseout', onMouseOut);
+
+    const tooltip = this.initTooltip();
 
     // Draw value on top of bar
     if (this.showValueOnBar) {
       svg.append('g')
+          .attr('class', 'chart-value')
           .attr('fill', this.axisLabelColor)
           .attr('text-anchor', 'middle')
         .selectAll('text')
@@ -219,11 +224,11 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
 
     // Draw axises
     if (this.showXAxis) {
-      svg.append('g').call(xAxis);
+      svg.append('g').call(initXAxis);
     }
 
     if (this.showYAxis) {
-      svg.append('g').call(yAxis);
+      svg.append('g').call(initYAxis);
     }
 
     if (this.showYAxis && this.showYUOM) {
@@ -236,49 +241,103 @@ export class BarChartComponent implements OnInit, OnChanges, OnDestroy {
         .text(this.yLabel);
     }
 
-    if (this.showTooltip) {
-      /*
-        Id:
-        Start time:
-        End time:
-        Value:
-      */
-      svg.append('g').call(initTooltip);
-    }
-
     function onMouseOver(d, i) {
       svg.select('#rect_' + i)
         .attr('filter', 'url(#barChartLighten)');
+
+      tooltip.style('display', 'block');
+    }
+
+    function onMouseMove() {
+      const d: any = d3.select(this).data()[0];
+
+      tooltip.html(`
+        <span>From: ${d.start}</span><br>
+        <span>To: ${d.end}</span>
+        <hr/>
+        <span>Value: ${d.value}</span>
+      `)
+      .style('left', (d3.event.offsetX - 34) + 'px')
+      .style('top', (d3.event.offsetY - 30) + 'px');
     }
 
     function onMouseOut(d, i) {
       svg.select('#rect_' + i)
         .attr('filter', null);
+
+      tooltip.style('display', 'none');
     }
 
-    function initTooltip(selection) {
+    function initXAxis(selection) {
       selection
-        .attr('class', 'bar-chart-tooltip')
-        .attr('pointer-events', 'none')
-        .attr('opacity', 0)
-        .attr('data-z-index', 8)
-        .attr('visibility', 'hidden')
-        .style('white-space', 'nowrap')
-        .attr('trasform', 'translate(1, -99999)');
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+        .call(d3.axisBottom(xScale).tickSizeOuter(0))
+        .call(axis => axis.select('.domain')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('line')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('text')
+          .attr('fill', that.axisLabelColor)
+          .attr('font-size', that.fontSize)
+          .attr('dx', data.length > 5 ? '-26px' : null)
+          .style('transform', data.length > 5 ? `rotate(-45deg)` : null)
+        );
+    }
+
+    function initYAxis(selection) {
+      selection
+        .attr('class', 'y-axis')
+        .attr('transform', `translate(${that.margin.left}, 0)`)
+        .call(d3.axisLeft(yScale).ticks(yTick).tickSizeOuter(0))
+        .call(axis => axis.select('.domain').remove())
+        .call(axis => axis.selectAll('line').remove())
+        .call(axis => axis.selectAll('text')
+          .attr('fill', that.axisLabelColor)
+          .attr('font-size', that.fontSize)
+        );
     }
   }
 
   /////////////// UTILS ///////////////
   parseData() {
-    const format = d3.format('.2s');
+    const d3Format = d3.format('.2s');
+    const momentFormat = this.format(this.data.length);
 
     return this.data.map(d => {
       return {
-        date: moment(d.date).format('DD-MM'),
+        date: moment(d.date).format(momentFormat),
         value: this.round(d.value),
-        shortValue: format(d.value)
+        shortValue: d3Format(d.value),
+        start: moment(d.start).format('DD-MM'), // TODO: need it?
+        end: moment(d.end).format('DD-MM')
       };
     });
+  }
+
+  format(length: number): string {
+    let format = 'MM';
+
+    switch (true) {
+      case (length <= 4): {
+        format = 'DD-MM'; // TOOD: fix it
+        break;
+      }
+
+      case (length <= 7): {
+        format = 'DD-MM';
+        break;
+      }
+
+      case (length > 7): {
+        format = 'MMM';
+        break;
+      }
+    }
+
+    return format;
   }
 
   calcFontSize(width: number): string {
