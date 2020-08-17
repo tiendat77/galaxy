@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, OnChanges, ChangeDetectionStrategy, ViewChild, ElementRef, Input, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChartControllerService } from '../../services/chart-controller.service';
+
 import { MOCK_DATA } from './mock';
 import * as d3 from 'd3';
 
@@ -48,7 +49,6 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
       this.draw();
     });
 
-    // TODO: Delete it
     this.initData();
   }
 
@@ -73,6 +73,8 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
   }
 
   initData() {
+    // translate tooltip here
+
     this.data = MOCK_DATA.map(d => ({ id: d.id, value: d.total })).sort((a, b) => {
       if (a.value < b.value) { return 1; }
 
@@ -98,7 +100,6 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
 
       this.width = width - 10;
       this.height = Math.max(height, this.data.length * this.barHeight);
-      console.log({ eHeight: height, dHeight: this.data.length * this.barHeight });
     }
 
     const svg = d3.select('#' + this.chartID)
@@ -127,12 +128,37 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
     return svg;
   }
 
+  initTooltip() {
+    d3.select('#' + this.chartID)
+      .selectAll('.chart-tooltip')
+      .remove();
+
+    const tooltip = d3.select('#' + this.chartID)
+      .append('div')
+      .attr('class', 'chart-tooltip')
+      .style('display', 'none')
+      .style('pointer-events', 'none')
+      .style('position', 'absolute')
+      .style('text-align', 'start')
+      .style('border', 'none')
+      .style('border-radius', '8px')
+      .style('padding', '8px')
+      .style('margin-top', '-30px')
+      .style('color', 'white')
+      .style('background', 'rgba(0,0,0,0.8)')
+      .style('font', '10px sans-serif');
+
+    return tooltip;
+  }
+
   draw() {
     if (!this.data.length) {
       return;
     }
 
+    const that = this;
     const svg = this.initSvg();
+    const yTick = this.calcYTick(this.height);
 
     const minValue = d3.min(this.data, (d: any) => d.value);
     const maxValue = d3.max(this.data, (d: any) => d.value);
@@ -146,45 +172,16 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
       .range([this.margin.top, this.height - this.margin.bottom])
       .padding(0.1);
 
-    const xAxis = g => g
-      .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(xScale).tickSizeOuter(0))
-      .call(axis => axis.select('.domain')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('line')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', this.fontSize)
-      );
-
-    const yAxis = g => g
-      .attr('transform', `translate(${this.margin.left}, 0)`)
-      .call(d3.axisLeft(yScale))
-      .call(axis => axis.select('.domain')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('line')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', this.fontSize)
-        .append('title')
-        .text((d, i) => this.data[i].id)
-      );
-
     // Draw axises
     if (this.showXAxis) {
-      svg.append('g').call(xAxis);
+      svg.append('g').call(initXAxis);
     }
 
     if (this.showYAxis) {
-      svg.append('g').call(yAxis);
+      svg.append('g').call(initYAxis);
     }
 
+    // Draw bar
     const rect = svg.append('g')
       .attr('fill', this.showGradient ? 'url(#barChartGradient)' : this.barColor)
       .selectAll('rect')
@@ -197,6 +194,7 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
         .attr('height', this.barHeight)
         .attr('stroke', this.barColor);
 
+    // Draw title
     svg.append('g')
       .attr('fill', 'none')
       .attr('pointer-events', 'all')
@@ -211,16 +209,6 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
         .on('mouseout', onMouseOut)
       .append('title')
         .text((d: any) => `Place: ${d.id}\nTotal: ${d.value}`);
-
-    function onMouseOver(d, i) {
-      svg.select(`#rect_${i}`)
-        .attr('filter', 'url(#barChartLighten)');
-    }
-
-    function onMouseOut(d, i) {
-      svg.select(`#rect_${i}`)
-        .attr('filter', null);
-    }
 
     if (this.showGradient) {
       rect.attr('stroke-width', 2)
@@ -240,10 +228,80 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
           .text((d: any) => d.value);
     }
 
+    const tooltip = this.initTooltip();
+
     if (this.showTooltip) {
-      // svg.append('g')
-      //   .
+
     }
+
+    // Functions
+    function onMouseOver(d, i) {
+      svg.select(`#rect_${i}`)
+        .attr('filter', 'url(#barChartLighten)');
+
+      tooltip.style('display', 'block');
+    }
+
+    function onMouseOut(d, i) {
+      svg.select(`#rect_${i}`)
+        .attr('filter', null);
+
+      const data: any = d3.select(this).data()[0];
+
+      tooltip.html(`
+        <span>From: ${d.start}</span><br>
+        <span>To: ${d.end}</span>
+        <hr/>
+        <span>Value: ${d.value}</span>
+      `)
+      .style('left', (d3.event.offsetX - 34) + 'px')
+      .style('top', (d3.event.offsetY - 30) + 'px');
+    }
+
+    function initXAxis(selection) {
+      selection
+        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+        .call(d3.axisBottom(xScale).tickSizeOuter(0))
+        .call(axis => axis.select('.domain')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('line')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('text')
+          .attr('fill', that.axisLabelColor)
+          .attr('font-size', that.fontSize)
+        );
+    }
+
+    function initYAxis(selection) {
+      selection
+        .attr('transform', `translate(${that.margin.left}, 0)`)
+        .call(d3.axisLeft(yScale))
+        .call(axis => axis.select('.domain')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('line')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('text')
+          .attr('fill', that.axisLabelColor)
+          .attr('font-size', that.fontSize)
+          .append('title')
+          .text((d, i) => that.data[i].id)
+        );
+    }
+  }
+
+  /////////////// UTILS ///////////////
+  parseData() {
+    const d3Format = d3.format('.2s');
+    return this.data.map(d => {
+      return {
+        id: '',
+        value: ''
+      };
+    });
   }
 
   calcFontSize(width: number) {
@@ -267,6 +325,28 @@ export class HorizontalBarChartComponent implements OnInit, OnChanges, OnDestroy
     }
 
     return fontSize + 'em';
+  }
+
+  calcYTick(height: number) {
+    let tick = 6;
+
+    switch (true) {
+      case (height > 400): {
+        tick = 5;
+        break;
+      }
+
+      case (height < 300): {
+        tick = 4;
+        break;
+      }
+    }
+
+    return tick;
+  }
+
+  round(value: number): number {
+    return Math.round(value * 100) / 100;
   }
 
 }
