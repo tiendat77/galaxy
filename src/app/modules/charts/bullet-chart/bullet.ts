@@ -13,7 +13,7 @@ export function createBulletChart(d3) {
     let measures = bulletMeasures;
     let width = 380;
     let height = 30;
-    let tickFormat = d3.format(',.1f');
+    let tickFormat = d3.format('.0f');
     let axisColor = '#rgba(0, 0, 0, 0.68)';
     let rangeTitles = ['Range 0', 'Range 1', 'Range 2'];
     let measureTitles = ['Measure 1', 'Measure 2', 'Measure 3'];
