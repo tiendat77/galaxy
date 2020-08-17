@@ -5,7 +5,6 @@ import { ChartControllerService } from '../../services/chart-controller.service'
 import { MOCK_DATA } from './mock';
 import * as moment from 'moment';
 import * as d3 from 'd3';
-import { style } from 'd3';
 
 @Component({
   selector: '[kpiBarChart]',
