@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { ChartControllerService } from '../../services/chart-controller.service';
 import { TranslateService } from '../../services/translate.service';
 
-import { KPID_DATA } from './mock';
+import { KPI_DATA } from './mock';
 
 import { enDefaultLocale, ruDefaultLocale, viDefaultLocale } from './utils';
 import * as d3 from 'd3';
@@ -42,7 +42,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showDot = false; // circle mark on line
 
   @Input() dashedLine = false;
-  @Input() mark: Date;
+  @Input() mark: Date = new Date(2020, 7, 25);
 
   chartID = 'LINE_CHART_';
   gradientColor = '#27283C';
@@ -51,6 +51,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   margin = { top: 0, right: 0, bottom: 0, left: 0 };
   width = 800;
   height = 600;
+  rotateXTicks = false;
 
   resizeSub: Subscription;
   translateSub: Subscription;
@@ -79,9 +80,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   test() {
-    const aaa = d3.color(this.tickColor);
-    aaa.opacity = 0.6;
-    console.log('color: ', aaa.toString());
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -177,9 +176,6 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .y0(yScale(minValue))
         .y1((d: any) => yScale(d.value));
 
-      const chartGraphical = svg.append('g')
-        .attr('class', 'line-chart-graphical');
-
       const chartGridLine = svg.append('g')
         .attr('class', 'line-chart-grid');
 
@@ -188,6 +184,9 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
 
       const chartYAxis = svg.append('g')
         .attr('class', 'line-chart-y-axis');
+
+      const chartGraphical = svg.append('g')
+        .attr('class', 'line-chart-graphical');
 
       const chartXCrossHairs = svg.append('g')
         .attr('class', 'line-chart-x-crosshairs');
@@ -202,6 +201,30 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .datum(that.data)
         .call(styleLine)
         .attr('d', line);
+
+      chartGraphical.append('defs') // SvgjsLinearGradient2410
+        .call(styleGradientDefs);
+
+      if (that.showGradient) {
+        chartGraphical.append('path')
+          .datum(that.data)
+          .call(styleGradientArea)
+          .attr('d', area);
+      }
+
+      if (that.showDot) {
+        chartGraphical.append('g')
+          .attr('class', 'line-chart-dots')
+          .selectAll('circle')
+          .data(that.data)
+          .join('circle')
+            .attr('fill', that.lineColor[0])
+            .attr('stroke', '#fff')
+            .attr('stroke-width', '2')
+            .attr('r', 6)
+            .attr('cx', (d: any) => xScale(d.date))
+            .attr('cy', (d: any) => yScale(d.value));
+      }
 
       if (that.showXGrid) {
         const tickSize = -(that.height - that.margin.top - that.margin.bottom);
@@ -251,7 +274,28 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
           .call(styleYAxis);
       }
 
+      if (that.mark !== undefined) {
+        const i = bisect(that.data, that.mark);
+        const data = that.data[i];
 
+        if (!data) { return; }
+
+        const cx = xScale(data.date);
+        const cy = yScale(data.value);
+        const max = xScale(maxDate);
+
+        if (cx > 0 && cx <= max) {
+          svg.append('g')
+              .attr('class', 'line-chart-mark')
+            .append('circle')
+              .attr('fill', that.lineColor[0])
+              .attr('stroke', '#fff')
+              .attr('stroke-width', '2')
+              .attr('r', 6)
+              .attr('cx', cx)
+              .attr('cy', cy);
+        }
+      }
     }
 
     function drawMultipleLine() {}
@@ -285,8 +329,26 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .attr('stroke-dasharray', that.dashedLine ? 3 : 0);
     }
 
-    function styleGradientArea(selection: d3.Selection<SVGPathElement, unknown, HTMLElement, any>) {
+    function styleGradientDefs(selection: d3.Selection<SVGDefsElement, unknown, HTMLElement, any>) {
+      const stopA = d3.color(that.lineColor[0]);
+      stopA.opacity = 0.5;
 
+      const stopB = d3.color(that.gradientColor);
+      stopB.opacity = 0.2;
+
+      selection.html(`
+        <linearGradient id="SvgjsLinearGradient2410" x1="0" y1="0" x2="0" y2="1">
+          <stop id="SvgjsStop2411" stop-opacity="0.7" stop-color="${stopA.toString()}" offset="0"></stop>
+          <stop id="SvgjsStop2412" stop-opacity="0.9" stop-color="${stopB.toString()}" offset="0.9"></stop>
+          <stop id="SvgjsStop2413" stop-opacity="0.9" stop-color="${stopB.toString()}" offset="1"></stop>
+        </linearGradient>
+      `);
+    }
+
+    function styleGradientArea(selection: d3.Selection<SVGPathElement, unknown, HTMLElement, any>) {
+      selection
+        .attr('fill', `url(#SvgjsLinearGradient2410)`)
+        .attr('stroke-width', 1);
     }
 
     function styleXAxis(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
@@ -306,6 +368,8 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
           .attr('class', 'font-number')
           .attr('fill', tickColor)
           .attr('font-size', that.fontSize)
+          .attr('dx', that.rotateXTicks ? '-26px' : null)
+          .style('transform', that.rotateXTicks ? 'rotate(-45deg)' : null)
         )
         .call(g => g.selectAll('line').remove());
 
@@ -345,6 +409,10 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
           .style('stroke-opacity', '0.7')
           .style('shape-rendering', 'crispEdges')
         );
+    }
+
+    function rand(): number {
+      return Math.floor(1000 + (9999 - 1000) * Math.random());
     }
 
   }
@@ -411,6 +479,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
 
   calcMargin() {
     const margin = { top: 30, right: 16, bottom: 30, left: 40 };
+    this.rotateXTicks = false;
 
     if (!(this.showXAxis && this.showYAxis)) {
       this.margin = { top: 10, right: 0, bottom: 10, left: 0 };
@@ -422,6 +491,11 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     if (maxValue !== undefined) {
       // 1 digit = 10 space
       margin.left = Math.round(maxValue).toString().length * 10 + (maxValue > 1 ? 20 : 40);
+    }
+
+    if (this.width <= 340 || this.data.length > 15) {
+      this.rotateXTicks = true;
+      margin.bottom = 60;
     }
 
     this.margin = margin;
@@ -444,7 +518,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getDataTest() {
-    this.data = KPID_DATA.map((item: any) => ({date: new Date(item.date), value: item.value}));
+    this.data = KPI_DATA.map((item: any) => ({date: new Date(item.date), value: item.value}));
 
     setTimeout(() => {
       this.draw();

@@ -6,7 +6,7 @@ export const MOCK_DATA = [
   { date: '2019-02-04', value: 83}
 ];
 
-export const KPID_DATA = [
+export const KPI_DATA = [
   {
     date: '2020-01-16T12:00:00.000Z',
     value: 309.04805555555555
