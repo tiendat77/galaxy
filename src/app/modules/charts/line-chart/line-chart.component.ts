@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChartControllerService } from '../../services/chart-controller.service';
-// import { TranslateService } from '../../services/translate.service';
+import { TranslateService } from '../../services/translate.service';
 
 import { MOCK_DATA } from './mock';
 
@@ -10,7 +10,8 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.scss']
+  styleUrls: ['./line-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('lineChartContainer') chartContainer: ElementRef;
@@ -23,19 +24,24 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     ['rgba(255,64,129,0.5)', 'rgba(46,46,46,0.2)']
   ];
   @Input() lineColor = ['#7cd177', '#ff4081'];
+  @Input() numberOfLine = 1;
+  @Input() yLabel = 'hours';
+  @Input() markCurrent: Date;
+
   @Input() dashedLine = false;
   @Input() showYAxisLabel = true;
   @Input() showXAxisLabel = true;
   @Input() showDot = false;
   @Input() showGradient = true;
   @Input() showTooltip = false;
+  @Input() showGridLine = true;
+  @Input() showYGridLine = false;
+  @Input() showMark = true;
   @Input() showAxis = true;
-  @Input() numberOfLine = 1;
   @Input() showYLabel = true;
-  @Input() yLabel = 'hours';
 
   chartID = 'LINE_CHART';
-  margin = { top: 20, right: 16, bottom: 30, left: 40 };
+  margin = { top: 30, right: 16, bottom: 30, left: 40 };
   width = 800 - this.margin.left - this.margin.right;
   height = 600 - this.margin.top - this.margin.bottom;
   fontSize = '1.3em';
@@ -44,7 +50,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private chartCtrl: ChartControllerService,
-    // private translate: TranslateService
+    private translate: TranslateService
   ) {
     this.chartID = this.initID();
   }
@@ -78,17 +84,14 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async initData() {
-    // this.yLabel = await this.translate.get('WORD.HOURS');
+    this.yLabel = await this.translate.get('WORD.HOURS');
   }
 
   initSvg() {
     if (this.chartContainer) {
       const element = this.chartContainer.nativeElement;
 
-      // this.width = element.offsetWidth;
-      // this.height = element.offsetHeight;
-
-      this.width = element.parentNode.clientWidth - 10;
+      this.width = element.parentNode.clientWidth;
       this.height = element.parentNode.clientHeight - 10;
     }
 
@@ -103,11 +106,11 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     svg.append('defs')
       .html(`
         <linearGradient id="dottedLineChartGradient0" gradientTransform="rotate(90)">
-          <stop offset="0%" stop-opacity="0.8" stop-color="${this.gradientColors[0][0]}"/>
+          <stop offset="0%" stop-color="${this.gradientColors[0][0]}"/>
           <stop offset="100%" stop-opacity="0" stop-color="${this.gradientColors[0][1]}"/>
         </linearGradient>
         <linearGradient id="dottedLineChartGradient1" gradientTransform="rotate(90)">
-          <stop offset="0%" stop-opacity="0.8" stop-color="${this.gradientColors[1][0]}"/>
+          <stop offset="0%" stop-color="${this.gradientColors[1][0]}"/>
           <stop offset="100%" stop-opacity="0" stop-color="${this.gradientColors[1][1]}"/>
         </linearGradient>
       `);
@@ -115,20 +118,50 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     return svg;
   }
 
-  async draw() {
+  initTooltip() {
+    d3.select('#' + this.chartID)
+    .selectAll('.line-chart-tooltip')
+    .remove();
+
+    return d3.select('#' + this.chartID)
+      .append('div')
+      .attr('class', 'chart-tooltip')
+      .style('display', 'none')
+      .style('pointer-events', 'none')
+      .style('position', 'absolute')
+      .style('text-align', 'start')
+      .style('border', 'none')
+      .style('border-radius', '8px')
+      .style('padding', '8px')
+      .style('margin-top', '-30px')
+      .style('color', 'white')
+      .style('background', 'rgba(0,0,0,0.8)')
+      .style('font-size', '12px')
+      .style('line-height', '16px');
+  }
+
+  draw() {
+    d3.select('#' + this.chartID)
+      .selectAll('svg')
+      .remove();
+
     if (!this.data.length) {
       return;
     }
 
     const that = this;
-    await this.clean();
     const svg = this.initSvg();
+    const tooltip = this.initTooltip();
+
+    const tick = this.calcTicks(this.width);
+    const adjust = 0.05;
+    const minDate = d3.min(this.data, (d: any) => d.date);
+    const maxDate = d3.max(this.data, (d: any) => d.date);
+    const bisect = d3.bisector((d: any) => d.date).left;
 
     const xScale = d3.scaleTime()
-      .domain(d3.extent(this.data, (d: any) => d.date))
+      .domain([minDate, maxDate])
       .range([this.margin.left, this.width - this.margin.right]);
-
-    const adjust = 0.05;
 
     const y1Domain = d3.extent(this.data, (d: any) => d.value);
     y1Domain[1] = y1Domain[1] + y1Domain[1] * adjust;
@@ -146,44 +179,19 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
       .domain([Math.min(y1Domain[0], y2Domain[0]), Math.max(y1Domain[1], y2Domain[1])])
       .range([this.height - this.margin.bottom, this.margin.top]);
 
-    const tick = this.calcTicks(this.width);
-    const xAxis = g => g
-      .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(xScale).ticks(tick).tickSizeOuter(0))
-      .call(axis => axis.select('.domain')
-        .attr('stroke', this.axisColor)
-      )
-      .call(axis => axis.selectAll('line').remove())
-      .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', this.fontSize)
-      );
-
-    const yAxis = g => g
-      .attr('transform', `translate(${this.margin.left}, 0)`)
-      .call(d3.axisLeft(yScale).ticks(tick))
-      .call(axis => axis.select('.domain').remove())
-      .call(axis => axis.selectAll('line').remove())
-      .call(axis => axis.selectAll('text')
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', this.fontSize)
-      );
-
-    if (!this.showXAxisLabel) {
-      xAxis.call(axis => axis.selectAll('text').remove());
+    if (this.showGridLine && this.showAxis) {
+      svg.append('g')
+        .attr('class', 'chart-grid-lines')
+        .call(drawGrid);
     }
 
-    if (!this.showYAxisLabel) {
-      yAxis.call(axis => axis.selectAll('text').remove());
-    }
-
-    if (this.showYLabel && this.showYAxisLabel) {
+    if (this.showYLabel && this.showAxis) {
       svg.append('text')
-        .attr('x', this.margin.left - 5)
-        .attr('y', this.margin.top)
+        .attr('x', this.margin.left)
+        .attr('y', this.margin.top - 6)
         .attr('fill', this.axisLabelColor)
         .attr('font-size', '0.9em')
-        .attr('text-anchor', 'end')
+        .attr('text-anchor', 'middle')
         .text(this.yLabel);
     }
 
@@ -193,8 +201,14 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
       drawLine(1, 'value1')
     }
 
-    // Draw line
-    function drawLine(index = 0, domain = 'value') { // TODO: clean this function
+    if (this.showAxis) {
+      svg.append('g').call(initXAxis);
+      svg.append('g').call(initYAxis);
+    }
+
+    // Functions
+    // TODO: clean this function
+    function drawLine(index = 0, domain = 'value') {
       const line = d3.line()
         .curve(d3.curveCatmullRom.alpha(0.5))
         .x((d: any) => xScale(d.date))
@@ -234,11 +248,104 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
             .attr('cy', (d: any) => yScale(d[domain]))
             .attr('r', 4);
       }
+
+      if (that.showMark) {
+        svg.append('g').call(drawMark);
+      }
     }
 
-    if (this.showAxis) {
-      svg.append('g').call(xAxis);
-      svg.append('g').call(yAxis);
+    function initXAxis(selection) {
+      selection
+        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+        .call(d3.axisBottom(xScale).ticks(tick).tickSizeOuter(0))
+        .call(axis => axis.select('.domain')
+          .attr('stroke', that.axisColor)
+        )
+        .call(axis => axis.selectAll('line').remove())
+        .call(axis => axis.selectAll('text')
+          .attr('class', 'font-number')
+          .attr('fill', that.axisLabelColor)
+          .attr('font-size', that.fontSize)
+        );
+
+      if (!that.showXAxisLabel) {
+        selection.call(axis => axis.selectAll('text').remove());
+      }
+    }
+
+    function initYAxis(selection) {
+      selection
+        .attr('transform', `translate(${that.margin.left}, 0)`)
+        .call(d3.axisLeft(yScale).ticks(tick))
+        .call(axis => axis.select('.domain').remove())
+        .call(axis => axis.selectAll('line').remove())
+        .call(axis => axis.selectAll('text')
+          .attr('class', 'font-number')
+          .attr('fill', that.axisLabelColor)
+          .attr('font-size', that.fontSize)
+        );
+
+      if (!that.showYAxisLabel) {
+        selection.call(axis => axis.selectAll('text').remove());
+      }
+    }
+
+    function drawGrid(selection) {
+      selection.append('g')
+        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+        .call(d3.axisBottom(xScale)
+            .ticks(tick)
+            .tickSize(-(that.height - that.margin.top - that.margin.bottom))
+            .tickFormat((d) => '')
+        )
+        .call(axis => axis.select('.domain').remove())
+        .call(axis => axis.selectAll('line')
+          .style('stroke', 'rgba(210, 210, 210, 0.12)')
+          .style('stroke-opacity', '0.7')
+          .style('shape-rendering', 'crispEdges')
+        );
+
+      if (that.showYGridLine) {
+        selection.append('g')
+          .attr('transform', `translate(${that.margin.left}, 0)`)
+          .call(d3.axisLeft(yScale).ticks(tick)
+            .tickSize(-(that.width - that.margin.left - that.margin.right))
+            .tickFormat((d) => '')
+          )
+          .call(axis => axis.select('.domain').remove())
+          .call(axis => axis.selectAll('line')
+            .style('stroke', 'rgba(210, 210, 210, 0.12)')
+            .style('stroke-opacity', '0.7')
+            .style('shape-rendering', 'crispEdges')
+          );
+      }
+    }
+
+    function drawMark(selection) {
+      if (!that.markCurrent) {
+        return;
+      }
+
+      const i = bisect(that.data, that.markCurrent);
+      const data = that.data[i];
+
+      if (!data) {
+        return;
+      }
+
+      const cx = xScale(data.date);
+      const cy = yScale(data.value);
+      const max = xScale(maxDate);
+
+      if (cx > 0 && cx <= max) {
+        selection.append('circle')
+          .attr('fill', '#fff')
+          .attr('stroke', that.lineColor[0])
+          .attr('stroke-width', '2')
+          .attr('r', 4)
+          .attr('cx', cx)
+          .attr('cy', cy);
+      }
     }
 
   }
@@ -271,7 +378,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   calcMargin() {
-    const margin = { top: 20, right: 16, bottom: 30, left: 40 };
+    const margin = { top: 30, right: 16, bottom: 30, left: 40 };
 
     if (!this.showAxis) {
       return { top: 10, right: 0, bottom: 10, left: 0 };
@@ -284,4 +391,5 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
 
     return margin;
   }
+
 }

@@ -8,14 +8,17 @@
   justify-content: center;
   min-height: 500px;
   overflow: auto;
-  background: #B7BBC4;
+  background: linear-gradient(#1e1e2f, #1e1e24);
+  border-top: 2px solid #57FF62;
 
   .card {
     position: relative;
     border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, .22);
     margin: 8px;
-    background: #30323A;
+    background: #27293d;
+    border: 0;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.1);
+    color: #fff;
 
     div {
       width: 100%;
