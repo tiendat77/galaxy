@@ -1,10 +1,12 @@
-import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { ChartControllerService } from '../../services/chart-controller.service';
 import { TranslateService } from '../../services/translate.service';
 
-import { MOCK_DATA } from './mock';
+import { KPID_DATA } from './mock';
 
+import { enDefaultLocale, ruDefaultLocale, viDefaultLocale } from './utils';
 import * as d3 from 'd3';
 
 @Component({
@@ -16,54 +18,73 @@ import * as d3 from 'd3';
 export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('lineChartContainer') chartContainer: ElementRef;
 
-  @Input() data: any[];
-  @Input() axisLabelColor = 'rgba(255, 255, 255, 0.68)';
-  @Input() axisColor = 'rgba(250, 250, 250, 0.4)';
-  @Input() gradientColors: string[][] = [
-    ['rgba(124,209,119,0.5)', 'rgba(46,46,46,0.2)'],
-    ['rgba(255,64,129,0.5)', 'rgba(46,46,46,0.2)']
-  ];
-  @Input() lineColor = ['#7cd177', '#ff4081'];
-  @Input() numberOfLine = 1;
-  @Input() yLabel = 'hours';
-  @Input() markCurrent: Date;
+  @Input() data: any[] = [];
+  @Input() dataMultiple: any[][] = [];
+  @Input() mode: 'single' | 'multiple' = 'single';
 
-  @Input() dashedLine = false;
-  @Input() showYAxisLabel = true;
-  @Input() showXAxisLabel = true;
-  @Input() showDot = false;
+  // colors
+  @Input() lineColor = ['#7cd177', '#ff4081'];
+  @Input() tickColor = '#fff';
+
+  // text
+  @Input() xLabel = '';
+  @Input() yLabel = 'hours';
+
+  // options
+  @Input() showXAxis = true;
+  @Input() showYAxis = true;
+  @Input() showXAxisTick = true;
+  @Input() showYAxisTick = true;
+  @Input() showXGrid = true;
+  @Input() showYGrid = false;
   @Input() showGradient = true;
   @Input() showTooltip = false;
-  @Input() showGridLine = true;
-  @Input() showYGridLine = false;
-  @Input() showMark = true;
-  @Input() showAxis = true;
-  @Input() showYLabel = true;
+  @Input() showDot = false; // circle mark on line
 
-  chartID = 'LINE_CHART';
-  margin = { top: 30, right: 16, bottom: 30, left: 40 };
-  width = 800 - this.margin.left - this.margin.right;
-  height = 600 - this.margin.top - this.margin.bottom;
+  @Input() dashedLine = false;
+  @Input() mark: Date;
+
+  chartID = 'LINE_CHART_';
+  gradientColor = '#27283C';
   fontSize = '1.3em';
 
+  margin = { top: 0, right: 0, bottom: 0, left: 0 };
+  width = 800;
+  height = 600;
+
   resizeSub: Subscription;
+  translateSub: Subscription;
 
   constructor(
     private chartCtrl: ChartControllerService,
     private translate: TranslateService
   ) {
-    this.chartID = this.initID();
+    this.chartID = this.generateID();
   }
 
+  /////////////// INITIAL ///////////////
   ngOnInit(): void {
-    this.initData();
+    this.translateWords();
 
     this.resizeSub = this.chartCtrl.onResizeRequest$.subscribe(() => {
       this.draw();
     });
+
+    this.translateSub = this.translate.currentLanguage$.subscribe((lang) => {
+      this.setTimeFormatDefaultLocale(lang);
+    });
+
+    this.test();
+    this.getDataTest();
   }
 
-  ngOnChanges(changes): void {
+  test() {
+    const aaa = d3.color(this.tickColor);
+    aaa.opacity = 0.6;
+    console.log('color: ', aaa.toString());
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.data) {
       setTimeout(() => {
         this.draw();
@@ -75,296 +96,341 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     if (this.resizeSub) {
       this.resizeSub.unsubscribe();
     }
+
+    if (this.translateSub) {
+      this.translateSub.unsubscribe();
+    }
   }
 
-  initID() {
-    const rand = () => Math.floor(1000 + (9999 - 1000) * Math.random());
+  /////////////// DRAW CHART ///////////////
+  draw() {
+    const that = this;
+    const chartID = '#' + this.chartID;
 
-    return 'LINE_CHART_' + rand() + '_' + rand();
-  }
-
-  async initData() {
-    this.yLabel = await this.translate.get('WORD.HOURS');
-  }
-
-  initSvg() {
-    if (this.chartContainer) {
-      const element = this.chartContainer.nativeElement;
-
-      this.width = element.parentNode.clientWidth;
-      this.height = element.parentNode.clientHeight - 10;
+     // TODO dataMultiple
+    if ((this.mode === 'single' && !this.data.length) || (this.mode === 'multiple' && !this.dataMultiple.length)) {
+      return;
     }
 
-    this.margin = this.calcMargin();
+    if (!this.chartContainer) {
+      return;
+    }
 
-    const svg = d3.select('#' + this.chartID)
+    this.clearChart(chartID);
+    this.calcSvgSize();
+    this.calcMargin();
+
+    const svg = d3.select(chartID)
       .append('svg')
         .attr('width', this.width)
         .attr('height', this.height);
 
-    // Define gradient
-    svg.append('defs')
-      .html(`
-        <linearGradient id="dottedLineChartGradient0" gradientTransform="rotate(90)">
-          <stop offset="0%" stop-color="${this.gradientColors[0][0]}"/>
-          <stop offset="100%" stop-opacity="0" stop-color="${this.gradientColors[0][1]}"/>
-        </linearGradient>
-        <linearGradient id="dottedLineChartGradient1" gradientTransform="rotate(90)">
-          <stop offset="0%" stop-color="${this.gradientColors[1][0]}"/>
-          <stop offset="100%" stop-opacity="0" stop-color="${this.gradientColors[1][1]}"/>
-        </linearGradient>
-      `);
-
-    return svg;
-  }
-
-  initTooltip() {
-    d3.select('#' + this.chartID)
-    .selectAll('.line-chart-tooltip')
-    .remove();
-
-    return d3.select('#' + this.chartID)
+    const chartTooltip = d3.select(chartID)
       .append('div')
-      .attr('class', 'chart-tooltip')
-      .style('display', 'none')
-      .style('pointer-events', 'none')
-      .style('position', 'absolute')
-      .style('text-align', 'start')
-      .style('border', 'none')
-      .style('border-radius', '8px')
-      .style('padding', '8px')
-      .style('margin-top', '-30px')
-      .style('color', 'white')
-      .style('background', 'rgba(0,0,0,0.8)')
-      .style('font-size', '12px')
-      .style('line-height', '16px');
-  }
+        .attr('class', 'line-chart-tooltip')
+        .call(styleTooltip);
 
-  draw() {
-    d3.select('#' + this.chartID)
-      .selectAll('svg')
-      .remove();
+    const chartLegend = d3.select(chartID)
+      .append('div')
+        .attr('class', 'line-chart-legend')
+        .call(styleLegend);
 
-    if (!this.data.length) {
+    const minDate = d3.min(this.data, (d: any) => d.date);
+    const maxDate = d3.max(this.data, (d: any) => d.date);
+    const minValue = d3.min(this.data, (d: any) => d.value);
+    const maxValue = d3.max(this.data, (d: any) => d.value);
+    const adjust = 0.05; // to avoid d3 curve touch the axis
+    const bisect = d3.bisector((d: any) => d.date).left;
+    const ticks = this.calcTicks(this.width);
+
+    if (this.mode === 'single') {
+      drawSingleLine();
       return;
     }
 
-    const that = this;
-    const svg = this.initSvg();
-    const tooltip = this.initTooltip();
-
-    const tick = this.calcTicks(this.width);
-    const adjust = 0.05;
-    const minDate = d3.min(this.data, (d: any) => d.date);
-    const maxDate = d3.max(this.data, (d: any) => d.date);
-    const bisect = d3.bisector((d: any) => d.date).left;
-
-    const xScale = d3.scaleTime()
-      .domain([minDate, maxDate])
-      .range([this.margin.left, this.width - this.margin.right]);
-
-    const y1Domain = d3.extent(this.data, (d: any) => d.value);
-    y1Domain[1] = y1Domain[1] + y1Domain[1] * adjust;
-    y1Domain[0] = y1Domain[0] - Math.max(y1Domain[0] * adjust, y1Domain[1] * adjust);
-
-    let y2Domain = y1Domain;
-
-    if (this.numberOfLine !== 1) {
-      y2Domain = d3.extent(this.data, (d: any) => d.value1);
-      y2Domain[1] = y2Domain[1] + y2Domain[1] * adjust;
-      y2Domain[0] = y2Domain[0] - Math.max(y2Domain[0] * adjust, y2Domain[1] * adjust);
+    if (this.mode === 'multiple') {
+      drawMultipleLine();
+      return;
     }
 
-    const yScale = d3.scaleLinear()
-      .domain([Math.min(y1Domain[0], y2Domain[0]), Math.max(y1Domain[1], y2Domain[1])])
-      .range([this.height - this.margin.bottom, this.margin.top]);
+    /////////////// FUNCTIONS ///////////////
+    function drawSingleLine() {
+      const xScale = d3.scaleTime()
+        .domain([minDate, maxDate])
+        .range([that.margin.left, that.width - that.margin.right]);
 
-    if (this.showGridLine && this.showAxis) {
-      svg.append('g')
-        .attr('class', 'chart-grid-lines')
-        .call(drawGrid);
-    }
+      const yMin = minValue - Math.max(minValue * adjust, maxValue * adjust);
+      const yMax = maxValue + maxValue * adjust;
 
-    if (this.showYLabel && this.showAxis) {
-      svg.append('text')
-        .attr('x', this.margin.left)
-        .attr('y', this.margin.top - 6)
-        .attr('fill', this.axisLabelColor)
-        .attr('font-size', '0.9em')
-        .attr('text-anchor', 'middle')
-        .text(this.yLabel);
-    }
+      const yScale = d3.scaleLinear()
+        .domain([yMin, yMax])
+        .range([that.height - that.margin.bottom, that.margin.top]);
 
-    drawLine();
-
-    if (this.numberOfLine !== 1) {
-      drawLine(1, 'value1')
-    }
-
-    if (this.showAxis) {
-      svg.append('g').call(initXAxis);
-      svg.append('g').call(initYAxis);
-    }
-
-    // Functions
-    // TODO: clean this function
-    function drawLine(index = 0, domain = 'value') {
-      const line = d3.line()
+      const line = d3.line() // create line chart
         .curve(d3.curveCatmullRom.alpha(0.5))
         .x((d: any) => xScale(d.date))
-        .y((d: any) => yScale(d[domain]));
+        .y((d: any) => yScale(d.value));
 
-      const area = d3.area()
+      const area = d3.area() // create gradient effect
         .curve(d3.curveCatmullRom.alpha(0.5))
         .x((d: any) => xScale(d.date))
-        .y0(yScale(d3.min(that.data, (d: any) => d[domain])))
-        .y1((d: any) => yScale(d[domain]));
+        .y0(yScale(minValue))
+        .y1((d: any) => yScale(d.value));
 
-      if (that.showGradient) {
-        svg.append('path')
-          .datum(that.data)
-          .attr('fill', `url(#dottedLineChartGradient${index})`)
-          .attr('stroke-width', 1)
-          .attr('d', area);
-      }
+      const chartGraphical = svg.append('g')
+        .attr('class', 'line-chart-graphical');
 
-      svg.append('path')
+      const chartGridLine = svg.append('g')
+        .attr('class', 'line-chart-grid');
+
+      const chartXAxis = svg.append('g')
+        .attr('class', 'line-chart-x-axis');
+
+      const chartYAxis = svg.append('g')
+        .attr('class', 'line-chart-y-axis');
+
+      const chartXCrossHairs = svg.append('g')
+        .attr('class', 'line-chart-x-crosshairs');
+
+      const chartYLabel = svg.append('g')
+        .attr('class', 'line-chart-y-label');
+
+      const chartXLabel = svg.append('g')
+        .attr('class', 'line-chart-x-label');
+
+      chartGraphical.append('path')
         .datum(that.data)
-        .attr('fill', 'none')
-        .attr('stroke', that.lineColor[index])
-        .attr('stroke-width', 2)
-        .attr('stroke-dasharray', that.dashedLine ? 3 : 0)
+        .call(styleLine)
         .attr('d', line);
 
-      // Draw circle
-      if (that.showDot) {
-        svg.append('g')
-          .selectAll('circle')
-          .data(that.data)
-          .join('circle')
-            .attr('fill', that.lineColor[index])
-            .attr('stroke', 'none')
-            .attr('cx', (d: any) => xScale(d.date))
-            .attr('cy', (d: any) => yScale(d[domain]))
-            .attr('r', 4);
+      if (that.showXGrid) {
+        const tickSize = -(that.height - that.margin.top - that.margin.bottom);
+
+        chartGridLine.append('g')
+          .attr('class', 'x-grid')
+          .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+          .call(d3.axisBottom(xScale)
+            .ticks(ticks)
+            .tickSize(tickSize)
+            .tickFormat(d => '')
+          )
+          .call(styleGridLine);
       }
 
-      if (that.showMark) {
-        svg.append('g').call(drawMark);
+      if (that.showYGrid) {
+        const tickSize = -(that.width - that.margin.left - that.margin.right);
+
+        chartGridLine.append('g')
+          .attr('class', 'y-grid')
+          .attr('transform', `translate(${that.margin.left}, 0)`)
+          .call(d3.axisLeft(yScale)
+            .ticks(ticks)
+            .tickSize(tickSize)
+            .tickFormat(d => '')
+          )
+          .call(styleGridLine);
+      }
+
+      if (that.showXAxis) {
+        chartXAxis
+          .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+          .call(d3.axisBottom(xScale)
+            .ticks(ticks)
+            .tickSizeOuter(0)
+          )
+          .call(styleXAxis);
+      }
+
+      if (that.showYAxis) {
+        chartYAxis
+          .attr('transform', `translate(${that.margin.left}, 0)`)
+          .call(d3.axisLeft(yScale)
+            .ticks(ticks)
+            .tickSizeOuter(0)
+          )
+          .call(styleYAxis);
+      }
+
+
+    }
+
+    function drawMultipleLine() {}
+
+    function styleTooltip(selection: d3.Selection<HTMLElement, unknown, HTMLElement, any>) {
+      selection
+        .style('position', 'absolute')
+        .style('display', 'none')
+        .style('pointer-events', 'none')
+        .style('background', 'rgba(0,0,0,0.8)')
+        .style('border', 'none')
+        .style('color', 'white')
+        .style('text-align', 'start')
+        .style('border-radius', '8px')
+        .style('padding', '8px')
+        .style('margin-top', '-30px')
+        .style('font-size', '12px')
+        .style('line-height', '16px');
+    }
+
+    function styleLegend(selection: d3.Selection<HTMLElement, unknown, HTMLElement, any>) {
+      selection
+        .style('width', '100%');
+    }
+
+    function styleLine(selection: d3.Selection<SVGPathElement, unknown, HTMLElement, any>) {
+      selection
+        .attr('fill', 'none')
+        .attr('stroke', that.lineColor[0])
+        .attr('stroke-width', 2)
+        .attr('stroke-dasharray', that.dashedLine ? 3 : 0);
+    }
+
+    function styleGradientArea(selection: d3.Selection<SVGPathElement, unknown, HTMLElement, any>) {
+
+    }
+
+    function styleXAxis(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
+      const color = d3.color(that.tickColor);
+
+      color.opacity = 0.4;
+      const axisColor = color.toString();
+
+      color.opacity = 0.68;
+      const tickColor = color.toString();
+
+      selection
+        .call(g => g.select('.domain')
+          .attr('stroke', axisColor)
+        )
+        .call(g => g.selectAll('text')
+          .attr('class', 'font-number')
+          .attr('fill', tickColor)
+          .attr('font-size', that.fontSize)
+        )
+        .call(g => g.selectAll('line').remove());
+
+      if (!that.showXAxisTick) {
+        selection.call(g => g.selectAll('text').remove());
       }
     }
 
-    function initXAxis(selection) {
+    function styleYAxis(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
+      const color = d3.color(that.tickColor);
+
+      color.opacity = 0.68;
+      const tickColor = color.toString();
+
       selection
-        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
-        .call(d3.axisBottom(xScale).ticks(tick).tickSizeOuter(0))
-        .call(axis => axis.select('.domain')
-          .attr('stroke', that.axisColor)
-        )
-        .call(axis => axis.selectAll('line').remove())
-        .call(axis => axis.selectAll('text')
+        .call(g => g.select('.domain').remove())
+        .call(g => g.selectAll('line').remove())
+        .call(g => g.selectAll('text')
           .attr('class', 'font-number')
-          .attr('fill', that.axisLabelColor)
+          .attr('fill', tickColor)
           .attr('font-size', that.fontSize)
         );
 
-      if (!that.showXAxisLabel) {
-        selection.call(axis => axis.selectAll('text').remove());
+      if (!that.showYAxisTick) {
+        selection.call(g => g.selectAll('text').remove());
       }
     }
 
-    function initYAxis(selection) {
+    function styleGridLine(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
+      const color = d3.color(that.tickColor);
+      color.opacity = 0.12;
+
       selection
-        .attr('transform', `translate(${that.margin.left}, 0)`)
-        .call(d3.axisLeft(yScale).ticks(tick))
-        .call(axis => axis.select('.domain').remove())
-        .call(axis => axis.selectAll('line').remove())
-        .call(axis => axis.selectAll('text')
-          .attr('class', 'font-number')
-          .attr('fill', that.axisLabelColor)
-          .attr('font-size', that.fontSize)
-        );
-
-      if (!that.showYAxisLabel) {
-        selection.call(axis => axis.selectAll('text').remove());
-      }
-    }
-
-    function drawGrid(selection) {
-      selection.append('g')
-        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
-        .call(d3.axisBottom(xScale)
-            .ticks(tick)
-            .tickSize(-(that.height - that.margin.top - that.margin.bottom))
-            .tickFormat((d) => '')
-        )
-        .call(axis => axis.select('.domain').remove())
-        .call(axis => axis.selectAll('line')
-          .style('stroke', 'rgba(210, 210, 210, 0.12)')
+        .call(g => g.select('.domain').remove())
+        .call(g => g.selectAll('line')
+          .style('stroke', color.toString())
           .style('stroke-opacity', '0.7')
           .style('shape-rendering', 'crispEdges')
         );
-
-      if (that.showYGridLine) {
-        selection.append('g')
-          .attr('transform', `translate(${that.margin.left}, 0)`)
-          .call(d3.axisLeft(yScale).ticks(tick)
-            .tickSize(-(that.width - that.margin.left - that.margin.right))
-            .tickFormat((d) => '')
-          )
-          .call(axis => axis.select('.domain').remove())
-          .call(axis => axis.selectAll('line')
-            .style('stroke', 'rgba(210, 210, 210, 0.12)')
-            .style('stroke-opacity', '0.7')
-            .style('shape-rendering', 'crispEdges')
-          );
-      }
-    }
-
-    function drawMark(selection) {
-      if (!that.markCurrent) {
-        return;
-      }
-
-      const i = bisect(that.data, that.markCurrent);
-      const data = that.data[i];
-
-      if (!data) {
-        return;
-      }
-
-      const cx = xScale(data.date);
-      const cy = yScale(data.value);
-      const max = xScale(maxDate);
-
-      if (cx > 0 && cx <= max) {
-        selection.append('circle')
-          .attr('fill', '#fff')
-          .attr('stroke', that.lineColor[0])
-          .attr('stroke-width', '2')
-          .attr('r', 4)
-          .attr('cx', cx)
-          .attr('cy', cy);
-      }
     }
 
   }
 
-  clean() {
-    return new Promise(resolve => {
-      d3.select('#' + this.chartID)
-          .selectAll('svg')
-          .remove();
+  clearChart(chartID: string) { // clean up old chart
+    d3.select(chartID)
+      .selectAll('svg')
+      .remove();
 
-      setTimeout(() => {
-        resolve(1);
-      }, 0);
-    });
+    d3.select(chartID)
+      .selectAll('.line-chart-tooltip')
+      .remove();
+
+    d3.select(chartID)
+      .selectAll('.line-chart-legend')
+      .remove();
+  }
+
+  /////////////// UTILS ///////////////
+  generateID(prefix = 'LINE_CHART_') {
+    const rand = () => Math.floor(1000 + (9999 - 1000) * Math.random());
+
+    return prefix + rand() + '_' + rand();
+  }
+
+  async translateWords() {
+    this.setTimeFormatDefaultLocale(this.translate.currentLanguage$.value);
+    this.yLabel = await this.translate.get('WORD.HOURS');
+  }
+
+  setTimeFormatDefaultLocale(lang: string) {
+    switch (lang) {
+      case 'vi': {
+        d3.timeFormatDefaultLocale(viDefaultLocale);
+        break;
+      }
+
+      case 'ru': {
+        d3.timeFormatDefaultLocale(ruDefaultLocale);
+        break;
+      }
+
+      default: {
+        d3.timeFormatDefaultLocale(enDefaultLocale);
+        break;
+      }
+    }
+  }
+
+  calcSvgSize() {
+    if (this.chartContainer) {
+      const element = this.chartContainer.nativeElement;
+
+      // this.width = element.parentNode.clientWidth;
+      // this.height = element.parentNode.clientHeight - 10;
+
+      this.width = element.clientWidth;
+      this.height = element.clientHeight - 10;
+      return {width: this.width, height: this.height};
+    }
+
+    return {width: 400, height: 300};
+  }
+
+  calcMargin() {
+    const margin = { top: 30, right: 16, bottom: 30, left: 40 };
+
+    if (!(this.showXAxis && this.showYAxis)) {
+      this.margin = { top: 10, right: 0, bottom: 10, left: 0 };
+      return { top: 10, right: 0, bottom: 10, left: 0 };
+    }
+
+    const maxValue = d3.max(this.data, (d: any) => d.value);
+
+    if (maxValue !== undefined) {
+      // 1 digit = 10 space
+      margin.left = Math.round(maxValue).toString().length * 10 + (maxValue > 1 ? 20 : 40);
+    }
+
+    this.margin = margin;
+    return margin;
   }
 
   calcTicks(width: number) {
     let tick = 5;
-    switch(true) {
+    switch (true) {
       case (width <= 450):
         tick = 3;
         break;
@@ -377,19 +443,12 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     return tick;
   }
 
-  calcMargin() {
-    const margin = { top: 30, right: 16, bottom: 30, left: 40 };
+  getDataTest() {
+    this.data = KPID_DATA.map((item: any) => ({date: new Date(item.date), value: item.value}));
 
-    if (!this.showAxis) {
-      return { top: 10, right: 0, bottom: 10, left: 0 };
-    }
-
-    const maxValue = d3.max(this.data, (d: any) => d.value);
-    if (maxValue !== undefined) {
-      margin.left = Math.round(maxValue).toString().length * 10 + (maxValue > 1 ? 20 : 40);
-    }
-
-    return margin;
+    setTimeout(() => {
+      this.draw();
+    }, 900);
   }
 
 }

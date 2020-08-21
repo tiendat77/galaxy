@@ -11,7 +11,6 @@ export class TranslateService {
   }
 
   init() {
-
     const lang = localStorage.getItem('[GALAXY] LANG');
 
     if (lang) {
@@ -22,7 +21,6 @@ export class TranslateService {
   }
 
   changeLanguage(lang: string) {
-
   }
 
   get(key: string, params: object = {}): Promise<string> {
