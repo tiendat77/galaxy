@@ -27,7 +27,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tickColor = '#fff';
 
   // text
-  @Input() xLabel = '';
+  @Input() xLabel;
   @Input() yLabel = 'hours';
 
   // options
@@ -42,7 +42,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showDot = false; // circle mark on line
 
   @Input() dashedLine = false;
-  @Input() mark: Date = new Date(2020, 7, 25);
+  @Input() mark: Date; // = new Date(2020, 7, 25);
 
   chartID = 'LINE_CHART_';
   gradientColor = '#27283C';
@@ -155,11 +155,11 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     const chartMark = svg.append('g')
       .attr('class', 'line-chart-mark');
 
-    const chartOverlay = svg.append('g')
-      .attr('class', 'line-chart-overlay');
-
     const chartXCrossHairs = svg.append('rect')
       .attr('class', 'line-chart-x-crosshairs');
+
+    const chartOverlay = svg.append('g')
+      .attr('class', 'line-chart-overlay');
 
     const minDate = d3.min(this.data, (d: any) => d.date);
     const maxDate = d3.max(this.data, (d: any) => d.date);
@@ -168,6 +168,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     const adjust = 0.05; // to avoid d3 curve touch the axis
     const bisect = d3.bisector((d: any) => d.date).left;
     const ticks = this.calcTicks(this.width);
+    const middlePoint = Math.round(that.data.length / 2);
 
     if (this.mode === 'single') {
       drawSingleLine();
@@ -287,6 +288,25 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
           .call(styleYAxis);
       }
 
+      if (that.xLabel) {
+        chartXLabel.append('text')
+          .attr('x', that.width - that.margin.right + 4)
+          .attr('y', that.height - that.margin.bottom)
+          .attr('text-anchor', 'start')
+          .attr('fill', getColor(that.tickColor, 0.68))
+          .text(that.xLabel);
+      }
+
+      if (that.yLabel) {
+        chartYLabel.append('text')
+          .attr('x', that.margin.left)
+          .attr('y', that.margin.top)
+          .attr('text-anchor', 'end')
+          .attr('font-size', '0.8em')
+          .attr('fill', getColor(that.tickColor, 0.68))
+          .text(that.yLabel);
+      }
+
       if (that.mark !== undefined) {
         const i = bisect(that.data, that.mark);
         const data = that.data[i];
@@ -323,8 +343,8 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
 
         chartXCrossHairs
           .style('opacity', 0)
-          .attr('fill', getColor(that.tickColor, 0.22))
-          .attr('width', '2')
+          .attr('fill', getColor(that.lineColor[0], 0.22))
+          .attr('width', '1')
           .attr('height', that.height - that.margin.top - that.margin.bottom)
           .attr('x', 0)
           .attr('y', that.margin.top);
@@ -333,21 +353,52 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
       function onMouseMove() {
         const x = xScale.invert(d3.mouse(this)[0]);
         const i = bisect(that.data, x, 1);
-        const data0 = that.data[i];
-        const data1 = that.data[i - 1];
 
-        // d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-        // const data = x.getTime() - data0.date.getTime() > data1 - x ? data1 : data0;
+        const x0 = that.data[i] && that.data[i].date ? that.data[i].date : 0;
+        const x1 = that.data[i - 1] && that.data[i - 1].date ? that.data[i - 1].date : 0;
+
+        // const d = x.getTime() - x0 > x1 - x.getTime() ? that.data[i] : that.data[i - 1];
+        const d = (+x) - (+x0) > (+x1) - (+x) ? that.data[i] : that.data[i - 1];
+        const dx = xScale(d.date);
+        const dy = yScale(d.value);
+
+        const tooltipArrow = `
+          <div style="position: absolute;
+            top: 50%;
+            right: ${i < middlePoint ? '100%' : 'unset'};
+            left: ${i < middlePoint ? 'unset' : '100%'};
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: ${i < middlePoint ? 'transparent rgba(0,0,0,0.8) transparent transparent' : 'transparent transparent transparent rgba(0,0,0,0.8)'};">
+          </div>
+        `;
+
         chartTooltip.html(`
-          <span>Value: ${data0.value}</span>
+          ${tooltipArrow}
+          <table>
+            <tr>
+              <td style="padding: 0;">
+                <div style="width: 10px; height: 10px; background: ${that.lineColor[0]}"></div>
+              </td>
+              <td style="padding: 0 0 0 4px">Value:</td>
+              <td style="padding: 0 0 0 4px; text-align: right;">
+                ${Math.round(d.value)}
+              </td>
+            </tr>
+          </table>
         `);
 
+        const tooltipBox = chartTooltip.node().getBoundingClientRect();
+        const deltaX = i < middlePoint ? 8 : -(tooltipBox.width + 8);
+
         chartTooltip
-          .style('left', (xScale(data0.date) - 34) + 'px')
-          .style('top', (yScale(data0.value) - 30) + 'px');
+          .style('left', (dx + deltaX) + 'px')
+          .style('top', (dy + tooltipBox.height / 2 - 5) + 'px')
+          .style('display', 'block');
 
         chartXCrossHairs
-          .attr('x', xScale(data0.date));
+          .attr('x', dx);
       }
     }
 
@@ -366,7 +417,9 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .style('padding', '8px')
         .style('margin-top', '-30px')
         .style('font-size', '12px')
-        .style('line-height', '16px');
+        .style('line-height', '16px')
+        .style('white-space', 'nowrap')
+        .style('box-sizing', 'border-box');
     }
 
     function styleLegend(selection: d3.Selection<HTMLElement, unknown, HTMLElement, any>) {
@@ -434,7 +487,6 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     function onMouseOver() {
-      chartTooltip.style('display', 'block');
       chartXCrossHairs.style('opacity', 1);
     }
 
