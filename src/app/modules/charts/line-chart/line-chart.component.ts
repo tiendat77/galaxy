@@ -38,7 +38,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showXGrid = true;
   @Input() showYGrid = false;
   @Input() showGradient = true;
-  @Input() showTooltip = false;
+  @Input() showTooltip = true;
   @Input() showDot = false; // circle mark on line
 
   @Input() dashedLine = false;
@@ -134,6 +134,33 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .attr('class', 'line-chart-legend')
         .call(styleLegend);
 
+    const chartGridLine = svg.append('g')
+      .attr('class', 'line-chart-grid');
+
+    const chartXAxis = svg.append('g')
+      .attr('class', 'line-chart-x-axis');
+
+    const chartYAxis = svg.append('g')
+      .attr('class', 'line-chart-y-axis');
+
+    const chartGraphical = svg.append('g')
+      .attr('class', 'line-chart-graphical');
+
+    const chartYLabel = svg.append('g')
+      .attr('class', 'line-chart-y-label');
+
+    const chartXLabel = svg.append('g')
+      .attr('class', 'line-chart-x-label');
+
+    const chartMark = svg.append('g')
+      .attr('class', 'line-chart-mark');
+
+    const chartOverlay = svg.append('g')
+      .attr('class', 'line-chart-overlay');
+
+    const chartXCrossHairs = svg.append('rect')
+      .attr('class', 'line-chart-x-crosshairs');
+
     const minDate = d3.min(this.data, (d: any) => d.date);
     const maxDate = d3.max(this.data, (d: any) => d.date);
     const minValue = d3.min(this.data, (d: any) => d.value);
@@ -176,39 +203,25 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .y0(yScale(minValue))
         .y1((d: any) => yScale(d.value));
 
-      const chartGridLine = svg.append('g')
-        .attr('class', 'line-chart-grid');
-
-      const chartXAxis = svg.append('g')
-        .attr('class', 'line-chart-x-axis');
-
-      const chartYAxis = svg.append('g')
-        .attr('class', 'line-chart-y-axis');
-
-      const chartGraphical = svg.append('g')
-        .attr('class', 'line-chart-graphical');
-
-      const chartXCrossHairs = svg.append('g')
-        .attr('class', 'line-chart-x-crosshairs');
-
-      const chartYLabel = svg.append('g')
-        .attr('class', 'line-chart-y-label');
-
-      const chartXLabel = svg.append('g')
-        .attr('class', 'line-chart-x-label');
-
       chartGraphical.append('path')
         .datum(that.data)
         .call(styleLine)
         .attr('d', line);
 
-      chartGraphical.append('defs') // SvgjsLinearGradient2410
-        .call(styleGradientDefs);
-
       if (that.showGradient) {
+        chartGraphical.append('defs') // SvgjsLinearGradient2410
+          .html(`
+            <linearGradient id="SvgjsLinearGradient2410" x1="0" y1="0" x2="0" y2="1">
+              <stop id="SvgjsStop2411" stop-opacity="0.7" stop-color="${getColor(that.lineColor[0], 0.5)}" offset="0"></stop>
+              <stop id="SvgjsStop2412" stop-opacity="0.9" stop-color="${getColor(that.gradientColor, 0.2)}" offset="0.9"></stop>
+              <stop id="SvgjsStop2413" stop-opacity="0.9" stop-color="${getColor(that.gradientColor, 0.2)}" offset="1"></stop>
+            </linearGradient>
+          `);
+
         chartGraphical.append('path')
           .datum(that.data)
-          .call(styleGradientArea)
+          .attr('fill', `url(#SvgjsLinearGradient2410)`)
+          .attr('stroke-width', 1)
           .attr('d', area);
       }
 
@@ -285,16 +298,56 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         const max = xScale(maxDate);
 
         if (cx > 0 && cx <= max) {
-          svg.append('g')
-              .attr('class', 'line-chart-mark')
-            .append('circle')
-              .attr('fill', that.lineColor[0])
-              .attr('stroke', '#fff')
-              .attr('stroke-width', '2')
-              .attr('r', 6)
-              .attr('cx', cx)
-              .attr('cy', cy);
+          chartMark.append('circle')
+            .attr('fill', that.lineColor[0])
+            .attr('stroke', '#fff')
+            .attr('stroke-width', '2')
+            .attr('r', 6)
+            .attr('cx', cx)
+            .attr('cy', cy);
         }
+      }
+
+      if (that.showTooltip) {
+        chartOverlay.append('rect')
+          .attr('class', 'line-chart-')
+          .attr('width', that.width - that.margin.left - that.margin.right)
+          .attr('height', that.height - that.margin.top - that.margin.bottom)
+          .attr('x', that.margin.left)
+          .attr('y', that.margin.top)
+          .attr('fill', 'none')
+          .style('pointer-events', 'all')
+          .on('mouseover', onMouseOver)
+          .on('mouseout', onMouseOut)
+          .on('mousemove', onMouseMove);
+
+        chartXCrossHairs
+          .style('opacity', 0)
+          .attr('fill', getColor(that.tickColor, 0.22))
+          .attr('width', '2')
+          .attr('height', that.height - that.margin.top - that.margin.bottom)
+          .attr('x', 0)
+          .attr('y', that.margin.top);
+      }
+
+      function onMouseMove() {
+        const x = xScale.invert(d3.mouse(this)[0]);
+        const i = bisect(that.data, x, 1);
+        const data0 = that.data[i];
+        const data1 = that.data[i - 1];
+
+        // d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+        // const data = x.getTime() - data0.date.getTime() > data1 - x ? data1 : data0;
+        chartTooltip.html(`
+          <span>Value: ${data0.value}</span>
+        `);
+
+        chartTooltip
+          .style('left', (xScale(data0.date) - 34) + 'px')
+          .style('top', (yScale(data0.value) - 30) + 'px');
+
+        chartXCrossHairs
+          .attr('x', xScale(data0.date));
       }
     }
 
@@ -329,44 +382,14 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .attr('stroke-dasharray', that.dashedLine ? 3 : 0);
     }
 
-    function styleGradientDefs(selection: d3.Selection<SVGDefsElement, unknown, HTMLElement, any>) {
-      const stopA = d3.color(that.lineColor[0]);
-      stopA.opacity = 0.5;
-
-      const stopB = d3.color(that.gradientColor);
-      stopB.opacity = 0.2;
-
-      selection.html(`
-        <linearGradient id="SvgjsLinearGradient2410" x1="0" y1="0" x2="0" y2="1">
-          <stop id="SvgjsStop2411" stop-opacity="0.7" stop-color="${stopA.toString()}" offset="0"></stop>
-          <stop id="SvgjsStop2412" stop-opacity="0.9" stop-color="${stopB.toString()}" offset="0.9"></stop>
-          <stop id="SvgjsStop2413" stop-opacity="0.9" stop-color="${stopB.toString()}" offset="1"></stop>
-        </linearGradient>
-      `);
-    }
-
-    function styleGradientArea(selection: d3.Selection<SVGPathElement, unknown, HTMLElement, any>) {
-      selection
-        .attr('fill', `url(#SvgjsLinearGradient2410)`)
-        .attr('stroke-width', 1);
-    }
-
     function styleXAxis(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
-      const color = d3.color(that.tickColor);
-
-      color.opacity = 0.4;
-      const axisColor = color.toString();
-
-      color.opacity = 0.68;
-      const tickColor = color.toString();
-
       selection
         .call(g => g.select('.domain')
-          .attr('stroke', axisColor)
+          .attr('stroke', getColor(that.tickColor, 0.4))
         )
         .call(g => g.selectAll('text')
           .attr('class', 'font-number')
-          .attr('fill', tickColor)
+          .attr('fill', getColor(that.tickColor, 0.68))
           .attr('font-size', that.fontSize)
           .attr('dx', that.rotateXTicks ? '-26px' : null)
           .style('transform', that.rotateXTicks ? 'rotate(-45deg)' : null)
@@ -379,17 +402,12 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     function styleYAxis(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
-      const color = d3.color(that.tickColor);
-
-      color.opacity = 0.68;
-      const tickColor = color.toString();
-
       selection
         .call(g => g.select('.domain').remove())
         .call(g => g.selectAll('line').remove())
         .call(g => g.selectAll('text')
           .attr('class', 'font-number')
-          .attr('fill', tickColor)
+          .attr('fill', getColor(that.tickColor, 0.68))
           .attr('font-size', that.fontSize)
         );
 
@@ -399,16 +417,30 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     function styleGridLine(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
-      const color = d3.color(that.tickColor);
-      color.opacity = 0.12;
-
       selection
         .call(g => g.select('.domain').remove())
         .call(g => g.selectAll('line')
-          .style('stroke', color.toString())
+          .style('stroke', getColor(that.tickColor, 0.12))
           .style('stroke-opacity', '0.7')
           .style('shape-rendering', 'crispEdges')
         );
+    }
+
+    function getColor(hex: string, opacity: number): string {
+      const color = d3.color(hex);
+      color.opacity = opacity;
+
+      return color.toString();
+    }
+
+    function onMouseOver() {
+      chartTooltip.style('display', 'block');
+      chartXCrossHairs.style('opacity', 1);
+    }
+
+    function onMouseOut() {
+      chartTooltip.style('display', 'none');
+      chartXCrossHairs.style('opacity', 0);
     }
 
     function rand(): number {

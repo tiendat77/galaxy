@@ -1,35 +1,11 @@
 export interface TimeLocaleDefinition {
-  /**
-   * The date and time (%c) format specifier (e.g., "%a %b %e %X %Y").
-   */
   dateTime: string;
-  /**
-   * The date (%x) format specifier (e.g., "%m/%d/%Y").
-   */
   date: string;
-  /**
-   *  The time (%X) format specifier (e.g., "%H:%M:%S").
-   */
   time: string;
-  /**
-   * The A.M. and P.M. equivalents (e.g., ["AM", "PM"]).
-   */
   periods: [string, string];
-  /**
-   * The full names of the weekdays, starting with Sunday.
-   */
   days: [string, string, string, string, string, string, string];
-  /**
-   * The abbreviated names of the weekdays, starting with Sunday.
-   */
   shortDays: [string, string, string, string, string, string, string];
-  /**
-   * The full names of the months (starting with January).
-   */
   months: [string, string, string, string, string, string, string, string, string, string, string, string];
-  /**
-   * the abbreviated names of the months (starting with January).
-   */
   shortMonths: [string, string, string, string, string, string, string, string, string, string, string, string];
 }
 
