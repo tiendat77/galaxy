@@ -13,6 +13,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: 'Charts',
     url: '/chart',
     children: [
+      { name: 'State', url: '/chart/state' },
       { name: 'Board', url: '/chart/board' },
       { name: 'Line Chart', url: '/chart/line-chart' },
       { name: 'Horizontal Bar Chart', url: '/chart/horizontal-bar-chart' },
