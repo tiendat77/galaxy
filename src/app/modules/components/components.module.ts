@@ -11,36 +11,38 @@ import { ComponentsRoutingModule } from './components-routing.module';
 import { MainComponent } from './main/main.component';
 import { TypeWriterComponent } from './type-writer/type-writer.component';
 import { MagicButtonComponent } from './magic-button/magic-button.component';
+import { FormSelectComponent } from './form-select/form-select.component';
 
 // Material Components
-import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { WrapperComponent } from './wrapper/wrapper.component';
 
 const MATERIAL_MODULES = [
-  MatIconModule,
-  MatToolbarModule,
-  MatButtonModule,
-  MatSidenavModule,
-  MatTooltipModule,
-  MatProgressBarModule,
   MatAutocompleteModule,
-  MatTabsModule,
   MatDatepickerModule,
-  MatNativeDateModule,
+  MatSelectModule,
+  MatInputModule,
   MatCheckboxModule,
-  MatPaginatorModule,
+  MatNativeDateModule,
+  MatButtonModule,
+  MatIconModule,
+  MatProgressBarModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatTabsModule,
   MatListModule,
   ScrollingModule,
 ];
@@ -50,7 +52,9 @@ const MATERIAL_MODULES = [
   declarations: [
     MainComponent,
     TypeWriterComponent,
-    MagicButtonComponent
+    MagicButtonComponent,
+    FormSelectComponent,
+    WrapperComponent
   ],
   imports: [
     CommonModule,

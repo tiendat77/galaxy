@@ -18,7 +18,9 @@ const CHART_CHILDRENS: MenuItem[] = [
 
 export const COMPONENT_CHILDRENDS: MenuItem[] = [
   { name: 'Magic Button', url: '/components/magic-button' },
-  { name: 'Type Writer', url: '/components/type-writer' }
+  { name: 'Type Writer', url: '/components/type-writer' },
+  { name: 'Form Select', url: '/components/form-select' },
+  { name: 'Wrap', url: '/components/wrapper' }
 ];
 
 export const MENU_ITEMS: MenuItem[] = [
