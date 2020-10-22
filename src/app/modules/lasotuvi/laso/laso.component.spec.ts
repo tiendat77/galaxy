@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StateChartComponent } from './state-chart.component';
+import { LasoComponent } from './laso.component';
 
-describe('StateChartComponent', () => {
-  let component: StateChartComponent;
-  let fixture: ComponentFixture<StateChartComponent>;
+describe('LasoComponent', () => {
+  let component: LasoComponent;
+  let fixture: ComponentFixture<LasoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StateChartComponent ]
+      declarations: [ LasoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StateChartComponent);
+    fixture = TestBed.createComponent(LasoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

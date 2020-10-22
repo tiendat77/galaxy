@@ -16,7 +16,6 @@ import { BoardComponent } from './board/board.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
 import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
-import { StateChartComponent } from './state-chart/state-chart.component';
 
 
 @NgModule({
@@ -31,8 +30,7 @@ import { StateChartComponent } from './state-chart/state-chart.component';
     BoardComponent,
     PieChartComponent,
     StackedBarChartComponent,
-    HorizontalBarChartComponent,
-    StateChartComponent
+    HorizontalBarChartComponent
   ],
   imports: [
     CommonModule,

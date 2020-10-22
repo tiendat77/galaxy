@@ -12,7 +12,8 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'chart', loadChildren: () => import('./modules/charts/charts.module').then(m => m.ChartsModule) },
-      { path: 'effect', loadChildren: () => import('./modules/effects/effects.module').then(m => m.EffectsModule) }
+      { path: 'components', loadChildren: () => import('./modules/components/components.module').then(m => m.ComponentsModule) },
+      { path: 'lasotuvi', loadChildren: () => import('./modules/lasotuvi/lasotuvi.module').then(m => m.LasotuviModule) }
     ]
   },
   { path: 'not-found', component: NotFoundComponent },

@@ -11,7 +11,6 @@ import { BoardComponent } from './board/board.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
 import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
-import { StateChartComponent } from './state-chart/state-chart.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/chart/bar-chart' },
@@ -24,8 +23,7 @@ const routes: Routes = [
   { path: 'bullet-chart', component: BulletChartComponent },
   { path: 'pie-chart', component: PieChartComponent },
   { path: 'stacked-bar-chart', component: StackedBarChartComponent },
-  { path: 'horizontal-bar-chart', component: HorizontalBarChartComponent },
-  { path: 'state', component: StateChartComponent }
+  { path: 'horizontal-bar-chart', component: HorizontalBarChartComponent }
 ];
 
 @NgModule({
