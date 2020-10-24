@@ -3,18 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// Installed Libraries
+// Installed Library
 import { TranslateModule } from '@ngx-translate/core';
-
-// Components
-import { ComponentsRoutingModule } from './components-routing.module';
-import { MainComponent } from './main/main.component';
-import { TypeWriterComponent } from './type-writer/type-writer.component';
-import { MagicButtonComponent } from './magic-button/magic-button.component';
-import { FormSelectComponent } from './form-select/form-select.component';
-import { WrapperComponent } from './wrapper/wrapper.component';
-import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
-import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
+import { GalaxyRoutingModule } from './galaxy-routing.module';
 
 // Material Components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -28,10 +19,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+
+import { GalaxyService } from './galaxy/galaxy.service';
+import { GalaxyComponent } from './galaxy/galaxy.component';
+import { FormSelectComponent } from './galaxy/components/form-select/form-select.component';
+import { FormDateTimeComponent } from './galaxy/components/form-date-time/form-date-time.component';
+import { FormDateMonthYearComponent } from './galaxy/components/form-date-month-year/form-date-month-year.component';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
@@ -45,8 +42,8 @@ const MATERIAL_MODULES = [
   MatProgressBarModule,
   MatTooltipModule,
   MatToolbarModule,
-  MatTabsModule,
   MatMenuModule,
+  MatTabsModule,
   MatListModule,
   ScrollingModule,
 ];
@@ -54,23 +51,24 @@ const MATERIAL_MODULES = [
 
 @NgModule({
   declarations: [
-    MainComponent,
-    TypeWriterComponent,
-    MagicButtonComponent,
+    GalaxyComponent,
     FormSelectComponent,
-    FormDateTimeComponent,
     FormDateMonthYearComponent,
-    WrapperComponent
+    FormDateTimeComponent,
   ],
   imports: [
     CommonModule,
-    FlexLayoutModule,
+    GalaxyRoutingModule,
+
     FormsModule,
     ReactiveFormsModule,
+    FlexLayoutModule,
     TranslateModule.forChild(),
-    ComponentsRoutingModule,
 
     ...MATERIAL_MODULES
+  ],
+  providers: [
+    GalaxyService
   ]
 })
-export class ComponentsModule { }
+export class GalaxyModule { }

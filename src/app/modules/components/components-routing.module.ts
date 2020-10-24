@@ -6,6 +6,8 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { MagicButtonComponent } from './magic-button/magic-button.component';
 import { TypeWriterComponent } from './type-writer/type-writer.component';
 import { FormSelectComponent } from './form-select/form-select.component';
+import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
+import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
 
 const routes: Routes = [
   {
@@ -15,7 +17,9 @@ const routes: Routes = [
       { path: 'wrapper', component: WrapperComponent },
       { path: 'type-writer', component: TypeWriterComponent },
       { path: 'magic-button', component: MagicButtonComponent },
-      { path: 'form-select', component: FormSelectComponent }
+      { path: 'form-select', component: FormSelectComponent },
+      { path: 'form-date-time', component: FormDateTimeComponent },
+      { path: 'form-date-month-year', component: FormDateMonthYearComponent }
     ]
   }
 ];

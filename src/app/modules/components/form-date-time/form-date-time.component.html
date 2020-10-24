@@ -1,0 +1,19 @@
+<mat-form-field appearance="outline" class="date-time-picker" fxFlex>
+  <mat-label>Choose a date</mat-label>
+
+  <input matInput [matDatepicker]="datePicker" [formControl]="valueCtrl"
+         (dateChange)="onValueChange($event)">
+
+  <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+
+  <button mat-icon-button matSuffix
+          [matMenuTriggerFor]="timePicker">
+    <mat-icon>access_time</mat-icon>
+  </button>
+
+  <mat-datepicker #datePicker></mat-datepicker>
+</mat-form-field>
+
+<mat-menu #timePicker="matMenu">
+  pick time ey
+</mat-menu>

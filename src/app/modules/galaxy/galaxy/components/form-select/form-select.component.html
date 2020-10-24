@@ -1,0 +1,34 @@
+<mat-form-field appearance="outline" class="form-select">
+  <mat-label>{{ 'GENERAL.TEXT.' + label | translate }}</mat-label>
+
+  <mat-select [formControl]="valueCtrl"
+              [multiple]="multiple"
+              [required]="required"
+              (openedChange)="onOpenSelect($event)"
+              (selectionChange)="onSelectionChange($event)">
+
+    <div class="form-select-search" *ngIf="enableSearch">
+      <mat-form-field floatLabel="never">
+        <mat-label>Search</mat-label>
+        <input #searchInput matInput autocomplete="off"
+               [formControl]="filterCtrl">
+
+        <button mat-icon-button matSuffix class="suffix"
+                *ngIf="!searchInput.value">
+          <mat-icon class="icon-search">search</mat-icon>
+        </button>
+
+        <button mat-icon-button matSuffix class="suffix"
+                *ngIf="searchInput.value"
+                (click)="onClearSearch()">
+          <mat-icon class="icon-cancel">clear</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <mat-option *ngFor="let option of filteredOptions$ | async"
+                [value]="option.id">
+      <span>{{ option.name }}</span>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -1,1 +1,26 @@
-{}
+{
+  "REPORTED": {
+    "TEXT": {
+      "REPORT_CATEGORIES": "Loại báo cáo",
+      "NO_REPORT": "Không có loại báo cáo nào",
+      "NO_PARAM": "Không có bộ lọc",
+      "PARAM_LIST": "Danh sách bộ lọc",
+      "SELECT_REPORT": "Hãy chọn một loại báo cáo"
+    },
+    "PLACEHOLDER": {
+      "SEARCH_REPORT": "Tìm loại báo cáo"
+    },
+    "ACTION": {
+      "CLEAR_FORM": "Nhập lại",
+      "EXPORT": "Xuất dữ liệu"
+    },
+    "TIP": {},
+    "NOTIFY": {
+      "GET_PARAM_ERROR": "Lấy danh sách bộ lọc lỗi!",
+      "EXPORT_SUCCESS": "Xuất dữ liệu thành công",
+      "EXPORT_FAIL": "Xuất dữ liệu thất bại!",
+      "REPORT_INFO_ERROR": "Lấy thông tin báo cáo lỗi!",
+      "INPUT_THE_FORM": "Hãy điền thông tin vào bộ lọc"
+    }
+  }
+}

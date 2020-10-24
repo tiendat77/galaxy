@@ -13,7 +13,8 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'chart', loadChildren: () => import('./modules/charts/charts.module').then(m => m.ChartsModule) },
       { path: 'components', loadChildren: () => import('./modules/components/components.module').then(m => m.ComponentsModule) },
-      { path: 'lasotuvi', loadChildren: () => import('./modules/lasotuvi/lasotuvi.module').then(m => m.LasotuviModule) }
+      { path: 'lasotuvi', loadChildren: () => import('./modules/lasotuvi/lasotuvi.module').then(m => m.LasotuviModule) },
+      { path: 'galaxy', loadChildren: () => import('./modules/galaxy/galaxy.module').then(m => m.GalaxyModule) }
     ]
   },
   { path: 'not-found', component: NotFoundComponent },

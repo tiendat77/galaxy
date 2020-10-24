@@ -25,14 +25,21 @@
   .main {
     height: 100%;
     width: calc(100vw - 240px);
-    overflow: auto;
+    margin: 0 24px;
 
-    &::-webkit-scrollbar {
+    .scroll {
+      height: 100%;
+      overflow: auto;
+      padding: 24px 0;
+      box-sizing: border-box;
+    }
+
+    ::-webkit-scrollbar {
       height: 6px;
       width: 6px;
     }
 
-    &::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
       background: rgba(225, 78, 202, 0.26);
     }
   }

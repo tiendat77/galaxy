@@ -19,8 +19,10 @@ const CHART_CHILDRENS: MenuItem[] = [
 export const COMPONENT_CHILDRENDS: MenuItem[] = [
   { name: 'Magic Button', url: '/components/magic-button' },
   { name: 'Type Writer', url: '/components/type-writer' },
+  { name: 'Wrap', url: '/components/wrapper' },
   { name: 'Form Select', url: '/components/form-select' },
-  { name: 'Wrap', url: '/components/wrapper' }
+  { name: 'Date Time', url: '/components/form-date-time' },
+  { name: 'Date Month Year', url: '/components/form-date-month-year' }
 ];
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -32,6 +34,10 @@ export const MENU_ITEMS: MenuItem[] = [
     name: 'Charts',
     url: '/chart',
     children: CHART_CHILDRENS
+  },
+  {
+    name: 'Galaxy',
+    url: '/galaxy'
   },
   {
     name: 'Components',

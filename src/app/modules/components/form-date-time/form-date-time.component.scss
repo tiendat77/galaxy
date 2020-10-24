@@ -1,0 +1,7 @@
+.date-time-picker {
+  ::ng-deep .mat-form-field-suffix {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+  }
+}

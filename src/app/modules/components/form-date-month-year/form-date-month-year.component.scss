@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+
+  mat-form-field {
+    ::ng-deep .mat-form-field-outline-thick {
+      color: var(--color-primary);
+    }
+  }
+}

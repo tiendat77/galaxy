@@ -5,9 +5,6 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import * as lodash from 'lodash';
-import { MOCK } from './mock';
-
 @Component({
   selector: 'app-form-select',
   templateUrl: './form-select.component.html',
@@ -34,23 +31,12 @@ export class FormSelectComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.init();
-    this.fake();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.value) {
       this.valueCtrl.setValue(this.value ? this.value : undefined);
     }
-  }
-
-  fake() {
-    const input = MOCK;
-    this.source = input.source;
-    this.label = input.name;
-    this.value = input.value;
-    this.multiple = true;
-    this.enableSearch = true;
-    this.required = false;
   }
 
   init() {

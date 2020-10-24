@@ -1,0 +1,35 @@
+<div class="container" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+  <mat-form-field *ngIf="showDay" appearance="outline" fxFlex>
+    <mat-label>{{ 'GENERAL.TEXT.DAY' | translate }}</mat-label>
+
+    <mat-select name="day" [formControl]="dayCtrl"
+                (selectionChange)="onSelectDay($event)">
+      <mat-option>{{ 'GENERAL.TEXT.NONE' | translate }}</mat-option>
+      <mat-option *ngFor="let day of days" [value]="day">{{day}}</mat-option>
+    </mat-select>
+
+    <mat-hint>{{ 'PERSONNEL.OLE.TEXT.SELECT_SPECIFIC_DATE' | translate }}</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="showMonth" appearance="outline" fxFlex>
+    <mat-label>{{ 'GENERAL.TEXT.MONTH' | translate }}</mat-label>
+
+    <mat-select name="day" [formControl]="monthCtrl"
+                (selectionChange)="onSelectMonth($event)">
+      <mat-option *ngFor="let month of months" [value]="month">
+        {{ month }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="showYear" appearance="outline" fxFlex>
+    <mat-label>{{ 'GENERAL.TEXT.YEAR' | translate }}</mat-label>
+
+    <mat-select name="day" [formControl]="yearCtrl"
+                (selectionChange)="onSelectYear($event)">
+      <mat-option *ngFor="let year of years" [value]="year">
+        {{ year }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
