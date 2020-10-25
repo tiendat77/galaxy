@@ -1,19 +1,50 @@
 <mat-form-field appearance="outline" class="date-time-picker" fxFlex>
-  <mat-label>Choose a date</mat-label>
+  <mat-label>Date time</mat-label>
 
-  <input matInput [matDatepicker]="datePicker" [formControl]="valueCtrl"
-         (dateChange)="onValueChange($event)">
+  <input matInput readonly
+         [value]="valueCtrl | momentFormat: 'DD/MM/YYYY HH:mm:ss'"/>
+
+  <input matInput hidden
+         [matDatepicker]="datePicker"
+         [formControl]="dateCtrl"
+         (dateChange)="onDateChange()">
 
   <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
 
   <button mat-icon-button matSuffix
-          [matMenuTriggerFor]="timePicker">
-    <mat-icon>access_time</mat-icon>
+          [matMenuTriggerFor]="timePicker"
+          (click)="onOpenTimeMenu()">
+    <mat-icon style="color: rgba(0, 0, 0, 0.54);"
+              [class.menu-active]="isTimeMenuOpen">access_time</mat-icon>
   </button>
 
-  <mat-datepicker #datePicker></mat-datepicker>
+  <mat-datepicker #datePicker xPosition="end"></mat-datepicker>
 </mat-form-field>
 
-<mat-menu #timePicker="matMenu">
-  pick time ey
+<mat-menu #timePicker="matMenu" (closed)="onTimeChange()">
+  <div class="time-picker-container" (click)="$event.stopPropagation()">
+    <div class="time-picker">
+      <div class="picker-container">
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="incrementHour()">
+          <span class="chevron"></span>
+        </button>
+
+        <mat-form-field appearance="outline" floatLabel="never" class="form-control">
+          <input matInput name="hour" [formControl]="hourCtrl" autocomplete="off">
+        </mat-form-field>
+
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="decrementHour()">
+          <span class="chevron chevron-bottom"></span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <button mat-button>OK</button>
+    </div>
+  </div>
 </mat-menu>

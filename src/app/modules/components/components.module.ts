@@ -16,6 +16,8 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
 import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
 
+import { MomentFormatPipe } from './pipes/moment-format.pipe';
+
 // Material Components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -54,6 +56,7 @@ const MATERIAL_MODULES = [
 
 @NgModule({
   declarations: [
+    MomentFormatPipe,
     MainComponent,
     TypeWriterComponent,
     MagicButtonComponent,
