@@ -1,14 +1,21 @@
 <mat-form-field appearance="outline" class="date-time-picker" fxFlex>
-  <mat-label>Date time</mat-label>
+  <mat-label>{{ label }}</mat-label>
 
   <input matInput readonly
-         [value]="valueCtrl | momentFormat: 'DD/MM/YYYY HH:mm:ss'"
+         [required]="required"
+         [ngModel]="valueCtrl | momentFormat: 'DD/MM/YYYY HH:mm:ss'"
          (click)="openDatePicker(datePicker)">
 
   <input matInput hidden
          [matDatepicker]="datePicker"
          [formControl]="dateCtrl"
          (dateChange)="onDateChange()">
+
+  <button mat-icon-button matSuffix
+          *ngIf="valueCtrl"
+          (click)="onClearValue()">
+    <mat-icon style="color: #f44336;">clear</mat-icon>
+  </button>
 
   <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
 
@@ -18,7 +25,7 @@
     <mat-icon [class.menu-active]="timeMenuTrigger.menuOpen">access_time</mat-icon>
   </button>
 
-  <mat-datepicker #datePicker xPosition="end"></mat-datepicker>
+  <mat-datepicker #datePicker xPosition="end" yPosition="below"></mat-datepicker>
 </mat-form-field>
 
 <mat-menu #timePicker="matMenu">

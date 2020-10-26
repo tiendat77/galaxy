@@ -7,7 +7,11 @@ import * as moment from 'moment';
 export class MomentFormatPipe implements PipeTransform {
 
   transform(value: moment.Moment, format: string): any {
-    return moment(value).format(format);
+    if (value && value.isValid()) {
+      return value.format(format);
+    }
+
+    return '';
   }
 
 }

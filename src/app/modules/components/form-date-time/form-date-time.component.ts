@@ -16,7 +16,7 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
   @ViewChild('timeMenuTrigger') timeMenuTrigger: MatMenuTrigger;
 
   @Input() label: string;
-  @Input() required = true;
+  @Input() required = false;
   @Input() showMinutes = true;
   @Input() showSeconds = true;
   @Input() showSpinners = true;
@@ -25,7 +25,7 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
   @Input() value: number;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
-  valueCtrl: moment.Moment;
+  valueCtrl: moment.Moment | undefined;
   dateCtrl: FormControl = new FormControl();
   hourCtrl: FormControl = new FormControl(0, [Validators.required, Validators.max(23), Validators.min(0)]);
   minuteCtrl: FormControl = new FormControl(0, [Validators.max(59), Validators.min(0)]);
@@ -57,6 +57,12 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
 
   initValueInput() {
     const value = moment.unix(this.value);
+
+    if (!value.isValid()) {
+      this.initDefault();
+      return;
+    }
+
     this.valueCtrl = value;
     this.dateCtrl.setValue(value.toDate());
     this.hourCtrl.setValue(value.hours());
@@ -64,12 +70,32 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
   }
 
   initDefault() {
-    const now = new Date();
+    this.valueCtrl = undefined;
+    this.dateCtrl.setValue(new Date());
+    this.hourCtrl.setValue(0);
+    this.minuteCtrl.setValue(0);
+    this.secondCtrl.setValue(0);
 
-    this.valueCtrl = moment(now);
-    this.dateCtrl.setValue(now);
-    this.hourCtrl.setValue(now.getHours());
-    this.minuteCtrl.setValue(now.getMinutes());
+    this.valueChange.emit(undefined);
+  }
+
+  initValueCtrl() {
+    const now = moment();
+    const date: Date = this.dateCtrl.value;
+    const hour = this.hourCtrl.value;
+    const minute = this.minuteCtrl.value;
+    const second = this.secondCtrl.value;
+
+    now.set({
+      date: date.getDate(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+      hour,
+      minute,
+      second
+    });
+
+    this.valueCtrl = now;
   }
 
   /////////////// VALUE CHANGE ///////////////
@@ -77,8 +103,12 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
     const selectedDate: Date = this.dateCtrl.value;
 
     if (!this.isValidDate(selectedDate)) {
-      this.notify.notify('Ngay khong hop le');
+      this.notify.notify('REPORTED.NOTIFY.INVALID_DATE');
       return;
+    }
+
+    if (!this.valueCtrl || !this.valueCtrl.isValid()) {
+      this.initValueCtrl();
     }
 
     this.valueCtrl = moment(this.valueCtrl).set({
@@ -96,8 +126,12 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
     const second = this.secondCtrl.value;
 
     if (!this.isValidTime(hour, minute, second)) {
-      this.notify.notify('Thoi gian khong hop le');
+      this.notify.notify('REPORTED.NOTIFY.INVALID_TIME');
       return;
+    }
+
+    if (!this.valueCtrl || !this.valueCtrl.isValid()) {
+      this.initValueCtrl();
     }
 
     this.valueCtrl = moment(this.valueCtrl).set({ hour, minute, second });
@@ -109,6 +143,10 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
     if (this.valueCtrl.isValid()) {
       this.valueChange.emit(this.valueCtrl.unix());
     }
+  }
+
+  onClearValue() {
+    this.initDefault();
   }
 
   /////////////// EVENT HANDLERS ///////////////
