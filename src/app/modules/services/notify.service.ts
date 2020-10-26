@@ -6,7 +6,7 @@ export class NotifyService {
 
   constructor(private snackbar: MatSnackBar) { }
 
-  notify(message, duration) {
+  notify(message, duration = 3000) {
     const config: MatSnackBarConfig = {
       duration
     };

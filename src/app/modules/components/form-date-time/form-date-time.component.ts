@@ -1,5 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDatepicker } from '@angular/material/datepicker';
+
+import { NotifyService } from '../../services/notify.service';
 
 import * as moment from 'moment';
 
@@ -9,6 +13,7 @@ import * as moment from 'moment';
   styleUrls: ['./form-date-time.component.scss']
 })
 export class FormDateTimeComponent implements OnInit, OnChanges {
+  @ViewChild('timeMenuTrigger') timeMenuTrigger: MatMenuTrigger;
 
   @Input() label: string;
   @Input() required = true;
@@ -26,9 +31,15 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
   minuteCtrl: FormControl = new FormControl(0, [Validators.max(59), Validators.min(0)]);
   secondCtrl: FormControl = new FormControl(0, [Validators.max(59), Validators.min(0)]);
 
-  isTimeMenuOpen = false;
+  /**
+   * allow keys for time input
+   * arrows key, backspace, delete
+   */
+  allowedKeys: number[] = [ 37, 38, 39, 40, 8, 46 ];
 
-  constructor() { }
+  constructor(
+    private notify: NotifyService
+  ) { }
 
   ngOnInit(): void {
     if (this.value) {
@@ -50,7 +61,6 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
     this.dateCtrl.setValue(value.toDate());
     this.hourCtrl.setValue(value.hours());
     this.minuteCtrl.setValue(value.minutes());
-    this.secondCtrl.setValue(value.seconds());
   }
 
   initDefault() {
@@ -60,12 +70,16 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
     this.dateCtrl.setValue(now);
     this.hourCtrl.setValue(now.getHours());
     this.minuteCtrl.setValue(now.getMinutes());
-    this.secondCtrl.setValue(now.getSeconds());
   }
 
   /////////////// VALUE CHANGE ///////////////
   onDateChange() {
     const selectedDate: Date = this.dateCtrl.value;
+
+    if (!this.isValidDate(selectedDate)) {
+      this.notify.notify('Ngay khong hop le');
+      return;
+    }
 
     this.valueCtrl = moment(this.valueCtrl).set({
       date: selectedDate.getDate(),
@@ -77,8 +91,18 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
   }
 
   onTimeChange() {
-    this.isTimeMenuOpen = false;
-    console.log('time change');
+    const hour = this.hourCtrl.value;
+    const minute = this.minuteCtrl.value;
+    const second = this.secondCtrl.value;
+
+    if (!this.isValidTime(hour, minute, second)) {
+      this.notify.notify('Thoi gian khong hop le');
+      return;
+    }
+
+    this.valueCtrl = moment(this.valueCtrl).set({ hour, minute, second });
+    this.onValueChange();
+    this.timeMenuTrigger.closeMenu();
   }
 
   onValueChange() {
@@ -88,36 +112,137 @@ export class FormDateTimeComponent implements OnInit, OnChanges {
   }
 
   /////////////// EVENT HANDLERS ///////////////
-  onOpenTimeMenu() {
-    this.isTimeMenuOpen = true;
+  openDatePicker(picker: MatDatepicker<Date>) {
+    picker.open();
   }
 
   incrementHour() {
-    let hour = this.hourCtrl.value;
+    const hour = this.hourCtrl.value;
 
     if (hour === 23) {
-      hour = 0;
-    } else if (hour > 23) {
-      hour = 23;
-    } else {
-      hour = hour + 1;
+      this.hourCtrl.setValue(0);
+      return;
     }
 
-    this.hourCtrl.setValue(hour);
+    if (hour > 23) {
+      this.hourCtrl.setValue(23);
+      return;
+    }
+
+    this.hourCtrl.setValue(hour + 1);
   }
 
   decrementHour() {
-    let hour = this.hourCtrl.value;
+    const hour = this.hourCtrl.value;
 
     if (hour === 0) {
-      hour = 23;
-    } else if (hour < 0) {
-      hour = 0;
-    } else {
-      hour = hour - 1;
+      this.hourCtrl.setValue(23);
+      return;
     }
 
-    this.hourCtrl.setValue(hour);
+    if (hour < 0) {
+      this.hourCtrl.setValue(0);
+      return;
+    }
+
+    this.hourCtrl.setValue(hour - 1);
+  }
+
+  incrementMinute() {
+    const minute = this.minuteCtrl.value;
+
+    if (minute === 59) {
+      this.minuteCtrl.setValue(0);
+      return;
+    }
+
+    if (minute > 59) {
+      this.minuteCtrl.setValue(59);
+      return;
+    }
+
+    this.minuteCtrl.setValue(minute + 1);
+  }
+
+  decrementMinute() {
+    const minute = this.minuteCtrl.value;
+
+    if (minute === 0) {
+      this.minuteCtrl.setValue(59);
+      return;
+    }
+
+    if (minute < 0) {
+      this.minuteCtrl.setValue(0);
+      return;
+    }
+
+    this.minuteCtrl.setValue(minute - 1);
+  }
+
+  incrementSecond() {
+    const second = this.secondCtrl.value;
+
+    if (second === 59) {
+      this.secondCtrl.setValue(0);
+      return;
+    }
+
+    if (second > 59) {
+      this.secondCtrl.setValue(59);
+      return;
+    }
+
+    this.secondCtrl.setValue(second + 1);
+  }
+
+  decrementSecond() {
+    const second = this.secondCtrl.value;
+
+    if (second === 0) {
+      this.secondCtrl.setValue(59);
+      return;
+    }
+
+    if (second < 0) {
+      this.secondCtrl.setValue(0);
+      return;
+    }
+
+    this.secondCtrl.setValue(second - 1);
+  }
+
+  isValidDate(date: Date) {
+    return moment(date).isValid();
+  }
+
+  isValidTime(hour: number, minute: number, second: number) {
+    if (hour < 0 || hour > 23) {
+      return false;
+    }
+
+    if (minute < 0 || minute > 59) {
+      return false;
+    }
+
+    if (second < 0 || second > 59) {
+      return false;
+    }
+
+    return true;
+  }
+
+  preventKeysForTime(event) {
+    const chr = String.fromCharCode(event.which);
+    const keyCode = event.keyCode;
+
+    if (this.allowedKeys.indexOf(keyCode) !== -1) {
+      return true;
+    }
+
+    if (`0123456789`.indexOf(chr) === -1) {
+      return false;
+    }
   }
 
 }
