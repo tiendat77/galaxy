@@ -8,4 +8,19 @@
   .chart {
     background: #27293d;
   }
+
+  .no-data {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    place-content: center;
+    align-items: center;
+
+    svg {
+      path {
+        fill: rgba(179, 179, 179, 0.33);
+      }
+    }
+  }
 }

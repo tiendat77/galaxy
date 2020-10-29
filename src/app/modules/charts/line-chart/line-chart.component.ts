@@ -1,12 +1,10 @@
 import { Component, OnInit, OnChanges, OnDestroy, ViewChild, ElementRef, Input, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { ChartControllerService } from '../../services/chart-controller.service';
 import { TranslateService } from '../../services/translate.service';
 
 import { KPI_DATA } from './mock';
-
-import { enDefaultLocale, ruDefaultLocale, viDefaultLocale } from './utils';
 import * as d3 from 'd3';
 
 @Component({
@@ -29,6 +27,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   // text
   @Input() xLabel;
   @Input() yLabel = 'hours';
+  @Input() timeRange = 'day';
 
   // options
   @Input() showXAxis = true;
@@ -38,11 +37,11 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showXGrid = true;
   @Input() showYGrid = false;
   @Input() showGradient = true;
-  @Input() showTooltip = true;
+  @Input() showTooltip = false;
   @Input() showDot = false; // circle mark on line
 
   @Input() dashedLine = false;
-  @Input() mark: Date; // = new Date(2020, 7, 25);
+  @Input() mark: Date;
 
   chartID = 'LINE_CHART_';
   gradientColor = '#27283C';
@@ -53,8 +52,12 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   height = 600;
   rotateXTicks = false;
 
+  isNoData$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   resizeSub: Subscription;
   translateSub: Subscription;
+
+  dev = true;
 
   constructor(
     private chartCtrl: ChartControllerService,
@@ -70,21 +73,30 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     this.resizeSub = this.chartCtrl.onResizeRequest$.subscribe(() => {
       this.draw();
     });
-
-    this.translateSub = this.translate.currentLanguage$.subscribe((lang) => {
-      this.setTimeFormatDefaultLocale(lang);
-    });
-
-    this.test();
-    this.getDataTest();
   }
 
-  test() {
+  /**
+   * Use for development this component
+   */
+  ngAfterViewInit(): void {
+    if (this.dev) {
+      setTimeout(() => {
+        this.data = KPI_DATA.map((item: any) => ({date: new Date(item.date), value: item.value}));
 
+        const dataMultiple = [[], []];
+        KPI_DATA.forEach((item, index) => {
+          dataMultiple[0].push({ date: new Date(item.date), value: item.value });
+          dataMultiple[1].push({ date: new Date(item.date), value: item.flow });
+        });
+        this.dataMultiple = dataMultiple;
+
+        this.draw();
+      }, 500);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.data) {
+    if (changes && (changes.data || changes.dataMultiple)) {
       setTimeout(() => {
         this.draw();
       }, 200);
@@ -105,9 +117,22 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   draw() {
     const that = this;
     const chartID = '#' + this.chartID;
+    this.clearChart(chartID);
 
-     // TODO dataMultiple
-    if ((this.mode === 'single' && !this.data.length) || (this.mode === 'multiple' && !this.dataMultiple.length)) {
+    // console.log({mode: this.mode, data: this.data, dataMultiple: this.dataMultiple});
+
+    if (this.mode === 'single' && (!this.data.length || this.data.length === 1)) {
+      this.isNoData$.next(true);
+      return;
+    }
+
+    if (this.mode === 'multiple' && (!this.dataMultiple.length || this.dataMultiple.length === 1)) {
+      this.isNoData$.next(true);
+      return;
+    }
+
+    if (this.mode === 'multiple' && (!this.dataMultiple[0].length || this.dataMultiple[0].length === 1)) {
+      this.isNoData$.next(true);
       return;
     }
 
@@ -115,7 +140,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    this.clearChart(chartID);
+    this.isNoData$.next(false);
     this.calcSvgSize();
     this.calcMargin();
 
@@ -161,14 +186,10 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     const chartOverlay = svg.append('g')
       .attr('class', 'line-chart-overlay');
 
-    const minDate = d3.min(this.data, (d: any) => d.date);
-    const maxDate = d3.max(this.data, (d: any) => d.date);
-    const minValue = d3.min(this.data, (d: any) => d.value);
-    const maxValue = d3.max(this.data, (d: any) => d.value);
+    const timeFormat = d3.timeFormat(this.caclTimeFormat());
     const adjust = 0.05; // to avoid d3 curve touch the axis
     const bisect = d3.bisector((d: any) => d.date).left;
-    const ticks = this.calcTicks(this.width);
-    const middlePoint = Math.round(that.data.length / 2);
+    const ticks = that.calcTicks(that.width);
 
     if (this.mode === 'single') {
       drawSingleLine();
@@ -182,6 +203,12 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
 
     /////////////// FUNCTIONS ///////////////
     function drawSingleLine() {
+      const minDate = d3.min(that.data, (d: any) => d.date);
+      const maxDate = d3.max(that.data, (d: any) => d.date);
+      const minValue = d3.min(that.data, (d: any) => d.value);
+      const maxValue = d3.max(that.data, (d: any) => d.value);
+      const middlePoint = Math.round(that.data.length / 2);
+
       const xScale = d3.scaleTime()
         .domain([minDate, maxDate])
         .range([that.margin.left, that.width - that.margin.right]);
@@ -210,7 +237,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
         .attr('d', line);
 
       if (that.showGradient) {
-        chartGraphical.append('defs') // SvgjsLinearGradient2410
+        chartGraphical.append('defs')
           .html(`
             <linearGradient id="SvgjsLinearGradient2410" x1="0" y1="0" x2="0" y2="1">
               <stop id="SvgjsStop2411" stop-opacity="0.7" stop-color="${getColor(that.lineColor[0], 0.5)}" offset="0"></stop>
@@ -402,7 +429,197 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
 
-    function drawMultipleLine() {}
+    function drawMultipleLine() {
+      let minDate = d3.min(that.dataMultiple[0], (d: any) => d.date);
+      let maxDate = d3.max(that.dataMultiple[0], (d: any) => d.date);
+      let minValue = d3.min(that.dataMultiple[0], (d: any) => d.value);
+      let maxValue = d3.max(that.dataMultiple[0], (d: any) => d.value);
+      // const middlePoint = Math.round(that.data.length / 2);
+
+      that.dataMultiple.slice(1).forEach((data) => {
+        const minD = d3.min(data, (d: any) => d.date);
+        const maxD = d3.max(data, (d: any) => d.date);
+        const minV = d3.min(data, (d: any) => d.value);
+        const maxV = d3.max(data, (d: any) => d.value);
+
+        if (minDate.getTime() > minD.getTime()) {
+          minDate = minD;
+        }
+
+        if (maxDate.getTime() < maxD.getTime()) {
+          maxDate = maxD;
+        }
+
+        if (minValue > minV) {
+          minValue = minV;
+        }
+
+        if (maxValue < maxV) {
+          maxValue = maxV;
+        }
+      });
+
+      const xScale = d3.scaleTime()
+        .domain([minDate, maxDate])
+        .range([that.margin.left, that.width - that.margin.right]);
+
+      const yMin = minValue - Math.max(minValue * adjust, maxValue * adjust);
+      const yMax = maxValue + maxValue * adjust;
+
+      const yScale = d3.scaleLinear()
+        .domain([yMin, yMax])
+        .range([that.height - that.margin.bottom, that.margin.top]);
+
+      const line = d3.line() // create line chart
+        .curve(d3.curveCatmullRom.alpha(0.5))
+        .x((d: any) => xScale(d.date))
+        .y((d: any) => yScale(d.value));
+
+      const area = d3.area() // create gradient effect
+        .curve(d3.curveCatmullRom.alpha(0.5))
+        .x((d: any) => xScale(d.date))
+        .y0(yScale(minValue))
+        .y1((d: any) => yScale(d.value));
+
+      if (that.showXGrid) {
+        const tickSize = -(that.height - that.margin.top - that.margin.bottom);
+
+        chartGridLine.append('g')
+          .attr('class', 'x-grid')
+          .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+          .call(d3.axisBottom(xScale)
+            .ticks(ticks)
+            .tickSize(tickSize)
+            .tickFormat(d => '')
+          )
+          .call(styleGridLine);
+      }
+
+      if (that.showYGrid) {
+        const tickSize = -(that.width - that.margin.left - that.margin.right);
+
+        chartGridLine.append('g')
+          .attr('class', 'y-grid')
+          .attr('transform', `translate(${that.margin.left}, 0)`)
+          .call(d3.axisLeft(yScale)
+            .ticks(ticks)
+            .tickSize(tickSize)
+            .tickFormat(d => '')
+          )
+          .call(styleGridLine);
+      }
+
+      if (that.showXAxis) {
+        chartXAxis
+          .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+          .call(d3.axisBottom(xScale)
+            .ticks(ticks)
+            .tickSizeOuter(0)
+          )
+          .call(styleXAxis);
+      }
+
+      if (that.showYAxis) {
+        chartYAxis
+          .attr('transform', `translate(${that.margin.left}, 0)`)
+          .call(d3.axisLeft(yScale)
+            .ticks(ticks)
+            .tickSizeOuter(0)
+          )
+          .call(styleYAxis);
+      }
+
+      if (that.xLabel) {
+        chartXLabel.append('text')
+          .attr('x', that.width - that.margin.right + 4)
+          .attr('y', that.height - that.margin.bottom)
+          .attr('text-anchor', 'start')
+          .attr('fill', getColor(that.tickColor, 0.68))
+          .text(that.xLabel);
+      }
+
+      if (that.yLabel) {
+        chartYLabel.append('text')
+          .attr('x', that.margin.left)
+          .attr('y', that.margin.top)
+          .attr('text-anchor', 'end')
+          .attr('font-size', '0.8em')
+          .attr('fill', getColor(that.tickColor, 0.68))
+          .text(that.yLabel);
+      }
+
+      that.dataMultiple.forEach((data, index) => {
+        drawLine(data, index);
+      });
+
+      function drawLine(data: any[], index: number) {
+        chartGraphical.append('path')
+          .datum(data)
+          .attr('fill', 'none')
+          .attr('stroke', that.lineColor[index])
+          .attr('stroke-width', 2)
+          .attr('stroke-dasharray', that.dashedLine ? 3 : 0)
+          .attr('d', line);
+
+        if (that.showGradient) {
+          const gradientID = 'SvgjsLinearGradient' + rand();
+
+          chartGraphical.append('defs') // SvgjsLinearGradient2410
+          .html(`
+            <linearGradient id="${gradientID}" x1="0" y1="0" x2="0" y2="1">
+              <stop id="SvgjsStop2411" stop-opacity="0.7" stop-color="${getColor(that.lineColor[index], 0.5)}" offset="0"></stop>
+              <stop id="SvgjsStop2412" stop-opacity="0.9" stop-color="${getColor(that.gradientColor, 0.2)}" offset="0.9"></stop>
+              <stop id="SvgjsStop2413" stop-opacity="0.9" stop-color="${getColor(that.gradientColor, 0.2)}" offset="1"></stop>
+            </linearGradient>
+          `);
+
+          chartGraphical.append('path')
+            .datum(data)
+            .attr('fill', `url(#${gradientID})`)
+            .attr('stroke-width', 1)
+            .attr('d', area);
+        }
+
+        if (that.showDot) {
+          chartGraphical.append('g')
+            .attr('class', 'line-chart-dots')
+            .selectAll('circle')
+            .data(data)
+            .join('circle')
+              .attr('fill', that.lineColor[index])
+              .attr('stroke', '#fff')
+              .attr('stroke-width', '2')
+              .attr('r', 6)
+              .attr('cx', (d: any) => xScale(d.date))
+              .attr('cy', (d: any) => yScale(d.value));
+        }
+
+        if (that.mark !== undefined) {
+          const i = bisect(data, that.mark);
+          const iData = data[i];
+
+          if (!iData) { return; }
+
+          const cx = xScale(iData.date);
+          const cy = yScale(iData.value);
+          const max = xScale(maxDate);
+
+          if (cx > 0 && cx <= max) {
+            chartMark.append('circle')
+              .attr('fill', that.lineColor[0])
+              .attr('stroke', '#fff')
+              .attr('stroke-width', '2')
+              .attr('r', 6)
+              .attr('cx', cx)
+              .attr('cy', cy);
+          }
+        }
+
+        if (that.showTooltip) {
+          // TODO: function show tooltip
+        }
+      }
+    }
 
     function styleTooltip(selection: d3.Selection<HTMLElement, unknown, HTMLElement, any>) {
       selection
@@ -436,16 +653,20 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     function styleXAxis(selection: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
+      const domainColor = getColor(that.tickColor, 0.4);
+      const textColor = getColor(that.tickColor, 0.68);
+
       selection
         .call(g => g.select('.domain')
-          .attr('stroke', getColor(that.tickColor, 0.4))
+          .attr('stroke', domainColor)
         )
         .call(g => g.selectAll('text')
           .attr('class', 'font-number')
-          .attr('fill', getColor(that.tickColor, 0.68))
+          .attr('fill', textColor)
           .attr('font-size', that.fontSize)
           .attr('dx', that.rotateXTicks ? '-26px' : null)
           .style('transform', that.rotateXTicks ? 'rotate(-45deg)' : null)
+          .text((d: any) => timeFormat(d))
         )
         .call(g => g.selectAll('line').remove());
 
@@ -523,38 +744,26 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async translateWords() {
-    this.setTimeFormatDefaultLocale(this.translate.currentLanguage$.value);
     this.yLabel = await this.translate.get('WORD.HOURS');
-  }
-
-  setTimeFormatDefaultLocale(lang: string) {
-    switch (lang) {
-      case 'vi': {
-        d3.timeFormatDefaultLocale(viDefaultLocale);
-        break;
-      }
-
-      case 'ru': {
-        d3.timeFormatDefaultLocale(ruDefaultLocale);
-        break;
-      }
-
-      default: {
-        d3.timeFormatDefaultLocale(enDefaultLocale);
-        break;
-      }
-    }
   }
 
   calcSvgSize() {
     if (this.chartContainer) {
       const element = this.chartContainer.nativeElement;
 
-      // this.width = element.parentNode.clientWidth;
-      // this.height = element.parentNode.clientHeight - 10;
+      if (this.dev) {
+        this.width = element.clientWidth;
+        this.height = element.clientHeight - 10;
 
-      this.width = element.clientWidth;
-      this.height = element.clientHeight - 10;
+      } else {
+        this.width = element.parentNode.clientWidth;
+        this.height = element.parentNode.clientHeight;
+
+        if (this.height > 10) {
+          this.height = this.height - 10;
+        }
+      }
+
       return {width: this.width, height: this.height};
     }
 
@@ -601,12 +810,23 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
     return tick;
   }
 
-  getDataTest() {
-    this.data = KPI_DATA.map((item: any) => ({date: new Date(item.date), value: item.value}));
+  caclTimeFormat() {
+    const timeRange = this.timeRange || 'day';
+    let format = '%d-%m';
 
-    setTimeout(() => {
-      this.draw();
-    }, 900);
+    switch (timeRange) {
+      case 'month': {
+        format = '%b';
+        break;
+      }
+
+      default: {
+        format = '%d-%m';
+        break;
+      }
+    }
+
+    return format;
   }
 
 }
