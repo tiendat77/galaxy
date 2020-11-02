@@ -22,7 +22,8 @@ export const COMPONENT_CHILDRENDS: MenuItem[] = [
   { name: 'Wrap', url: '/components/wrapper' },
   { name: 'Form Select', url: '/components/form-select' },
   { name: 'Date Time', url: '/components/form-date-time' },
-  { name: 'Date Month Year', url: '/components/form-date-month-year' }
+  { name: 'Date Month Year', url: '/components/form-date-month-year' },
+  { name: 'Form Input File', url: '/components/form-input-file' }
 ];
 
 export const MENU_ITEMS: MenuItem[] = [

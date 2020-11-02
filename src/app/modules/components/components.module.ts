@@ -15,6 +15,7 @@ import { FormSelectComponent } from './form-select/form-select.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
 import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
+import { FormInputFileComponent } from './form-input-file/form-input-file.component';
 
 import { MomentFormatPipe } from './pipes/moment-format.pipe';
 
@@ -34,6 +35,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
@@ -63,7 +65,9 @@ const MATERIAL_MODULES = [
     FormSelectComponent,
     FormDateTimeComponent,
     FormDateMonthYearComponent,
-    WrapperComponent
+    WrapperComponent,
+    FormInputFileComponent,
+    DragAndDropDirective
   ],
   imports: [
     CommonModule,

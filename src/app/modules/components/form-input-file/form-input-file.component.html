@@ -1,0 +1,22 @@
+<div appDragAndDrop
+     class="drop-area-container center"
+     (fileDropped)="onFileDrop($event)"
+     (click)="fileUpload.click()">
+
+  <ng-template [ngIf]="!selectedFile.name">
+    <mat-icon>description</mat-icon>
+    <h1>Drag & drop CSV file here</h1>
+    <p>or</p>
+    <h2>Click to upload csv</h2>
+  </ng-template>
+
+  <ng-template [ngIf]="selectedFile.name">
+    <h1>{{ selectedFile.name }}</h1>
+    <button mat-button (click)="clearFile()">
+      <span>Clear file</span>
+    </button>
+  </ng-template>
+
+  <input #fileUpload type="file" (change)="onSelectFile($event)" hidden>
+</div>
+

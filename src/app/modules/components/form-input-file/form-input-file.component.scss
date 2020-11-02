@@ -1,0 +1,17 @@
+.drop-area-container {
+  height: 200px;
+  width: 100%;
+  margin: 20px auto;
+  border: 2px dashed rgb(168, 163, 163);
+  border-radius: 10px;
+  background: #fcf7f8;
+  cursor: pointer;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  place-content: center;
+  align-items: center;
+}
