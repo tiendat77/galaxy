@@ -15,11 +15,12 @@ export class FormInputFileComponent implements OnInit, OnChanges {
   @Input() required = false;
   @Input() type: 'csv_file' | 'csv_file_raw' = 'csv_file';
 
-  @Input() value: any[];
+  @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   separator = ',';
-  csvName;
+  csvName: string;
+  csvRaw: string;
   csvLines: any[] = [];
 
   isLoading$ = new BehaviorSubject(false);
@@ -32,7 +33,13 @@ export class FormInputFileComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!changes) {
+      return;
+    }
 
+    if (!this.value) {
+      this.onLoadFileFail();
+    }
   }
 
   onSelectFile(event) {
@@ -61,16 +68,21 @@ export class FormInputFileComponent implements OnInit, OnChanges {
 
   onFileLoaded() {
     if (!this.csvLines.length) {
-      this.notify.notify('DATA.IMPORT.NOTIFY.EMPTY_FILE');
+      this.notify.notify('EMPTY_FILE');
       return;
     }
 
-    // TODO: check type
-    this.valueChange.emit(this.csvLines);
+    if (this.type === 'csv_file') {
+      this.valueChange.emit(this.csvLines);
+
+    } else {
+      this.valueChange.emit(this.csvRaw);
+    }
   }
 
   onLoadFileFail() {
     this.csvName = undefined;
+    this.csvRaw = undefined;
     this.csvLines = [];
     this.isLoading$.next(false);
   }
@@ -79,9 +91,9 @@ export class FormInputFileComponent implements OnInit, OnChanges {
     event.stopPropagation();
 
     this.csvName = undefined;
+    this.csvRaw = undefined;
     this.csvLines = [];
   }
-
   readFile(file: File) {
     return new Promise((resolve, reject) => {
       this.isLoading$.next(true);
@@ -97,7 +109,7 @@ export class FormInputFileComponent implements OnInit, OnChanges {
 
       if (type !== 'text/csv') {
         this.onLoadFileFail();
-        this.notify.notify('DATA.IMPORT.NOTIFY.INVALID_CSV_FILE');
+        this.notify.notify('INVALID_CSV_FILE');
         resolve();
         return;
       }
@@ -123,6 +135,7 @@ export class FormInputFileComponent implements OnInit, OnChanges {
           }
         }
 
+        this.csvRaw = csv;
         this.csvName = name;
         this.csvLines = lines;
 
