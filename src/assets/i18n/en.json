@@ -1,1 +1,63 @@
-{}
+{
+  "DATA": {
+    "IMPORT": {
+      "TEXT": {
+        "IMPORTED_CATEGORIES": "Imported categories",
+        "SELECT_REPORT": "Select an imported category",
+        "NO_IMPORTED": "No imported category",
+        "NO_PARAM": "No filter",
+        "PARAM_LIST": "Filters",
+        "DRAG_DROP_CSV": "Drag and drop CSV file here",
+        "OR": "or",
+        "CLICK_TO_UPLOAD_CSV": "Click to upload CSV file",
+        "UPLOADING": "Uploading"
+      },
+      "PLACEHOLDER": {
+        "SEARCH_IMPORTED": "Search imported"
+      },
+      "ACTION": {
+        "IMPORT": "Import",
+        "CLEAR_FORM": "Clear forms",
+        "CLEAR_FILE": "Clear file"
+      },
+      "TIP": {},
+      "NOTIFY": {
+        "GET_PARAM_ERROR": "Get filters error!",
+        "IMPORT_SUCCESS": "Import data successful!",
+        "IMPORT_FAIL": "Import data fail!",
+        "IMPORTED_INFO_ERROR": "Get imported info error!",
+        "INPUT_THE_FORM": "Please fill out the form",
+        "EMPTY_FILE": "File is empty!",
+        "INVALID_CSV_FILE": "Please select a valid CSV file!"
+      }
+    },
+    "EXPORT": {
+      "TEXT": {
+        "REPORT_CATEGORIES": "Report categories",
+        "NO_REPORT": "No report category",
+        "NO_PARAM": "No filter",
+        "PARAM_LIST": "Filters",
+        "SELECT_REPORT": "Select a report category",
+        "SELECT_SPECIFIC_DATE": "Leave blank if export by month"
+      },
+      "PLACEHOLDER": {
+        "SEARCH_REPORT": "Search report category",
+        "SEARCH": "Search"
+      },
+      "ACTION": {
+        "CLEAR_FORM": "Clear forms",
+        "EXPORT": "Export"
+      },
+      "TIP": {},
+      "NOTIFY": {
+        "GET_PARAM_ERROR": "Get filters error!",
+        "EXPORT_SUCCESS": "Export data successful!",
+        "EXPORT_FAIL": "Export data fail!",
+        "REPORT_INFO_ERROR": "Get report info error!",
+        "INPUT_THE_FORM": "Please fill out the form",
+        "INVALID_DATE": "Invalid date!",
+        "INVALID_TIME": "Invalid time!"
+      }
+    }
+  }
+}

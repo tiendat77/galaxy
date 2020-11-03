@@ -1,11 +1,54 @@
-.drop-area-container {
-  height: 200px;
+.form-input-file {
+  height: 300px;
   width: 100%;
   margin: 20px auto;
   border: 2px dashed rgb(168, 163, 163);
   border-radius: 10px;
-  background: #fcf7f8;
+  position: relative;
   cursor: pointer;
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .file-drop-area {
+    width: 100%;
+    height: 100%;
+
+    .csv-icon {
+      margin-bottom: 10px;
+    }
+
+    .title {
+      color: rgba(0, 0, 0, 0.68);
+      margin-bottom: 10px;
+    }
+  }
+
+  .file-info {
+    width: 100%;
+    height: 100%;
+    background: #f7fcf9;
+
+    .title {
+      color: rgba(0, 0, 0, 0.68);
+      margin-bottom: 28px;
+    }
+  }
+
+  .file-loading {
+    background: #e0f8fd;
+    color: rgba(0, 0, 0, 0.68);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+  }
 }
 
 .center {

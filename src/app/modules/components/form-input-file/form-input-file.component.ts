@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { read } from 'fs';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 import { NotifyService } from '../../services/notify.service';
 
@@ -9,24 +9,20 @@ import { NotifyService } from '../../services/notify.service';
   styleUrls: ['./form-input-file.component.scss']
 })
 export class FormInputFileComponent implements OnInit, OnChanges {
+  @ViewChild('fileUpload') inputFile: ElementRef;
 
   @Input() label: string;
   @Input() required = false;
+  @Input() type: 'csv_file' | 'csv_file_raw' = 'csv_file';
 
   @Input() value: any[];
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
-  separators = [
-    // TODO: translate
-    { name: 'semi-colon', value: ';' },
-    { name: 'comma', value: ',' }
-  ];
-  separator: ',' | ';' = ',';
+  separator = ',';
+  csvName;
+  csvLines: any[] = [];
 
-  selectedFile = {
-    name: undefined,
-    value: []
-  };
+  isLoading$ = new BehaviorSubject(false);
 
   constructor(
     private notify: NotifyService
@@ -42,59 +38,107 @@ export class FormInputFileComponent implements OnInit, OnChanges {
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      this.readFile(file);
+
+      this.readFile(file).then(() => {
+        this.onFileLoaded();
+
+        // clear file input
+        if (this.inputFile) {
+          this.inputFile.nativeElement.value = null;
+        }
+      });
     }
   }
 
   onFileDrop(files: FileList) {
     if (files && files.length && files[0]) {
-      this.readFile(files[0]);
+
+      this.readFile(files[0]).then(() => {
+        this.onFileLoaded();
+      });
     }
   }
 
-  clearFile() {
-    this.selectedFile.name = undefined;
-    this.selectedFile.value = [];
-  }
-
-  readFile(file: File) {
-    const type = file.type;
-    const name = file.name;
-    const ext = this.getFileExtension(file.name);
-
-    this.selectedFile.name = name;
-
-    const reader = new FileReader();
-    const header: any[] = [];
-    const rows: any[] = [];
-
-    if (!file) { return; }
-
-    if (type !== 'text/csv') {
-      this.notify.notify('Nhap file csv thoi ban ey!!!!');
+  onFileLoaded() {
+    if (!this.csvLines.length) {
+      this.notify.notify('DATA.IMPORT.NOTIFY.EMPTY_FILE');
       return;
     }
 
-    reader.onload = (event: any) => {
-      const result: string = reader.result as string;
-      const list: any[] = result.split(/\r\n|\n/);
+    // TODO: check type
+    this.valueChange.emit(this.csvLines);
+  }
 
-      header.push(...list.splice(0, 1));
+  onLoadFileFail() {
+    this.csvName = undefined;
+    this.csvLines = [];
+    this.isLoading$.next(false);
+  }
 
-      for (const row of list) {
-        const rowData = row.split(this.separator);
-        rows.push(rowData);
+  clearFile(event) {
+    event.stopPropagation();
+
+    this.csvName = undefined;
+    this.csvLines = [];
+  }
+
+  readFile(file: File) {
+    return new Promise((resolve, reject) => {
+      this.isLoading$.next(true);
+
+      const type = file.type;
+      const name = file.name;
+      // const ext = this.getFileExtension(file.name);
+
+      const reader = new FileReader();
+      const lines: any[] = [];
+
+      if (!file) { return; }
+
+      if (type !== 'text/csv') {
+        this.onLoadFileFail();
+        this.notify.notify('DATA.IMPORT.NOTIFY.INVALID_CSV_FILE');
+        resolve();
+        return;
       }
 
-      console.log('hehehe');
-    };
+      reader.onload = (event: any) => {
+        const csv: string = reader.result as string;
+        const allLines: any[] = csv.split(/\r\n|\n/);
 
-    reader.readAsText(file);
-    console.log({header, rows});
+        // Check file is empty
+        if (allLines.length < 2) {
+          this.onLoadFileFail();
+          resolve();
+          return;
+        }
+
+        const header: any[] = allLines.splice(0, 1)[0].split(this.separator);
+
+        for (const row of allLines) {
+          const lineData = row.split(this.separator);
+
+          if (lineData.length === header.length) {
+            lines.push(lineData);
+          }
+        }
+
+        this.csvName = name;
+        this.csvLines = lines;
+
+        setTimeout(() => {
+          this.isLoading$.next(false);
+        }, 300);
+
+        resolve();
+      };
+
+      reader.readAsText(file);
+    });
   }
 
   /////////////// UTILS ///////////////
-  getFileExtension(fileName: string) {
+  private getFileExtension(fileName: string) {
     if (!fileName || !fileName.length) {
       return '';
     }

@@ -2,28 +2,65 @@
   "WORD": {
     "HOURS": "Giờ"
   },
-  "REPORTED": {
-    "TEXT": {
-      "REPORT_CATEGORIES": "Loại báo cáo",
-      "NO_REPORT": "Không có loại báo cáo nào",
-      "NO_PARAM": "Không có bộ lọc",
-      "PARAM_LIST": "Danh sách bộ lọc",
-      "SELECT_REPORT": "Hãy chọn một loại báo cáo"
+  "DATA": {
+    "IMPORT": {
+      "TEXT": {
+        "IMPORTED_CATEGORIES": "Loại nhập liệu",
+        "SELECT_REPORT": "Hãy chọn một loại liệu",
+        "NO_IMPORTED": "Không có loại nhập liệu nào",
+        "NO_PARAM": "Không có bộ lọc",
+        "PARAM_LIST": "Danh sách bộ lọc",
+        "DRAG_DROP_CSV": "Kéo thả tập tin CSV vào đây",
+        "OR": "hoặc",
+        "CLICK_TO_UPLOAD_CSV": "Nhấn vào để tải lên tập tin CSV",
+        "UPLOADING": "Đang tải lên"
+      },
+      "PLACEHOLDER": {
+        "SEARCH_IMPORTED": "Tìm loại nhập liệu"
+      },
+      "ACTION": {
+        "IMPORT": "Nhập dữ liệu",
+        "CLEAR_FORM": "Nhập lại",
+        "CLEAR_FILE": "Bỏ chọn tập tin"
+      },
+      "TIP": {},
+      "NOTIFY": {
+        "GET_PARAM_ERROR": "Lấy danh sách bộ lọc lỗi!",
+        "IMPORT_SUCCESS": "Nhập liệu thành công",
+        "IMPORT_FAIL": "Nhập liệu thất bại!",
+        "IMPORTED_INFO_ERROR": "Lấy thông tin nhập liệu lỗi!",
+        "INPUT_THE_FORM": "Hãy điền thông tin vào bộ lọc",
+        "EMPTY_FILE": "Tập tin rỗng!",
+        "INVALID_CSV_FILE": "Hãy chọn tập tin CSV hợp lệ!"
+      }
     },
-    "PLACEHOLDER": {
-      "SEARCH_REPORT": "Tìm loại báo cáo"
-    },
-    "ACTION": {
-      "CLEAR_FORM": "Nhập lại",
-      "EXPORT": "Xuất dữ liệu"
-    },
-    "TIP": {},
-    "NOTIFY": {
-      "GET_PARAM_ERROR": "Lấy danh sách bộ lọc lỗi!",
-      "EXPORT_SUCCESS": "Xuất dữ liệu thành công",
-      "EXPORT_FAIL": "Xuất dữ liệu thất bại!",
-      "REPORT_INFO_ERROR": "Lấy thông tin báo cáo lỗi!",
-      "INPUT_THE_FORM": "Hãy điền thông tin vào bộ lọc"
+    "EXPORT": {
+      "TEXT": {
+        "REPORT_CATEGORIES": "Loại báo cáo",
+        "NO_REPORT": "Không có loại báo cáo nào",
+        "NO_PARAM": "Không có bộ lọc",
+        "PARAM_LIST": "Danh sách bộ lọc",
+        "SELECT_REPORT": "Hãy chọn một loại báo cáo",
+        "SELECT_SPECIFIC_DATE": "Để trống nếu xuất dữ liệu theo tháng"
+      },
+      "PLACEHOLDER": {
+        "SEARCH_REPORT": "Tìm loại báo cáo",
+        "SEARCH": "Tìm kiếm"
+      },
+      "ACTION": {
+        "CLEAR_FORM": "Nhập lại",
+        "EXPORT": "Xuất dữ liệu"
+      },
+      "TIP": {},
+      "NOTIFY": {
+        "GET_PARAM_ERROR": "Lấy danh sách bộ lọc lỗi!",
+        "EXPORT_SUCCESS": "Xuất dữ liệu thành công",
+        "EXPORT_FAIL": "Xuất dữ liệu thất bại!",
+        "REPORT_INFO_ERROR": "Lấy thông tin báo cáo lỗi!",
+        "INPUT_THE_FORM": "Hãy điền thông tin vào bộ lọc",
+        "INVALID_DATE": "Ngày không hợp lệ!",
+        "INVALID_TIME": "Thời gian không hợp lệ!"
+      }
     }
   }
 }

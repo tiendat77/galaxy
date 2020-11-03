@@ -6,19 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Installed Libraries
 import { TranslateModule } from '@ngx-translate/core';
 
-// Components
-import { ComponentsRoutingModule } from './components-routing.module';
-import { MainComponent } from './main/main.component';
-import { TypeWriterComponent } from './type-writer/type-writer.component';
-import { MagicButtonComponent } from './magic-button/magic-button.component';
-import { FormSelectComponent } from './form-select/form-select.component';
-import { WrapperComponent } from './wrapper/wrapper.component';
-import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
-import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
-import { FormInputFileComponent } from './form-input-file/form-input-file.component';
-
-import { MomentFormatPipe } from './pipes/moment-format.pipe';
-
 // Material Components
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -29,13 +16,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
@@ -47,6 +34,7 @@ const MATERIAL_MODULES = [
   MatButtonModule,
   MatIconModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatTooltipModule,
   MatToolbarModule,
   MatTabsModule,
@@ -54,6 +42,20 @@ const MATERIAL_MODULES = [
   MatListModule,
   ScrollingModule,
 ];
+
+import { MomentFormatPipe } from './pipes/moment-format.pipe';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+
+// Components
+import { ComponentsRoutingModule } from './components-routing.module';
+import { MainComponent } from './main/main.component';
+import { TypeWriterComponent } from './type-writer/type-writer.component';
+import { MagicButtonComponent } from './magic-button/magic-button.component';
+import { FormSelectComponent } from './form-select/form-select.component';
+import { WrapperComponent } from './wrapper/wrapper.component';
+import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
+import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
+import { FormInputFileComponent } from './form-input-file/form-input-file.component';
 
 
 @NgModule({
