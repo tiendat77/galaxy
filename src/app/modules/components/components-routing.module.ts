@@ -9,6 +9,7 @@ import { FormSelectComponent } from './form-select/form-select.component';
 import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
 import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
 import { FormInputFileComponent } from './form-input-file/form-input-file.component';
+import { FormSelectTimezoneComponent } from './form-select-timezone/form-select-timezone.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'type-writer', component: TypeWriterComponent },
       { path: 'magic-button', component: MagicButtonComponent },
       { path: 'form-select', component: FormSelectComponent },
+      { path: 'form-select-timezone', component: FormSelectTimezoneComponent },
       { path: 'form-date-time', component: FormDateTimeComponent },
       { path: 'form-date-month-year', component: FormDateMonthYearComponent },
       { path: 'form-input-file', component: FormInputFileComponent }

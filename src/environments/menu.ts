@@ -17,13 +17,14 @@ const CHART_CHILDRENS: MenuItem[] = [
 ];
 
 export const COMPONENT_CHILDRENDS: MenuItem[] = [
+  { name: 'Form Select', url: '/components/form-select' },
+  { name: 'Form Select Timezone', url: '/components/form-select-timezone' },
+  { name: 'Date Time', url: '/components/form-date-time' },
+  { name: 'Date Month Year', url: '/components/form-date-month-year' },
+  { name: 'Form Input File', url: '/components/form-input-file' },
   { name: 'Magic Button', url: '/components/magic-button' },
   { name: 'Type Writer', url: '/components/type-writer' },
   { name: 'Wrap', url: '/components/wrapper' },
-  { name: 'Form Select', url: '/components/form-select' },
-  { name: 'Date Time', url: '/components/form-date-time' },
-  { name: 'Date Month Year', url: '/components/form-date-month-year' },
-  { name: 'Form Input File', url: '/components/form-input-file' }
 ];
 
 export const MENU_ITEMS: MenuItem[] = [

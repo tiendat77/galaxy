@@ -54,8 +54,9 @@ import { MagicButtonComponent } from './magic-button/magic-button.component';
 import { FormSelectComponent } from './form-select/form-select.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
-import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
 import { FormInputFileComponent } from './form-input-file/form-input-file.component';
+import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
+import { FormSelectTimezoneComponent } from './form-select-timezone/form-select-timezone.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { FormInputFileComponent } from './form-input-file/form-input-file.compon
     FormDateMonthYearComponent,
     WrapperComponent,
     FormInputFileComponent,
-    DragAndDropDirective
+    DragAndDropDirective,
+    FormSelectTimezoneComponent
   ],
   imports: [
     CommonModule,
