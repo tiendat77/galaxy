@@ -9,18 +9,21 @@ import { LineBarChartComponent } from './line-bar-chart/line-bar-chart.component
 import { BulletChartComponent } from './bullet-chart/bullet-chart.component';
 import { BoardComponent } from './board/board.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { StackedBarChartComponent } from './stacked-bar-chart/stacked-bar-chart.component';
+import { HorizontalBarChartComponent } from './horizontal-bar-chart/horizontal-bar-chart.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/chart/bar-chart' },
   { path: 'board', component: BoardComponent },
   { path: 'bar-chart', component: BarChartComponent },
   { path: 'line-chart', component: LineChartComponent },
-  { path: 'smooth-zoom', component: SmoothZoomComponent },
   { path: 'clock', component: ClockComponent },
   { path: 'tooltip', component: TooltipComponent },
   { path: 'line-bar-chart', component: LineBarChartComponent },
   { path: 'bullet-chart', component: BulletChartComponent },
-  { path: 'pie-chart', component: PieChartComponent }
+  { path: 'pie-chart', component: PieChartComponent },
+  { path: 'stacked-bar-chart', component: StackedBarChartComponent },
+  { path: 'horizontal-bar-chart', component: HorizontalBarChartComponent }
 ];
 
 @NgModule({

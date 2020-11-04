@@ -1,0 +1,114 @@
+<mat-form-field appearance="outline" class="date-time-picker" fxFlex>
+  <mat-label>{{ label }}</mat-label>
+
+  <input matInput readonly
+         [required]="required"
+         [ngModel]="valueCtrl | momentFormat: 'DD/MM/YYYY HH:mm:ss'"
+         (click)="openDatePicker(datePicker)">
+
+  <input matInput hidden
+         [matDatepicker]="datePicker"
+         [formControl]="dateCtrl"
+         (dateChange)="onDateChange()">
+
+  <button mat-icon-button matSuffix
+          *ngIf="valueCtrl"
+          (click)="onClearValue()">
+    <mat-icon style="color: #f44336;">clear</mat-icon>
+  </button>
+
+  <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+
+  <button #timeMenuTrigger="matMenuTrigger"
+          mat-icon-button matSuffix
+          [matMenuTriggerFor]="timePicker">
+    <mat-icon [class.menu-active]="timeMenuTrigger.menuOpen">access_time</mat-icon>
+  </button>
+
+  <mat-datepicker #datePicker xPosition="end" yPosition="below"></mat-datepicker>
+</mat-form-field>
+
+<mat-menu #timePicker="matMenu">
+  <div class="time-picker-container" (click)="$event.stopPropagation()">
+    <div class="time-picker">
+      <!-- HOUR -->
+      <div class="picker-container">
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="incrementHour()">
+          <span class="chevron"></span>
+        </button>
+
+        <mat-form-field appearance="outline" floatLabel="never" class="form-control">
+          <input matInput name="hour" autocomplete="off"
+                 [formControl]="hourCtrl"
+                 (keydown)="preventKeysForTime($event)">
+        </mat-form-field>
+
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="decrementHour()">
+          <span class="chevron chevron-bottom"></span>
+        </button>
+      </div>
+
+      <div class="spacer" *ngIf="showMinutes">:</div>
+
+      <!-- MINUTE -->
+      <div class="picker-container" *ngIf="showMinutes">
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="incrementMinute()">
+          <span class="chevron"></span>
+        </button>
+
+        <mat-form-field appearance="outline" floatLabel="never" class="form-control">
+          <input matInput name="minute" autocomplete="off"
+                 [formControl]="minuteCtrl"
+                 (keydown)="preventKeysForTime($event)">
+        </mat-form-field>
+
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="decrementMinute()">
+          <span class="chevron chevron-bottom"></span>
+        </button>
+      </div>
+
+      <div class="spacer" *ngIf="showSeconds">:</div>
+
+      <!-- SECOND -->
+      <div class="picker-container" *ngIf="showSeconds">
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="incrementSecond()">
+          <span class="chevron"></span>
+        </button>
+
+        <mat-form-field appearance="outline" floatLabel="never" class="form-control">
+          <input matInput name="second" autocomplete="off"
+                 [formControl]="secondCtrl"
+                 (keydown)="preventKeysForTime($event)">
+        </mat-form-field>
+
+        <button type="button" class="btn btn-link"
+                [class.hidden]="!showSpinners"
+                (click)="decrementSecond()">
+          <span class="chevron chevron-bottom"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-button color="primary"
+              (click)="timeMenuTrigger.closeMenu()">
+        <span>CANCEL</span>
+      </button>
+
+      <button mat-button color="primary"
+              (click)="onTimeChange()">
+        <span>OK</span>
+      </button>
+    </div>
+  </div>
+</mat-menu>

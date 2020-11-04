@@ -1,4 +1,4 @@
-$nav-bg: #555555;
+$nav-bg: linear-gradient(#1e1e2f, #1e1e24);
 $nav-color: #fff;
 
 .header-container {
@@ -16,7 +16,8 @@ $nav-color: #fff;
 }
 
 .navbar {
-  background-color: $nav-bg;
+  background: $nav-bg;
+  border-top: 2px solid #e14eca;
 
   ul, li {
     padding: 20px;
@@ -51,7 +52,7 @@ $nav-color: #fff;
       z-index: 9999;
 
       li {
-        background-color: $nav-bg;
+        background: $nav-bg;
         padding: 10px;
         display: none;
         animation: appear 300ms ease-in-out;

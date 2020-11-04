@@ -1,0 +1,59 @@
+<div class="form-input-file center">
+  <!-- NO FILE SELECTED -->
+  <ng-template [ngIf]="!csvName">
+    <div appDragAndDrop
+         class="file-drop-area center"
+         (fileDropped)="onFileDrop($event)"
+         (click)="fileUpload.click()">
+      <div class="csv-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 6.35 6.35">
+          <path fill="#3fd155" d="M3.857.271h-2.54A.396.396 0 00.92.668v5.025c0 .22.177.397.397.397H4.81c.22 0 .396-.177.396-.397V1.622z" />
+          <path fill="#2fc646" d="M3.064.271v5.82H4.81c.22 0 .396-.178.396-.398V1.622L3.857.272z" />
+          <path fill="#66da79" d="M5.207 1.622L3.857.272V1.224c0 .22.177.397.397.397h.899z" />
+          <path style="line-height:1.25;-inkscape-font-specification:'Arial Bold'"
+            d="M2.046 2.617a.482.482 0 00-.37.151c-.093.1-.14.24-.14.422 0 .171.047.307.14.406a.47.47 0 00.357.147.465.465 0 00.289-.086.479.479 0 00.163-.265l-.213-.068a.323.323 0 01-.09.176.22.22 0 01-.151.055.242.242 0 01-.193-.088c-.05-.058-.075-.156-.075-.294 0-.13.025-.223.075-.28a.249.249 0 01.197-.087.23.23 0 01.149.048.23.23 0 01.08.134l.218-.052a.43.43 0 00-.111-.2.453.453 0 00-.325-.119zm1.009 0a.547.547 0 00-.215.038.297.297 0 00-.136.11.283.283 0 00.053.375c.048.043.13.079.249.108.091.023.15.038.176.047.037.014.063.03.078.048.016.018.024.04.024.065 0 .04-.019.076-.055.106-.035.03-.089.044-.16.044a.238.238 0 01-.16-.05.262.262 0 01-.077-.158l-.214.02a.417.417 0 00.132.279c.074.063.18.095.318.095a.62.62 0 00.236-.04.32.32 0 00.199-.297.298.298 0 00-.164-.284 1.046 1.046 0 00-.237-.078.578.578 0 01-.202-.073.084.084 0 01.003-.133.25.25 0 01.15-.04c.061 0 .108.013.139.038.03.024.051.064.06.12l.22-.01a.316.316 0 00-.109-.24c-.069-.06-.172-.09-.308-.09zm.522.019l.39 1.089H4.2l.39-1.089h-.234l-.266.806-.276-.806z"
+            font-weight="700" font-size="1.521" font-family="Arial" fill="#fff" />
+        </svg>
+      </div>
+
+      <h2 class="title" translate>DATA.IMPORT.TEXT.DRAG_DROP_CSV</h2>
+
+      <p class="title" style="color: rgba(0, 0, 0, 0.38);" translate>
+        DATA.IMPORT.TEXT.OR
+      </p>
+
+      <button mat-stroked-button color="primary"
+              style="padding: 8px 16px;">
+        <mat-icon style="margin-right: 6px;">backup</mat-icon>
+        <span translate>DATA.IMPORT.TEXT.CLICK_TO_UPLOAD_CSV</span>
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- SELECTED FILE -->
+  <ng-template [ngIf]="csvName">
+    <div class="file-info center">
+      <h2 class="title">{{ csvName }}</h2>
+
+      <button mat-stroked-button color="warn"
+              (click)="clearFile($event)">
+        <mat-icon style="margin-right: 6px;">clear</mat-icon>
+        <span translate>DATA.IMPORT.ACTION.CLEAR_FILE</span>
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- LOADING FILE -->
+  <ng-template [ngIf]="isLoading$ | async">
+    <div class="file-loading center">
+      <mat-progress-spinner color="primary" mode="indeterminate" strokeWidth="2">
+      </mat-progress-spinner>
+
+      <div style="margin-top: 30px;">
+        <span translate>DATA.IMPORT.TEXT.UPLOADING</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <input #fileUpload type="file" (change)="onSelectFile($event)" hidden>
+</div>

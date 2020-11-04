@@ -17,6 +17,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HeaderComponent } from './header/header.component';
 
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { LoaderService } from './services/loader.service';
+
 @NgModule({
   declarations: [
     ContainerComponent,
@@ -29,6 +32,7 @@ import { HeaderComponent } from './header/header.component';
     RouterModule,
     HttpClientModule,
     FlexLayoutModule,
+    MatDialogModule,
 
     TranslateModule.forRoot({
       loader: {
@@ -47,6 +51,13 @@ import { HeaderComponent } from './header/header.component';
     ContainerComponent,
     DashboardComponent,
     NotFoundComponent,
+  ],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    LoaderService
   ]
 })
 export class CoreModule { }

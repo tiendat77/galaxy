@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$default-primary: mat-palette($mat-blue, 800);
+$default-accent:  mat-palette($mat-pink, A200, A100, A400);
+$default-warn:    mat-palette($mat-red);
+$default-theme: mat-light-theme($default-primary, $default-accent, $default-warn);
+
+@include angular-material-theme($default-theme);
+
+:root {
+  --color-primary: #{mat-color($default-primary, default)};
+  --color-accent: #{mat-color($default-accent, default)};
+  --color-warn: #{mat-color($default-warn, default)};
+}

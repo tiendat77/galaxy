@@ -1,0 +1,85 @@
+.container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  .button-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      padding-left: 62px;
+      position: relative;
+      display: block;
+      box-sizing: border-box;
+      width: 250px;
+      height: auto;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      color: #fff;
+      text-align: left;
+      background: #4eab57;
+      border-bottom: 2px solid #489452;
+      border-radius: 6px;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 5px 20px 10px rgba(0, 0, 0, 0.15);
+      transition: all 150ms ease-out 0s;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #477644;
+      border-color: #3f663f;
+    }
+
+    button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-110px, -50px) rotate(45deg);
+      animation-name: buttonShine;
+      animation-duration: 5000ms;
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      animation-delay: 3000ms;
+      animation-iteration-count: infinite;
+    }
+
+    .label {
+      display: block;
+      position: relative;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .icon {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      width: 40px;
+      height: 40px;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAB+klEQVR4Ae3cAUdDYRSH8WYZKCagvkOEGEAGIGsALAyMAASDBWBAgAFKDCRsn2EfI7AAQwarVnM7GM0Rtv73tr3vnsMDcNgPLrvu2UmShIRAAHDJAATw0Bom2c+zdRAjYDX5vzmPHXBg3afcYGF/NXbAegb76wACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAIIIIAAAggggAACCCCAAAK4PYD7VlGsFhjgblqAvST9yRqwIu66tj6tXhqAHxkAXmQAeGK9W6/WkbCnmfzMWxqADffjR+LnCC0rnxKar2jtqXgL05AB511Zs4XFzcg+2fJ4M+sy7adwzSNGjFfTn8LxI2p4HlBAbAWMd6PgeUAFsR0gXlvF84DxI+p4GmAEiB7vy+NJgALi1CMGgDe1KpvyZ0LFI8aP5wGjRNTxdEAdMbdGuJx1q+DpgDpiR0BU8TqZ4DnAGBGzxXOAsSF6vImCpwPqiBMJUccrh/5OpKwh6ngBAAqIIeI5wNAR89adjqcDrgPxwcqLeF0dTwdcJ2LXIQaA5wADRPR4Y+tsK+4HOsSxR/wjXmlbDzCWfkMU8GIB1BEFvAgBdcSC9STgBQioIz5ahXl9AS9gQB2xvwoegA7Rzcg65Qzy8ogjh3fMHekVmoO9WEOPB+BmBCCAANI3JS/k31NE/aUAAAAASUVORK5CYII=);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+
+  @keyframes buttonShine {
+    0% {
+      transform: translate(-110px, -50px) rotate(45deg)
+    }
+
+    10% {
+      transform: translate(280px, -50px) rotate(45deg)
+    }
+
+    100% {
+      transform: translate(280px, -50px) rotate(45deg)
+    }
+  }
+}

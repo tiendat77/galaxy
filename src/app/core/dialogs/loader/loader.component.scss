@@ -1,0 +1,18 @@
+.container {
+  margin: -24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+
+  img {
+    width: 200px;
+    height: 150px;
+  }
+
+  .text {
+    margin-top: 24px;
+    color: rgba(0,0,0,.42);
+  }
+}

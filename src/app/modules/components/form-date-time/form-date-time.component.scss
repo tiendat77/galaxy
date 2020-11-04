@@ -1,0 +1,135 @@
+.date-time-picker {
+  ::ng-deep .mat-form-field-suffix {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+  }
+
+  ::ng-deep .mat-form-field-outline-thick {
+    color: var(--color-primary);
+  }
+
+  mat-icon {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .menu-active {
+    color: var(--color-primary);
+  }
+}
+
+.time-picker-container {
+  padding: 12px 24px;
+
+  .time-picker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    place-content: center flex-start;
+
+    .picker-container {
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+      width: 4rem;
+
+      ::ng-deep .mat-form-field-appearance-outline {
+        .mat-form-field-outline-thick {
+          color: #80bdff;
+        }
+      }
+
+      ::ng-deep .mat-form-field-invalid {
+        .mat-form-field-outline-thick {
+          color: #f44336 !important;
+        }
+      }
+    }
+
+    .spacer {
+      width: 1em;
+      text-align: center;
+    }
+
+    .btn {
+      cursor: pointer;
+      font-weight: 400;
+      color: #212529;
+      text-align: center;
+      vertical-align: middle;
+      user-select: none;
+      background-color: transparent;
+      border: 1px solid transparent;
+      overflow: visible;
+      padding: .375rem .75rem;
+      border-radius: 0.25rem;
+      transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+      &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 1px rgba(0, 123, 255, .25);
+      }
+    }
+
+    .btn-link {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .chevron {
+      box-sizing: border-box;
+
+      &::before {
+        border-style: solid;
+        border-width: .29em .29em 0 0;
+        content: "";
+        display: inline-block;
+        height: .69em;
+        left: .05em;
+        position: relative;
+        top: .15em;
+        transform: rotate(-45deg);
+        vertical-align: middle;
+        width: .69em;
+      }
+    }
+
+    .chevron-bottom {
+      &::before {
+        top: -.3em;
+        transform: rotate(135deg);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .form-control {
+      width: 4rem;
+      margin: 4px 0;
+
+      input {
+        text-align: center;
+      }
+
+      ::ng-deep .mat-form-field-wrapper {
+        padding: 0;
+      }
+
+      ::ng-deep .mat-form-field-infix {
+        padding: 8px 4px;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    place-content: center flex-end;
+  }
+}

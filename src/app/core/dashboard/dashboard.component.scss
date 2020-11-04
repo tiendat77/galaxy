@@ -16,8 +16,14 @@
     }
 
     .title {
-      font-size: 2em;
-      color: rgba(0, 0, 0, .38);
+      margin-bottom: 15px;
+      color: #676767;
+      text-transform: uppercase;
+      letter-spacing: 10px;
+      text-align: center;
+      font-size: 1.75em;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+      font-variant: tabular-nums;
     }
   }
 }
