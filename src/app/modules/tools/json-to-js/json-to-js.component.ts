@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { stringify } from 'javascript-stringify';
+import { NotifyService } from '../../services/notify.service';
 
 @Component({
   selector: 'app-json-to-js',
@@ -27,7 +28,7 @@ export class JsonToJsComponent implements OnInit {
   }`;
   output = ``;
 
-  constructor() { }
+  constructor(private notify: NotifyService) { }
 
   ngOnInit(): void {
   }
@@ -55,6 +56,7 @@ export class JsonToJsComponent implements OnInit {
 
       try {
         document.execCommand('copy');
+        this.notify.notify('Copied!');
 
       } catch (error) {
         console.log(error);

@@ -47,13 +47,19 @@ import { ToolsRoutingModule } from './tools-routing.module';
 import { LasotuviComponent } from './lasotuvi/lasotuvi.component';
 import { MainComponent } from './main/main.component';
 import { JsonToJsComponent } from './json-to-js/json-to-js.component';
+import { EpochConverterComponent } from './epoch-converter/epoch-converter.component';
+import { MomentFormatDocComponent } from './moment-format-doc/moment-format-doc.component';
+import { FlexLayoutComponent } from './flex-layout/flex-layout.component';
 
 
 @NgModule({
   declarations: [
     LasotuviComponent,
     MainComponent,
-    JsonToJsComponent
+    JsonToJsComponent,
+    EpochConverterComponent,
+    MomentFormatDocComponent,
+    FlexLayoutComponent
   ],
   imports: [
     CommonModule,
