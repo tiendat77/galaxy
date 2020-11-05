@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-flex-layout',
   templateUrl: './flex-layout.component.html',
   styleUrls: ['./flex-layout.component.scss']
 })
-export class FlexLayoutComponent implements OnInit {
+export class FlexLayoutComponent {
 
-  constructor() { }
+  options = {
+    direction :  'row',
+    mainAxis  : 'space-around',
+    crossAxis :  'center'
+  };
 
-  ngOnInit(): void {
+  layoutAlign() {
+    return `${this.options.mainAxis} ${this.options.crossAxis}`;
   }
 
 }

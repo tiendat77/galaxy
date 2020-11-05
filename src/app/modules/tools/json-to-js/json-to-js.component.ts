@@ -34,7 +34,6 @@ export class JsonToJsComponent implements OnInit {
   }
 
   convert() {
-    console.log(this.input);
     try {
       const jsObject = JSON.parse(this.input);
       const stringifiedObject = stringify(jsObject, null, 2);
