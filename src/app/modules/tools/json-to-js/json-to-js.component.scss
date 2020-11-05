@@ -51,7 +51,7 @@
       width: 100%;
       box-sizing: border-box;
     }
-    
+
     .form-input-label {
       position: absolute;
       top: -7px;
@@ -65,7 +65,7 @@
       font-family: sans-serif;
       text-transform: capitalize;
     }
-    
+
     .ui-form-btn {
       padding: 13px 15px;
       border-radius: 8px;
@@ -78,24 +78,24 @@
       color: white;
       font-weight: 500;
     }
-    
+
     .error .ui-form-input,
     .error .form-input-label {
       border-color: #d50000;
       color: #d50000;
     }
-    
+
     textarea {
       height: 500px;
       width: 100%;
       font-size: 1.1em;
-      white-space: nowrap;
+      white-space: pre;
 
       &::-webkit-scrollbar {
         height: 6px;
         width: 6px;
       }
-  
+
       &::-webkit-scrollbar-thumb {
         background: rgb(175, 175, 175);
       }
