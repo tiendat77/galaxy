@@ -1,0 +1,25 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  box-sizing: border-box;
+}
+
+.flex.space-between {
+  flex: 100%;
+  max-width: 100%;
+  justify-content: space-between;
+}
+
+.flex.start {
+  justify-content: flex-start;
+}
+
+.flex.end {
+  justify-content: flex-end;
+}
+
+.flex.stretch {
+  height: 100%;
+}

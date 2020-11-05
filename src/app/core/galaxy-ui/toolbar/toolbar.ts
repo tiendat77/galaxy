@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  selector: 'galaxy-toolbar',
+  templateUrl: 'toolbar.html',
+  styleUrls: ['toolbar.scss'],
+  host: {
+    'class': 'galaxy-toolbar'
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToolbarComponent implements OnInit {
+export class GalaxyToolbar {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

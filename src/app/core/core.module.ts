@@ -8,17 +8,16 @@ import { NgxTranslateConfig } from './configs/translate';
 
 import { PageModule } from './pages/page.module';
 import { ComponentModule } from './components/component.module';
+import { GalaxyUIModule } from './galaxy-ui/galaxy-ui.module';
 import { ContainerComponent } from './container/container.component';
 
 @NgModule({
-  declarations: [
-    ContainerComponent,
-  ],
   imports: [
     CommonModule,
     RouterModule,
     HttpClientModule,
     PageModule,
+    GalaxyUIModule,
     ComponentModule,
     TranslateModule.forRoot(NgxTranslateConfig),
   ],
@@ -26,7 +25,11 @@ import { ContainerComponent } from './container/container.component';
     HttpClientModule,
     TranslateModule,
     RouterModule,
+    PageModule,
+    GalaxyUIModule,
+    ComponentModule,
   ],
+  declarations: [ContainerComponent],
   providers: []
 })
 export class CoreModule { }

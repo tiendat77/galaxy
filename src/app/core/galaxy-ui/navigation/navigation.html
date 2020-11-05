@@ -1,0 +1,18 @@
+<nav class="flex">
+  <ul class="flex start stretch">
+    <li class="nav-section" *ngFor="let item of menu$ | async">
+      <div class="nav-title">
+        <a [routerLink]="item.url">{{ item.name }}</a>
+      </div>
+
+      <ul class="nav-list" *ngIf="item.children && item.children.length">
+        <li class="nav-list-item" *ngFor="let child of item.children">
+          <a [routerLink]="child.url">
+            <p>{{ child.name }}</p>
+            <small>{{ child.description }}</small>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

@@ -1,15 +1,6 @@
-export interface MenuItem {
-  name: string;
-  url: string;
-  icon?: string;
-  children?: MenuItem[];
-}
+import { NavigationItem } from './core/interfaces/navigation-item';
 
-export const MENU_ITEMS: MenuItem[] = [
-  {
-    name: 'Home',
-    url: '/dashboard'
-  },
+export const MENU_ITEMS: NavigationItem[] = [
   {
     name: 'Galaxy',
     url: '/galaxy'
@@ -17,12 +8,18 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     name: 'Charts',
     url: '/chart',
-    children: []
-  },
-  {
-    name: 'Galaxy Components',
-    url: '/components',
-    children: []
+    children: [
+      {
+        name: 'Line',
+        url: '/chart/line-chart',
+        description: 'Line chart'
+      },
+      {
+        name: 'Bar',
+        url: '/chart/bar-chart',
+        description: 'Bar chart'
+      }
+    ]
   },
   {
     name: 'Tools',
@@ -41,9 +38,5 @@ export const MENU_ITEMS: MenuItem[] = [
         url: '/tools/flex-layout-demos'
       },
     ]
-  },
-  {
-    name: 'Error',
-    url: '/not-found'
   }
 ];

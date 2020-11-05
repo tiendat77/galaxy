@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MENU_ITEMS } from 'src/app/menu';
+
+import { AuthService } from '../../auth/auth.service';
+import { MENU_ITEMS } from '../../../menu';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,9 @@ export class HeaderComponent implements OnInit {
 
   menuItems = MENU_ITEMS;
 
-  constructor() { }
+  constructor(
+    private auth: AuthService
+  ) { }
 
   ngOnInit(): void {
   }

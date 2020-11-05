@@ -1,20 +1,23 @@
-.container {
+.app-container {
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
-  max-width: 100vw;
   height: 100vh;
-  max-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
 
-  .main {
+  .app-wrapper {
     height: 100vh;
 
-    .limiter {
-      height: calc(100vh - 64px);
+    .main-header {
       width: 100vw;
+      height: 70px;
+    }
+
+    .main-content {
+      width: 100vw;
+      height: calc(100vh - 70px);
     }
   }
 }

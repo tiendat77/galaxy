@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { GalaxyUIModule } from '../galaxy-ui/galaxy-ui.module';
+
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-  declarations: [
-    ToolbarComponent
-  ],
-  exports: [
-    ToolbarComponent,
-  ]
+  imports: [GalaxyUIModule],
+  exports: [HeaderComponent],
+  declarations: [HeaderComponent],
 })
 export class ComponentModule { }

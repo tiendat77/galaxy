@@ -1,17 +1,15 @@
-<div class="header-container navbar">
-  <a href="/">
-    <img height="30px" src="assets/images/alien.svg" alt="" />
-  </a>
+<galaxy-toolbar>
+  <nav class="navigation flex space-between">
+    <div class="flex start stretch">
+      <a class="logo" href="/">
+        <img src="assets/images/logo.svg" width="133px" height="40px" alt="Galaxy">
+      </a>
 
-  <ul>
-    <li *ngFor="let item of menuItems" [ngClass]="{ 'menu': item.children && item.children.length > 0 }">
-      <a [routerLink]="item.url">{{ item.name }}</a>
+      <galaxy-navigation [menu]="menuItems"></galaxy-navigation>
+    </div>
 
-      <ul *ngIf="item.children" class="sub-menu">
-        <li *ngFor="let child of item.children">
-          <a [routerLink]="child.url">{{ child.name }}</a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
+    <div class="flex end stretch">
+      <div class="avatar"></div>
+    </div>
+  </nav>
+</galaxy-toolbar>
