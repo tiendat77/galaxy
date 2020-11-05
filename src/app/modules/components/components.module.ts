@@ -44,6 +44,7 @@ const MATERIAL_MODULES = [
 ];
 
 import { MomentFormatPipe } from './pipes/moment-format.pipe';
+import { HighLightPipe } from './pipes/high-light.pipe';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 // Components
@@ -62,6 +63,7 @@ import { FormSelectTimezoneComponent } from './form-select-timezone/form-select-
 @NgModule({
   declarations: [
     MomentFormatPipe,
+    HighLightPipe,
     MainComponent,
     TypeWriterComponent,
     MagicButtonComponent,

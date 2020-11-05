@@ -1,7 +1,8 @@
 <mat-form-field appearance="outline" class="form-select-timezone">
-  <mat-label>timezone</mat-label>
+  <mat-label>{{ label }}</mat-label>
 
   <mat-select [formControl]="valueCtrl"
+              [required]="required"
               (openedChange)="onOpenSelect($event)"
               (selectionChange)="onSelectionChange($event)">
     <div class="form-select-search">
@@ -24,11 +25,14 @@
       </mat-form-field>
     </div>
 
-    <cdk-virtual-scroll-viewport itemSize="25" [ngStyle]="{'height': scrollHeight}">
-      <mat-option *cdkVirtualFor="let option of filteredZones$ | async"
-                  [value]="option.id">
-        <span>{{ option.name }}</span>
+    <mat-optgroup *ngFor="let group of filteredZoneGroups$ | async"
+                  [disabled]="group.disabled">
+      <mat-label [innerHTML]="group.name | highlight: filterCtrl.value"></mat-label>
+
+      <mat-option *ngFor="let zone of group.zones"
+                  [value]="zone.id">
+        <span [innerHTML]="zone.name | highlight: filterCtrl.value"></span>
       </mat-option>
-    </cdk-virtual-scroll-viewport>
+    </mat-optgroup>
   </mat-select>
 </mat-form-field>
