@@ -43,37 +43,17 @@ const MATERIAL_MODULES = [
   ScrollingModule,
 ];
 
-import { MomentFormatPipe } from './pipes/moment-format.pipe';
-import { HighLightPipe } from './pipes/high-light.pipe';
-import { DragAndDropDirective } from './directives/drag-and-drop.directive';
-
-// Components
-import { ComponentsRoutingModule } from './components-routing.module';
+import { ToolsRoutingModule } from './tools-routing.module';
+import { LasotuviComponent } from './lasotuvi/lasotuvi.component';
 import { MainComponent } from './main/main.component';
-import { TypeWriterComponent } from './type-writer/type-writer.component';
-import { MagicButtonComponent } from './magic-button/magic-button.component';
-import { FormSelectComponent } from './form-select/form-select.component';
-import { WrapperComponent } from './wrapper/wrapper.component';
-import { FormDateTimeComponent } from './form-date-time/form-date-time.component';
-import { FormInputFileComponent } from './form-input-file/form-input-file.component';
-import { FormDateMonthYearComponent } from './form-date-month-year/form-date-month-year.component';
-import { FormSelectTimezoneComponent } from './form-select-timezone/form-select-timezone.component';
+import { JsonToJsComponent } from './json-to-js/json-to-js.component';
 
 
 @NgModule({
   declarations: [
-    MomentFormatPipe,
-    HighLightPipe,
+    LasotuviComponent,
     MainComponent,
-    TypeWriterComponent,
-    MagicButtonComponent,
-    FormSelectComponent,
-    FormDateTimeComponent,
-    FormDateMonthYearComponent,
-    WrapperComponent,
-    FormInputFileComponent,
-    DragAndDropDirective,
-    FormSelectTimezoneComponent
+    JsonToJsComponent
   ],
   imports: [
     CommonModule,
@@ -81,9 +61,9 @@ import { FormSelectTimezoneComponent } from './form-select-timezone/form-select-
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    ComponentsRoutingModule,
+    ...MATERIAL_MODULES,
 
-    ...MATERIAL_MODULES
+    ToolsRoutingModule
   ]
 })
-export class ComponentsModule { }
+export class ToolsModule { }

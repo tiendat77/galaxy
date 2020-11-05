@@ -5,6 +5,19 @@
          class="file-drop-area center"
          (fileDropped)="onFileDrop($event)"
          (click)="fileUpload.click()">
+
+      <button mat-button color="primary"
+              class="download-template-button"
+              (click)="downloadTemplate($event)">
+        <mat-icon style="margin-right: 6px;">
+          <svg style="width:24px; height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M8 17V15H16V17H8M16 10L12 14L8 10H10.5V6H13.5V10H16M12 2C17.5 2 22 6.5 22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4Z" />
+          </svg>
+        </mat-icon>
+
+        <span translate>DOWNLOAD_TEMPLATE</span>
+      </button>
+
       <div class="csv-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 6.35 6.35">
           <path fill="#3fd155" d="M3.857.271h-2.54A.396.396 0 00.92.668v5.025c0 .22.177.397.397.397H4.81c.22 0 .396-.177.396-.397V1.622z" />
@@ -16,16 +29,16 @@
         </svg>
       </div>
 
-      <h2 class="title" translate>DATA.IMPORT.TEXT.DRAG_DROP_CSV</h2>
+      <h2 class="title" translate>DRAG_DROP_CSV</h2>
 
       <p class="title" style="color: rgba(0, 0, 0, 0.38);" translate>
-        DATA.IMPORT.TEXT.OR
+        OR
       </p>
 
       <button mat-stroked-button color="primary"
               style="padding: 8px 16px;">
         <mat-icon style="margin-right: 6px;">backup</mat-icon>
-        <span translate>DATA.IMPORT.TEXT.CLICK_TO_UPLOAD_CSV</span>
+        <span translate>CLICK_TO_UPLOAD_CSV</span>
       </button>
     </div>
   </ng-template>
@@ -38,7 +51,7 @@
       <button mat-stroked-button color="warn"
               (click)="clearFile($event)">
         <mat-icon style="margin-right: 6px;">clear</mat-icon>
-        <span translate>DATA.IMPORT.ACTION.CLEAR_FILE</span>
+        <span translate>CLEAR_FILE</span>
       </button>
     </div>
   </ng-template>
@@ -50,7 +63,7 @@
       </mat-progress-spinner>
 
       <div style="margin-top: 30px;">
-        <span translate>DATA.IMPORT.TEXT.UPLOADING</span>
+        <span translate>UPLOADING</span>
       </div>
     </div>
   </ng-template>

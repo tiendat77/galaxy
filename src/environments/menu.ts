@@ -27,6 +27,11 @@ export const COMPONENT_CHILDRENDS: MenuItem[] = [
   { name: 'Wrap', url: '/components/wrapper' },
 ];
 
+export const TOOL_CHILDRENDS: MenuItem[] = [
+  { name: 'Json to Js', url: '/tools/json-to-js' },
+  { name: 'LSTV', url: '/tools/lasotuvi' }
+];
+
 export const MENU_ITEMS: MenuItem[] = [
   {
     name: 'Home',
@@ -46,8 +51,8 @@ export const MENU_ITEMS: MenuItem[] = [
     url: '/components'
   },
   {
-    name: 'LaSoTuVi',
-    url: '/lasotuvi'
+    name: 'Tools',
+    url: '/tools'
   },
   {
     name: 'Error',

@@ -17,6 +17,12 @@ export class WrapperComponent implements OnInit {
     required: true,
   };
 
+  timezone = {
+    required: true,
+    value: undefined,
+    label: 'Timezone'
+  };
+
   constructor() { }
 
   ngOnInit(): void {
@@ -24,6 +30,7 @@ export class WrapperComponent implements OnInit {
 
   test() {
     console.log(this.wtf);
+    console.log(this.timezone);
   }
 
 }

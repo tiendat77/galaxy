@@ -1,7 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+// import { NotifyService } from '../../../../core/services/notify.service';
+// import { isNull } from '../../../utils/utils';
+
 import { NotifyService } from '../../services/notify.service';
+import { isNull } from '../../../shared/utils';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-form-input-file',
@@ -14,6 +19,7 @@ export class FormInputFileComponent implements OnInit, OnChanges {
   @Input() label: string;
   @Input() required = false;
   @Input() type: 'csv_file' | 'csv_file_raw' = 'csv_file';
+  @Input() template: any[] = [];
 
   @Input() value: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
@@ -42,6 +48,20 @@ export class FormInputFileComponent implements OnInit, OnChanges {
     }
   }
 
+  downloadTemplate(event) {
+    event.stopPropagation();
+
+    const name = `${this.label.replace(' ', '_')}_template.csv`;
+    let csv = '';
+
+    this.template.forEach((row: any[]) => {
+      csv += row.join(this.separator) + '\n';
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    FileSaver.saveAs(blob, name);
+  }
+
   onSelectFile(event) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
@@ -68,7 +88,7 @@ export class FormInputFileComponent implements OnInit, OnChanges {
 
   onFileLoaded() {
     if (!this.csvLines.length) {
-      this.notify.notify('EMPTY_FILE');
+      this.notify.notify('DATA.IMPORT.NOTIFY.EMPTY_FILE');
       return;
     }
 
@@ -94,6 +114,7 @@ export class FormInputFileComponent implements OnInit, OnChanges {
     this.csvRaw = undefined;
     this.csvLines = [];
   }
+
   readFile(file: File) {
     return new Promise((resolve, reject) => {
       this.isLoading$.next(true);
@@ -107,10 +128,10 @@ export class FormInputFileComponent implements OnInit, OnChanges {
 
       if (!file) { return; }
 
-      if (type !== 'text/csv') {
+      if (type !== 'text/csv' && type !== 'application/vnd.ms-excel') {
         this.onLoadFileFail();
-        this.notify.notify('INVALID_CSV_FILE');
-        resolve();
+        this.notify.notify('DATA.IMPORT.NOTIFY.INVALID_CSV_FILE');
+        reject();
         return;
       }
 
@@ -125,10 +146,14 @@ export class FormInputFileComponent implements OnInit, OnChanges {
           return;
         }
 
-        const header: any[] = allLines.splice(0, 1)[0].split(this.separator);
+        const header: any[] = allLines.slice(0, 1)[0].split(this.separator);
 
         for (const row of allLines) {
           const lineData = row.split(this.separator);
+
+          if (this.isEmptyLine(lineData)) {
+            continue;
+          }
 
           if (lineData.length === header.length) {
             lines.push(lineData);
@@ -146,11 +171,29 @@ export class FormInputFileComponent implements OnInit, OnChanges {
         resolve();
       };
 
+      reader.onerror = (error) => {
+        console.error(error);
+        this.notify.notify('DATA.IMPORT.NOTIFY.READ_FILE_ERROR');
+        reject();
+      };
+
       reader.readAsText(file);
     });
   }
 
   /////////////// UTILS ///////////////
+  private isEmptyLine(line: any[]): boolean {
+    let haveValue = false;
+
+    for (const value of line) {
+      if (!isNull(value)) {
+        haveValue = true;
+      }
+    }
+
+    return !haveValue;
+  }
+
   private getFileExtension(fileName: string) {
     if (!fileName || !fileName.length) {
       return '';
