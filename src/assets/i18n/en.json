@@ -38,7 +38,8 @@
         "NO_PARAM": "No filter",
         "PARAM_LIST": "Filters",
         "SELECT_REPORT": "Select a report category",
-        "SELECT_SPECIFIC_DATE": "Leave blank if export by month"
+        "SELECT_SPECIFIC_DATE": "Leave blank if export by month",
+        "NONE": "None"
       },
       "PLACEHOLDER": {
         "SEARCH_REPORT": "Search report category",

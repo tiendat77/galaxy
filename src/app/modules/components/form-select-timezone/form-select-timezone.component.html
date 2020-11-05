@@ -25,6 +25,7 @@
       </mat-form-field>
     </div>
 
+    <mat-option>{{ 'DATA.EXPORT.TEXT.NONE' | translate }}</mat-option>
     <mat-optgroup *ngFor="let group of filteredZoneGroups$ | async"
                   [disabled]="group.disabled">
       <mat-label [innerHTML]="group.name | highlight: filterCtrl.value"></mat-label>

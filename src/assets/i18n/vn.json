@@ -41,7 +41,8 @@
         "NO_PARAM": "Không có bộ lọc",
         "PARAM_LIST": "Danh sách bộ lọc",
         "SELECT_REPORT": "Hãy chọn một loại báo cáo",
-        "SELECT_SPECIFIC_DATE": "Để trống nếu xuất dữ liệu theo tháng"
+        "SELECT_SPECIFIC_DATE": "Để trống nếu xuất dữ liệu theo tháng",
+        "NONE": "Để trống"
       },
       "PLACEHOLDER": {
         "SEARCH_REPORT": "Tìm loại báo cáo",
