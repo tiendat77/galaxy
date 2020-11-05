@@ -14,3 +14,14 @@ $default-theme: mat-light-theme($default-primary, $default-accent, $default-warn
   --color-accent: #{mat-color($default-accent, default)};
   --color-warn: #{mat-color($default-warn, default)};
 }
+
+.multiline-mat-tooltip {
+  white-space: pre-line;
+  min-width: 10px !important;
+  max-width: 500px !important;
+  line-height: 15px;
+}
+
+.snackbar-style-success .mat-simple-snackbar-action {
+  color: #33bf2c;
+}

@@ -1,20 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/style/main.scss';
+@import './assets/style/flex.scss';
 @import './assets//style//material-theming.scss';
+@import './app/core/galaxy-ui/galaxy-ui.scss';
 
 html, body { height: 100%; overflow: hidden }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.multiline-mat-tooltip {
-  white-space: pre-line;
-  min-width: 10px !important;
-  max-width: 500px !important;
-  line-height: 15px;
-}
-
-.snackbar-style-success .mat-simple-snackbar-action {
-  color: #33bf2c;
-}

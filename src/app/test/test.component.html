@@ -1,0 +1,22 @@
+<!-- <p>test works!</p> -->
+<app-header></app-header>
+
+<div>
+  <p translate>demo.title</p>
+</div>
+
+<div>
+  <p>{{ 'demo.content' | translate }}</p>
+</div>
+
+<div>
+  <button (click)="doit('vn')">
+    Change language Vietnamese
+  </button>
+</div>
+
+<div>
+  <button (click)="doit('en')">
+    Change language Meo
+  </button>
+</div>
