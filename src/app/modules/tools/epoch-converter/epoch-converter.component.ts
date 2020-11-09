@@ -21,6 +21,7 @@ export class EpochConverterComponent implements OnInit {
   parsedHumanDate = {
     utc: undefined,
     local: undefined,
+    error: undefined
   };
 
   // human date to timestamp
@@ -34,6 +35,7 @@ export class EpochConverterComponent implements OnInit {
 
   ngOnInit(): void {
     this.initEcClock();
+    this.initTimestamp2HumanDate();
     this.initHumanDate2TimestampForm();
   }
 
@@ -41,6 +43,11 @@ export class EpochConverterComponent implements OnInit {
     this.intervalClock = setInterval(() => {
       this.ecclock = moment().unix();
     }, 1000);
+  }
+
+  initTimestamp2HumanDate() {
+    const now = moment().unix();
+    this.timestampCtrl.setValue(now);
   }
 
   initHumanDate2TimestampForm() {
@@ -67,20 +74,21 @@ export class EpochConverterComponent implements OnInit {
 
   epoch2human() {
     const format = 'dddd, MMMM M, YYYY HH:mm:ss A';
-    let humanDateUtc = 'Invalid timestamp';
+    let humanDateUtc = '';
     let humanDateLocal = '';
+    let errorMessage;
 
     try {
       const unixTimestamp = Number.parseInt(this.timestampCtrl.value, 10);
 
       if (Number.isNaN(unixTimestamp)) {
-        throw Error('NaN');
+        throw Error('Sorry, this timestamp is not valid');
       }
 
       const momentObj = moment.unix(unixTimestamp);
 
       if (!momentObj.isValid()) {
-        throw Error('Invalid moment');
+        throw Error('Sorry, this timestamp is not valid');
       }
 
       humanDateUtc = momentObj.utc().format(format);
@@ -88,10 +96,12 @@ export class EpochConverterComponent implements OnInit {
 
     } catch (error) {
       console.error(error);
+      errorMessage = error;
     }
 
     this.parsedHumanDate.utc = humanDateUtc;
     this.parsedHumanDate.local = humanDateLocal;
+    this.parsedHumanDate.error = errorMessage;
   }
 
   human2epoch() {

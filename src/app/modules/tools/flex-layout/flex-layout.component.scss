@@ -4,8 +4,16 @@
   color: #a3a3a3;
 }
 
+#blocks-demo {
+  height: 100%;
+}
+
 mat-radio-group {
   padding-top: 15px;
+
+  mat-radio-button {
+    margin: 2px;
+  }
 }
 
 .demo_controls {
@@ -173,6 +181,9 @@ div.colored.box.nopad>div {
   min-width: 75px;
   min-height: 50px;
   border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .black {
@@ -314,7 +325,6 @@ mat-card-content pre {
   font-size: 0.9em;
   margin: 5px 5px 0 20px;
   box-sizing: border-box;
-  width: 100%;
   padding: 8px;
   border: 1px solid rgba(0, 0, 0, 0.12);
 }

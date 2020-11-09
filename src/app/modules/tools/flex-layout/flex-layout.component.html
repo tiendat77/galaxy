@@ -5,7 +5,7 @@
     <mat-card-content>
       <div class="containerX">
         <div class="colorNested box" [class.taller]="options.direction != 'row'">
-          <div id="blocks-demo" [fxLayout]="options.direction" [fxLayoutAlign]="layoutAlign()" style="height: 100%;">
+          <div id="blocks-demo" [fxLayout]="options.direction" [fxLayoutAlign]="layoutAlign()">
             <div class="blocks one">1</div>
             <div class="blocks" [class.two_h]="options.direction == 'row'"
                  [class.two_w]="options.direction != 'row'">2
