@@ -1,1 +1,49 @@
-<p>epoch-converter works!</p>
+<div class="epoch-container">
+  <div class="clock">
+    <div style="display: inline;">The current Unix Epoch Time is </div>
+    <div class="ecclock" (mouseenter)="onClockHover()" (mouseleave)="initEcClock()">
+      <span>{{ ecclock }}</span>
+    </div>
+    <div class="clocknotice">pause</div>
+  </div>
+
+  <p style="margin: 8px 0 20px;">&nbsp;</p>
+
+  <div class="epoch-to-human">
+    <h2 style="color: #143470;">Convert epoch timestamp to human date</h2>
+
+    <div>
+      <input type="number" autocomplete="off"
+             [formControl]="timestampCtrl">
+
+      <button mat-stroked-button color="primary"
+              style="margin-left: 10px;"
+              (click)="epoch2human()">
+        <span>Timestamp to Human date</span>
+      </button>
+    </div>
+
+    <div style="padding-top: 8px;">
+      Supports Unix timestamps in seconds
+    </div>
+
+    <div class="result-box">
+      <div *ngIf="parsedHumanDate.utc">
+        <b class="list-header">UTC:</b>
+        <span>{{ parsedHumanDate.utc }}</span>
+      </div>
+
+      <div *ngIf="parsedHumanDate.local">
+        <b class="list-header">Your time zone:</b>
+        <span>{{ parsedHumanDate.local }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div [formGroup]="humanDateForm">
+    <label>
+      Year:
+      <input type="number" maxlength="4" formControlName="year">
+    </label>
+  </div>
+</div>
