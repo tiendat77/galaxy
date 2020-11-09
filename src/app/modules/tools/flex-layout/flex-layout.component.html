@@ -5,7 +5,7 @@
     <mat-card-content>
       <div class="containerX">
         <div class="colorNested box" [class.taller]="options.direction != 'row'">
-          <div [fxLayout]="options.direction" [fxLayoutAlign]="layoutAlign()" style="height: 100%;">
+          <div id="blocks-demo" [fxLayout]="options.direction" [fxLayoutAlign]="layoutAlign()" style="height: 100%;">
             <div class="blocks one">1</div>
             <div class="blocks" [class.two_h]="options.direction == 'row'"
                  [class.two_w]="options.direction != 'row'">2
@@ -28,6 +28,11 @@
             <mat-radio-button value="row">row</mat-radio-button>
             <mat-radio-button value="column">column</mat-radio-button>
           </mat-radio-group>
+          <div>
+            <button mat-icon-button (click)="getStyle()">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
         </div>
         <div>
           <div>Alignment in Layout Direction
@@ -61,9 +66,20 @@
 </div>
 
 <div>
-  <div class="hint" style="padding-left:50px;">
-    &lt;div fxLayout="{{ options.direction }}"
-    <span style="padding-left: 30px">fxLayoutAlign="{{ layoutAlign() }}"</span>
-    &gt;
+  <div style="margin-top: 30px; color: #a3a3a3">FxLayout:</div>
+  <div class="hint">
+    <div class="selectable">
+      &lt;div
+      <span> fxLayout="{{ options.direction }}"</span>
+      <span> fxLayoutAlign="{{ layoutAlign() }}"</span>
+      &gt;
+    </div>
+  </div>
+
+  <div style="margin-top: 30px; color: #a3a3a3">Css styles:</div>
+  <div class="hint">
+    <div class="selectable" style="white-space: pre;">
+      <span>{{ getStyle() }}</span>
+    </div>
   </div>
 </div>

@@ -17,4 +17,10 @@ export class FlexLayoutComponent {
     return `${this.options.mainAxis} ${this.options.crossAxis}`;
   }
 
+  getStyle() {
+    const styles = document.getElementById('blocks-demo').style;
+    const cssStyles = styles.cssText.split(';').map(style => style.trim()).join(';\n');
+    return cssStyles;
+  }
+
 }
