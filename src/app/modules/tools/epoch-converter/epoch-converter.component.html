@@ -1,0 +1,163 @@
+<div class="epoch-container">
+  <section>
+    <div class="section-container">
+      <h2 class="title">
+        Current Unix Epoch Time
+      </h2>
+
+      <div class="clock">
+        <div #clock id="clock" class="ecclock" (mouseenter)="onClockHover()" (mouseleave)="initEcClock()" (click)="copyClock()">
+          <span>{{ ecclock }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-container">
+      <h2 class="title">
+        Convert epoch timestamp to human date
+      </h2>
+
+      <div class="epoch-to-human">
+        <div>
+          <input type="number" autocomplete="off" [formControl]="timestampCtrl">
+
+          <button mat-stroked-button color="primary" (click)="epoch2human()">
+            <span>Timestamp to Human date</span>
+          </button>
+        </div>
+
+        <div class="result-box">
+          <table>
+            <tr *ngIf="parsedHumanDate.utc">
+              <td class="list-header">UTC:</td>
+              <td>{{ parsedHumanDate.utc }}</td>
+            </tr>
+
+            <tr *ngIf="parsedHumanDate.local">
+              <td class="list-header">Your time zone:</td>
+              <td>{{ parsedHumanDate.local }}</td>
+            </tr>
+          </table>
+
+          <div *ngIf="parsedHumanDate.error">
+            <span>{{ parsedHumanDate.error }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-container">
+      <h2 class="title">
+        Convert human date to timestamp
+      </h2>
+    </div>
+
+    <div class="human-to-epoch" [formGroup]="humanDateForm">
+      <div>
+        <table class="ymd">
+          <tr>
+            <td>Year</td>
+            <td>Month</td>
+            <td>Date</td>
+          </tr>
+
+          <tr>
+            <td>
+              <input type="text" size="4" maxlength="4" formControlName="year">
+              &nbsp;/&nbsp;
+            </td>
+
+            <td>
+              <input type="text" size="2" maxlength="2" min="1" max="12" formControlName="month">
+              &nbsp;/&nbsp;
+            </td>
+
+            <td>
+              <input type="text" size="2" maxlength="2" min="1" max="31" formControlName="date">
+            </td>
+          </tr>
+        </table>
+
+        <table class="hms">
+          <tr>
+            <td>Hour</td>
+            <td>Minute</td>
+            <td>Second</td>
+          </tr>
+
+          <tr>
+            <td>
+              <input type="text" size="2" maxlength="2" min="0" max="23" formControlName="hour">
+              &nbsp;:&nbsp;
+            </td>
+
+            <td>
+              <input type="text" size="2" maxlength="2" min="0" max="59" formControlName="minute">
+              &nbsp;:&nbsp;
+            </td>
+
+            <td>
+              <input type="text" size="2" maxlength="2" min="0" max="59" formControlName="second">
+            </td>
+          </tr>
+        </table>
+
+        <table class="mt">
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+
+          <tr>
+            <!-- <td>
+              <select name="meridiem" formControlName="meridiem">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </td> -->
+
+            <td>
+              <select name="timezone" formControlName="timezone">
+                <option value="gmt">GMT</option>
+                <option value="local">Local time</option>
+              </select>
+            </td>
+
+            <td>
+              <button mat-stroked-button color="primary" (click)="human2epoch()">
+                <span>Human date to Timestamp</span>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="result-box">
+        <table *ngIf="parsedTimestamp.timestamp">
+          <tr>
+            <td class="list-header">Timestamp:</td>
+            <td>{{ parsedTimestamp.timestamp }}</td>
+          </tr>
+
+          <tr>
+            <td class="list-header">Date and time (UTC):</td>
+            <td>{{ parsedTimestamp.dateUtc }}</td>
+          </tr>
+
+          <tr>
+            <td class="list-header">Date and time (your timezone):</td>
+            <td>{{ parsedTimestamp.dateLocal }}</td>
+          </tr>
+        </table>
+
+        <div *ngIf="parsedTimestamp.error">
+          <span>{{ parsedTimestamp.error }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

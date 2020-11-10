@@ -1,0 +1,144 @@
+.epoch-container {
+  width: 100%;
+  height: 100%;
+
+  section {
+    padding: 3em 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #dee2e6;
+
+    .section-container {
+      max-width: 90%;
+      margin: auto;
+      padding: 3rem 16px;
+
+      .title {
+        font-size: 38px;
+        position: relative;
+        letter-spacing: 1px;
+        color: #143470;
+        font-weight: 700;
+        text-align: center;
+        margin: 0;
+      }
+    }
+
+    .dark {
+      background: #282932;
+      color: #adacac;
+    }
+  }
+
+  .clock {
+    text-align: center;
+    margin-top: 30px;
+
+    .ecclock {
+      user-select: all;
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: 1.2em;
+      font-weight: 600;
+      border-radius: 8px;
+      text-align: center;
+      background: #eaeafa;
+      color: #545454;
+    }
+  }
+
+  .epoch-to-human {
+    text-align: center;
+    margin-top: 30px;
+
+    input {
+      box-shadow: none;
+      outline: none;
+      padding: 4px;
+      border-radius: 2px;
+      font-size: 1.1em;
+      border: 1px solid #a7a7a7;
+      box-shadow: 2px 2px 4px #ddd;
+    }
+
+    button {
+      margin-left: 20px;
+    }
+
+    .result-box {
+      margin-top: 30px;
+      min-height: 45px;
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+
+      table {
+        border: none;
+        text-align: start;
+
+        tr {
+          height: 32px;
+        }
+      }
+
+      .list-header {
+        font-weight: 500;
+        min-width: 120px;
+      }
+    }
+  }
+
+  .human-to-epoch {
+    text-align: center;
+    margin-top: 30px;
+
+    input, select {
+      box-shadow: none;
+      outline: none;
+      padding: 4px;
+      border-radius: 2px;
+      font-size: 1.1em;
+      border: 1px solid #a7a7a7;
+      box-shadow: 2px 2px 4px #ddd;
+      background: #fff;
+    }
+
+    button {
+      margin-left: 20px;
+    }
+
+    table {
+      display: inline;
+      border: none;
+      text-align: start;
+    }
+
+    .ymd {
+      input {
+        width: 50px;
+      }
+    }
+
+    .hms {
+      input {
+        width: 30px;
+      }
+    }
+
+    .result-box {
+      margin-top: 30px;
+      min-height: 45px;
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .list-header {
+      font-weight: 500;
+      min-width: 120px;
+    }
+  }
+}

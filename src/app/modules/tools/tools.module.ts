@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const MATERIAL_MODULES = [
@@ -30,6 +32,7 @@ const MATERIAL_MODULES = [
   MatSelectModule,
   MatInputModule,
   MatCheckboxModule,
+  MatRadioModule,
   MatNativeDateModule,
   MatButtonModule,
   MatIconModule,
@@ -40,6 +43,7 @@ const MATERIAL_MODULES = [
   MatTabsModule,
   MatMenuModule,
   MatListModule,
+  MatCardModule,
   ScrollingModule,
 ];
 
@@ -47,13 +51,19 @@ import { ToolsRoutingModule } from './tools-routing.module';
 import { LasotuviComponent } from './lasotuvi/lasotuvi.component';
 import { MainComponent } from './main/main.component';
 import { JsonToJsComponent } from './json-to-js/json-to-js.component';
+import { EpochConverterComponent } from './epoch-converter/epoch-converter.component';
+import { MomentFormatDocComponent } from './moment-format-doc/moment-format-doc.component';
+import { FlexLayoutComponent } from './flex-layout/flex-layout.component';
 
 
 @NgModule({
   declarations: [
     LasotuviComponent,
     MainComponent,
-    JsonToJsComponent
+    JsonToJsComponent,
+    EpochConverterComponent,
+    MomentFormatDocComponent,
+    FlexLayoutComponent
   ],
   imports: [
     CommonModule,

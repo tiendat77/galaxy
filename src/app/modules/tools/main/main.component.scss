@@ -25,12 +25,11 @@
   .main {
     height: 100%;
     width: calc(100vw - 240px);
-    margin: 0 24px;
 
     .scroll {
       height: 100%;
       overflow: auto;
-      padding: 24px 0;
+      padding: 24px;
       box-sizing: border-box;
     }
 
