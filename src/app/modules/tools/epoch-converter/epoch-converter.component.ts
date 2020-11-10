@@ -26,7 +26,12 @@ export class EpochConverterComponent implements OnInit {
 
   // human date to timestamp
   humanDateForm: FormGroup;
-  parsedEpochTimestamp: string;
+  parsedTimestamp = {
+    timestamp: undefined,
+    dateUtc: undefined,
+    dateLocal: undefined,
+    error: undefined
+  };
 
   constructor(
     private formbuilder: FormBuilder,
@@ -55,23 +60,28 @@ export class EpochConverterComponent implements OnInit {
 
     this.humanDateForm = this.formbuilder.group({
       year: [now.year(), [Validators.required, Validators.min(1970)]],
-      month: [now.month(), []],
+      month: [now.month() + 1, []],
       date: [now.date()],
       hour: [now.hour()],
       minute: [now.minute()],
       second: [now.second()],
-      meridiem: ['AM'],
-      timezone: ['']
+      meridiem: ['AM'], // 'AM' || 'PM'
+      timezone: ['gmt'], // 'gmt' || 'local'
     });
   }
 
-  // ecclock
+  /////////////// ECCLOCK ///////////////
   onClockHover() {
     if (this.intervalClock) {
       clearInterval(this.intervalClock);
     }
   }
 
+  copyClock() {
+
+  }
+
+  /////////////// TIMESTAMP TO HUMAN DATE ///////////////
   epoch2human() {
     const format = 'dddd, MMMM M, YYYY HH:mm:ss A';
     let humanDateUtc = '';
@@ -104,24 +114,71 @@ export class EpochConverterComponent implements OnInit {
     this.parsedHumanDate.error = errorMessage;
   }
 
+  /////////////// HUMAN DATE TO TIMESTAMP ///////////////
   human2epoch() {
-    const options = this.humanDateForm.value;
-    for (const key of Object.keys(options)) {
-      const option = options[key];
-      if (option === undefined || option === null || option.length === 0) {
-        this.parsedEpochTimestamp = 'Invalid form';
-        return;
-      }
+    const form = this.humanDateForm.value;
+
+    const invalidForm = this.validateHumanDateForm();
+    if (invalidForm) {
+      this.parsedTimestamp.error = invalidForm;
+      this.parsedTimestamp.timestamp = undefined;
+      this.parsedTimestamp.dateUtc = undefined;
+      this.parsedTimestamp.dateLocal = undefined;
+      return;
     }
 
-    const momentObj = moment().set({
-      year: options.year,
-      month: options.month,
-      date: options.date,
-      hour: options.hour,
-      minute: options.minute,
-      second: options.second,
+    const momentObj = moment();
+
+    if (form.timezone === 'local') {
+      momentObj.local();
+    } else {
+      momentObj.utc();
+    }
+
+    momentObj.set({
+      year: form.year,
+      month: form.month - 1,
+      date: form.date,
+      hour: form.hour,
+      minute: form.minute,
+      second: form.second,
     });
+
+    this.parsedTimestamp.timestamp = momentObj.unix();
+    this.parsedTimestamp.dateUtc = momentObj.utc().format('dddd, MMMM M, YYYY HH:mm:ss A');
+    this.parsedTimestamp.dateLocal = momentObj.local().format('dddd, MMMM M, YYYY HH:mm:ss A (Z)');
+  }
+
+  validateHumanDateForm() {
+    const form = this.humanDateForm.value;
+
+    const isNull = (value) => {
+      return value === undefined || value === null;
+    };
+
+    if (isNull(form.year) || form.year < 1970) {
+      return 'Invalid year';
+    }
+
+    if (isNull(form.month) || form.month < 1 || form.month > 12) {
+      return 'Invalid month';
+    }
+
+    if (isNull(form.date) || form.date < 1 || form.date > 31) {
+      return 'Invalid date';
+    }
+
+    if (isNull(form.hour) || form.hour < 0 || form.hour > 23) {
+      return 'Invalid hour';
+    }
+
+    if (isNull(form.minute) || form.minute < 0 || form.minute > 59) {
+      return 'Invalid minute';
+    }
+
+    if (isNull(form.second) || form.second < 0 || form.second > 59) {
+      return 'Invalid second';
+    }
   }
 
 }

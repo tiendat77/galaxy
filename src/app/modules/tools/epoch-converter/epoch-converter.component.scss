@@ -93,7 +93,7 @@
     text-align: center;
     margin-top: 30px;
 
-    input {
+    input, select {
       box-shadow: none;
       outline: none;
       padding: 4px;
@@ -101,6 +101,44 @@
       font-size: 1.1em;
       border: 1px solid #a7a7a7;
       box-shadow: 2px 2px 4px #ddd;
+      background: #fff;
+    }
+
+    button {
+      margin-left: 20px;
+    }
+
+    table {
+      display: inline;
+      border: none;
+      text-align: start;
+    }
+
+    .ymd {
+      input {
+        width: 50px;
+      }
+    }
+
+    .hms {
+      input {
+        width: 30px;
+      }
+    }
+
+    .result-box {
+      margin-top: 30px;
+      min-height: 45px;
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .list-header {
+      font-weight: 500;
+      min-width: 120px;
     }
   }
 }
