@@ -83,7 +83,7 @@ export class EpochConverterComponent implements OnInit {
 
   /////////////// TIMESTAMP TO HUMAN DATE ///////////////
   epoch2human() {
-    const format = 'dddd, MMMM M, YYYY HH:mm:ss A';
+    const format = 'dddd, MMMM DD, YYYY HH:mm:ss A';
     let humanDateUtc = '';
     let humanDateLocal = '';
     let errorMessage;
