@@ -1,94 +1,234 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { MatOptionSelectionChange } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
 
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { debounceTime, filter, startWith } from 'rxjs/operators';
 
 import * as lodash from 'lodash';
-import { MOCK } from './mock';
 
 @Component({
   selector: 'app-form-select',
   templateUrl: './form-select.component.html',
-  styleUrls: ['./form-select.component.scss']
+  styleUrls: ['./form-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormSelectComponent implements OnInit, OnChanges {
+export class FormSelectComponent implements OnInit, OnChanges, OnDestroy {
+  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   @ViewChild('searchInput') searchInput: ElementRef;
 
-  @Input() source: any[] = [];
-  @Input() label: string;
+  @Input() label = 'Select';
+  @Input() searchLabel = 'Search';
+  @Input() searchBy: string[] = ['id'];
+  @Input() appearance: 'legacy' | 'standard' | 'outline' = 'outline';
   @Input() multiple = false;
   @Input() required = true;
   @Input() enableSearch = false;
+
   @Input() value: any;
+  @Input() options: any[] = [];
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
+  @Output() selectionChange: EventEmitter<any> = new EventEmitter();
 
   valueCtrl: FormControl = new FormControl();
   filterCtrl: FormControl = new FormControl();
-  filteredOptions$: Observable<any[]>;
 
-  selected: any[] = [];
+  filteredOptions$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  filterSubscription: Subscription;
+  scrollSubscription: Subscription;
 
-  constructor() { }
+  oldValue;
+  text = '';
+  tooltip: string;
+  virtualScrollHeight = 192;
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    readonly sd: ScrollDispatcher
+  ) { }
 
   ngOnInit(): void {
-    this.init();
-    this.fake();
+    this.initialize();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.onClearSearch();
+
     if (changes.value) {
-      this.valueCtrl.setValue(this.value ? this.value : undefined);
+      this.fake();
+      this.valueCtrl.setValue(this.value);
     }
   }
 
-  fake() {
-    const input = MOCK;
-    this.source = input.source;
-    this.label = input.name;
-    this.value = input.value;
-    this.multiple = true;
-    this.enableSearch = true;
-    this.required = false;
+  ngOnDestroy(): void {
+    if (this.filterSubscription) {
+      this.filterSubscription.unsubscribe();
+    }
+
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+    }
   }
 
-  init() {
-
-    this.filteredOptions$ = this.filterCtrl.valueChanges.pipe(
+  private initialize() {
+    // init search subscription
+    this.filterSubscription = this.filterCtrl.valueChanges.pipe(
       startWith(''),
-      map(value => this.filter(value))
-    );
-  }
+      debounceTime(200),
+    ).subscribe((value) => {
+      const filtered: any[] = this.filter(value);
 
-  filter(value: string) {
-    const search: string = value ? value.toLowerCase().trim() : '';
+      this.filteredOptions$.next(filtered);
+      this.virtualScrollHeight = filtered.length < 5 ? filtered.length * 48 : 192;
 
-    return this.source.filter(d => {
-      const id = d.id ? d.id.toLowerCase().indexOf(search) !== -1 : false;
-      const name = d.name ? d.name.toLowerCase().indexOf(search) !== -1 : false;
+      // scroll to top of view port
+      this.resetVirtualScroll();
+    });
 
-      return id || name;
+    // init view port scroll subscription
+    this.scrollSubscription = this.sd.scrolled().pipe(
+      debounceTime(500),
+      filter((scrollable) => this.viewport === scrollable),
+    ).subscribe(() => {
+      this.viewport.checkViewportSize();
+      // this.cdr.detectChanges();
     });
   }
 
-  onOpenSelect(event) {
-    this.onClearSearch();
+  private filter(search: string) {
+    const value: string = search ? search.toLowerCase().trim() : '';
+
+    if (!value) {
+      return this.options.slice();
+    }
+
+    return this.options.filter(d => {
+      const result = [];
+
+      this.searchBy.forEach(field => {
+        result.push(d[field] && d[field].toLowerCase().indexOf(value) !== -1);
+      });
+
+      // return true if match one of various field
+      return result.reduce((accumulator, current) => accumulator || current);
+    });
   }
 
-  onSelectionChange(event: MatSelectChange) {
-    this.selected = event.value;
-    this.valueChange.emit(event.value);
+  private compare(): boolean {
+    return lodash.isEqual(lodash.sortBy(this.oldValue), lodash.sortBy(this.value));
+  }
+
+  private fake() {
+    if (this.multiple) {
+      this.text = this.value.join(',');
+      this.tooltip = this.value.join('\n');
+
+    } else {
+      this.text = this.value;
+      this.tooltip = '';
+    }
+  }
+
+  resetVirtualScroll() {
+    setTimeout(() => {
+      // fix blank viewport on virtual scroll
+      if (this.viewport) {
+        this.viewport.scrollToOffset(10);
+        this.viewport.scrollToOffset(0);
+      }
+    }, 100);
+  }
+
+  onOpenedChange(isOpen) {
+    if (isOpen) {
+      this.oldValue = lodash.cloneDeep(this.value);
+      this.onClearSearch();
+      this.focusSearchInput();
+      return;
+    }
+
+    // on mat-select panel closed
+    this.fake();
+
+    const isEqual = this.compare();
+    if (!isEqual) {
+      this.valueChange.emit(this.value);
+    }
+  }
+
+  onSelectionChange(event: MatOptionSelectionChange) {
+    if (!event.isUserInput) {
+      return;
+    }
+
+    const value = event.source.value;
+
+    if (!this.multiple) {
+      this.value = value;
+      this.valueCtrl.setValue(value);
+      return;
+    }
+
+    const idx = this.value.indexOf(value);
+
+    if (idx > -1) {
+      this.value.splice(idx, 1);
+
+    } else {
+      this.value.push(value);
+    }
+
+    this.valueCtrl.patchValue(this.value);
   }
 
   onClearSearch() {
     this.filterCtrl.setValue('');
+    this.blurSearchInput();
+  }
 
+  focusSearchInput() {
     setTimeout(() => {
       if (this.searchInput) {
         this.searchInput.nativeElement.focus();
       }
     }, 100);
+  }
+
+  blurSearchInput() {
+    setTimeout(() => {
+      if (this.searchInput) {
+        this.searchInput.nativeElement.blur();
+      }
+    }, 50);
+  }
+
+  clear(event) {
+    event.stopPropagation();
+
+    this.value = [];
+    this.valueChange.emit(this.value);
+  }
+
+  prevent(event) {
+    event.stopPropagation();
+  }
+
+  trackByFn(index, item) {
+    return item.id || index;
   }
 
 }

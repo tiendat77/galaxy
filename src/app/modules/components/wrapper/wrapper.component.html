@@ -8,11 +8,12 @@
   </button>
 
   <app-form-select [(value)]="wtf.value"
-                   [source]="wtf.source"
+                   [options]="wtf.source"
                    [label]="wtf.label"
                    [multiple]="wtf.multiple"
                    [required]="wtf.required"
-                   [enableSearch]="true">
+                   [enableSearch]="true"
+                   (valueChange)="changed($event)">
   </app-form-select>
 
   <app-form-select-timezone [(value)]="timezone.value"

@@ -1,6 +1,25 @@
 .form-select {
   width: 100%;
 
+  mat-select {
+    color: rgba(0, 0, 0, .68);
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+
+  input {
+    color: rgba(0, 0, 0, .68);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  ::ng-deep .mat-form-field-suffix {
+    display: flex;
+  }
+
   ::ng-deep .mat-form-field-outline-thick {
     color: var(--color-primary);
   }
@@ -18,14 +37,6 @@
   .suffix {
     font-size: 1.2em;
     transform: translateY(-4px);
-  }
-
-  .icon-search {
-    color: rgba(0, 0, 0, 0.58);
-  }
-
-  .icon-cancel {
-    color: #e85757;
   }
 
   mat-form-field {

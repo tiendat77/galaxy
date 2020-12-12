@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { OPTIONS } from './mock';
+import { COMPANIES } from './companies';
 
 @Component({
   selector: 'app-wrapper',
@@ -10,9 +11,9 @@ import { OPTIONS } from './mock';
 export class WrapperComponent implements OnInit {
 
   wtf = {
-    value: ['github'],
+    value: [],
     label: 'Company',
-    source: OPTIONS,
+    source: COMPANIES,
     multiple: true,
     required: true,
   };
@@ -23,6 +24,8 @@ export class WrapperComponent implements OnInit {
     label: 'Timezone'
   };
 
+  source: any[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -30,7 +33,10 @@ export class WrapperComponent implements OnInit {
 
   test() {
     console.log(this.wtf);
-    console.log(this.timezone);
+  }
+
+  changed(event) {
+    console.log('change neee: ', event);
   }
 
 }
