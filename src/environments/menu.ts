@@ -7,6 +7,7 @@ export interface MenuItem {
 const CHART_CHILDRENS: MenuItem[] = [
   { name: 'Board', url: '/chart/board' },
   { name: 'Line Chart', url: '/chart/line-chart' },
+  { name: 'Gaussian', url: '/chart/gaussian-chart' },
   { name: 'Horizontal Bar Chart', url: '/chart/horizontal-bar-chart' },
   { name: 'Line Bar Chart', url: '/chart/line-bar-chart' },
   { name: 'Stacked Bar Chart', url: '/chart/stacked-bar-chart' },

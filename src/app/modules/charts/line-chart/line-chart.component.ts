@@ -37,7 +37,7 @@ export class LineChartComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showXGrid = true;
   @Input() showYGrid = false;
   @Input() showGradient = true;
-  @Input() showTooltip = false;
+  @Input() showTooltip = true;
   @Input() showDot = false; // circle mark on line
 
   @Input() dashedLine = false;

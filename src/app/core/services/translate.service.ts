@@ -56,7 +56,7 @@ export class TranslateService {
 
   private loadLangFile(lang: string) {
     return new Observable((resolver) => {
-      this.http.get(`/assets/i18n/${lang}.json`).subscribe(res => {
+      this.http.get(`assets/i18n/${lang}.json`).subscribe(res => {
         resolver.next();
         resolver.complete();
       }, err => {
