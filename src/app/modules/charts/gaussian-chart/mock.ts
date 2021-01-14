@@ -1,11 +1,3 @@
-import * as d3 from 'd3';
-
-interface HISTOGRAM {
-  x0: number;
-  x1: number;
-  y: number;
-};
-
 const WEATHER: any[] = [
   {
     time: 1545109200,

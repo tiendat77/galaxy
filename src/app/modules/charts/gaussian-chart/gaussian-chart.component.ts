@@ -439,7 +439,7 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
 
     function formatAxisTop(index: number) { // Six Sigma
       if (index === 3) {
-        return 'μ';
+        return 'μ = ' + formatValue(that.mean);
       }
 
       return (index - 3) + ' σ';
@@ -550,14 +550,24 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
 
   mock() {
     console.log('mock');
-    const dataset = MOCK.generate();
+    // Input zone
+    const data = MOCK.generate();
+    const sample = 40;
+    const upperFence = 0.84;
+    const loweFence = 0.35;
+
+    // Handle zone
+    const dataset = data.filter(element =>
+          (loweFence ? element > loweFence : true) &&
+          (upperFence ? element < upperFence : true)
+        );
 
     const accessor = d => d;
     const generator = d3
       .histogram()
       .domain(d3.extent(dataset, accessor))
       .value(accessor)
-      .thresholds(12);
+      .thresholds(sample);
 
     const mean = d3.mean(dataset, accessor);
     const stdev = this.STDEV(dataset);
@@ -565,6 +575,7 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
 
     console.log({bins, mean, stdev});
 
+    // Output zone
     this.mean = mean;
     this.stdev = stdev;
     this.sample = dataset.length;
