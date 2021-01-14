@@ -1,12 +1,12 @@
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
-
-// import { TranslateService } from '../../../../core/services/translate.service';
+import { debounceTime } from 'rxjs/operators';
 
 import * as jstat from 'jstat';
 import * as d3 from 'd3';
-import { debounceTime } from 'rxjs/operators';
+
+import MOCK from './mock';
 
 @Component({
   selector: 'app-gaussian-chart',
@@ -21,23 +21,24 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() mean: number;
   @Input() stdev: number;
   @Input() sample: number;
+  @Input() histogram: any[] = [];
   @Input() interval = 0.05;
 
   // colors
-  @Input() lineColor = '#ff8383';
+  @Input() lineColor = '#fd372e';
   @Input() tickColor = '#464646';
-  @Input() barFillColor = '#2dacd1';
-  @Input() barStrokeColor = '#209e91';
+  @Input() barFillColor = '#4db1ff';
+  @Input() barStrokeColor = '#2186d4';
 
   // text
-  @Input() xLabel;
+  @Input() xLabel = 's';
   @Input() yLabel;
 
   // options
   @Input() showXAxis = true;
   @Input() showYAxis = true;
   @Input() showXAxisTick = true;
-  @Input() showYAxisTick = false;
+  @Input() showYAxisTick = true;
   @Input() showXGrid = true;
   @Input() showYGrid = false;
   @Input() showTooltip = false;
@@ -54,9 +55,7 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
 
   isNoData$ = new BehaviorSubject(false);
 
-  constructor(
-    // private translate: TranslateService
-  ) {
+  constructor( ) {
     this.chartID = this.generateID();
   }
 
@@ -65,20 +64,17 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
       this.draw();
     });
 
-    setTimeout(() => {
-      console.log('init');
-      this.stdev = 14.4;
-      this.mean = 25.6;
-      this.sample = 7650;
-      this.draw();
-    }, 3000);
+    // TODO: remove
+    this.mock();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes) { return; }
 
-    if (!changes.stdev) {
-      return this.isNoData$.next(true);
+    if (changes.stdev) {
+      if (this.stdev === null || this.stdev === undefined) {
+        return this.isNoData$.next(true);
+      }
     }
 
     setTimeout(() => this.draw(), 500);
@@ -98,7 +94,7 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
 
   /////////////// DRAW CHART ///////////////
   draw() {
-    if (!this.stdev || this.stdev < 1) {
+    if (this.stdev === null || this.stdev === undefined) {
       return this.isNoData$.next(true);
     }
 
@@ -167,12 +163,25 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
       .attr('class', 'gaussian-chart-x-label');
 
     const formatValue = d3.format('.2f');
-    const dataset = this.generateDataset(this.mean, this.stdev, this.interval, this.sample);
-    const histogram = []; // TODO
-    console.log({ mean: this.mean, stdev: this.stdev, sample: dataset.length });
+
+    const dataset = this.generateDataset(this.mean, this.stdev, this.interval);
+    const histogram = this.histogram
+
+    const domain = histogram.map(d => d.x0);
+    const min = this.min ? this.min : d3.min(histogram, (d) => d.x0);
+    const max = this.max ? this.max : d3.max(histogram, (d) => d.x1);
+
+    console.log({ mean: this.mean, stdev: this.stdev, sample: dataset.length, histogram, domain });
 
     drawGaussianCurve();
     drawHistogram();
+
+    chartXLabel.append('text')
+      .attr('x', that.width - that.margin.right + 10)
+      .attr('y', that.height - that.margin.bottom)
+      .attr('text-anchor', 'start')
+      .attr('fill', getColor(that.tickColor, 0.68))
+      .text(that.xLabel);
 
     function drawGaussianCurve() {
       const tickValues = [-3, -2, -1, 0, 1, 2, 3].map(sigma => {
@@ -180,19 +189,15 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
       });
 
       const xScale = d3.scaleLinear()
-        .domain([d3.min(dataset, (d) => d.x), d3.max(dataset, (d) => d.x)])
+        .domain([min, max])
         .range([that.margin.left, that.width - that.margin.right]);
 
       const yScale = d3.scaleLinear()
         .domain([d3.min(dataset, (d) => d.y), d3.max(dataset, (d) => d.y)])
         .range([that.height - that.margin.bottom, that.margin.top]);
 
-      // TODO: remove
-      tickValues.forEach(element => {
-        histogram.push({ x: element, y: yScale(10) });
-      });
-
       const line = d3.line() // create line chart
+        .curve(d3.curveMonotoneX)
         .x((d: any) => xScale(d.x))
         .y((d: any) => yScale(d.y));
 
@@ -203,21 +208,6 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
           .tickFormat((d: any, i) => formatAxisTop(i))
         )
         .call(styleXAxisTop);
-
-      chartXAxisBottom
-        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
-        .call(d3.axisBottom(xScale)
-          .tickValues(tickValues)
-          .tickFormat((d: any, i) => formatAxisBottom(d, i))
-        )
-        .call(styleXAxisBottom);
-
-      chartYAxis
-        .attr('transform', `translate(${that.margin.left}, 0)`)
-        .call(d3.axisLeft(yScale)
-          .tickSizeOuter(0)
-        )
-        .call(styleYAxis);
 
       chartGraphical.append('path')
         .datum(dataset)
@@ -240,15 +230,18 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     function drawHistogram() {
-      const xScale = d3.scaleBand()
-        .domain(histogram.map(d => d.x))
-        .rangeRound([that.margin.left, that.width - that.margin.right])
-        .padding(0);
+      const barPadding = 1;
+
+      const xScale = d3.scaleLinear()
+        .domain([min, max])
+        .range([that.margin.left, that.width - that.margin.right]);
 
       const yScale = d3.scaleLinear()
-        .domain([0, d3.max(histogram, (d: any) => d.y)])
-        .nice()
-        .range([that.height - that.margin.bottom, that.margin.top]);
+        .domain([0, d3.max(histogram, (d: any) => d.length)])
+        .range([that.height - that.margin.bottom, that.margin.top])
+        .nice();
+
+      const accessor = d => d.length;
 
       chartHistogram
         .attr('fill', that.barFillColor)
@@ -256,12 +249,12 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
         .data(histogram)
         .join('rect')
           .attr('id', (d, i) => `rect_${i}`)
-          .attr('x', (d: any) => xScale(d.x))
-          .attr('y', (d: any) => yScale(d.y))
-          .attr('width', xScale.bandwidth())
-          .attr('height', (d: any) => yScale(0) - yScale(d.y))
-          .attr('stroke', that.barStrokeColor)
-          .attr('stroke-width', 2);
+          .attr('x', (d: any) => xScale(d.x0) + barPadding / 2)
+          .attr('y', (d: any) => yScale(accessor(d)))
+          .attr('width', (d: any) => d3.max([0, xScale(d.x1) - xScale(d.x0) - barPadding]))
+          .attr('height', (d: any) => yScale(0) - yScale(accessor(d)))
+        .attr('stroke', that.barStrokeColor)
+        .attr('stroke-width', 2);
 
       chartHistogramOverlay
         .attr('fill', 'none')
@@ -269,52 +262,67 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
         .selectAll('rect')
         .data(histogram)
         .join('rect')
-          .attr('x', (d: any) => xScale(d.x))
-          .attr('y', 0)
-          .attr('width', xScale.bandwidth())
-          .attr('height', that.height)
+          .attr('x', (d: any) => xScale(d.x0) + barPadding / 2)
+          .attr('y', (d: any) => yScale(accessor(d)))
+          .attr('width', (d: any) => d3.max([0, xScale(d.x1) - xScale(d.x0) - barPadding]))
+          .attr('height', (d: any) => yScale(0) - yScale(accessor(d)))
         .on('mouseover', onMouseOver)
-        .on('mousemove', onMouseMove)
         .on('mouseout', onMouseOut);
+
+      chartXAxisBottom
+        .attr('transform', `translate(0, ${that.height - that.margin.bottom})`)
+        .call(d3.axisBottom(xScale)
+          .tickValues(domain)
+        )
+        .call(styleXAxisBottom);
+
+      chartYAxis
+        .attr('transform', `translate(${that.margin.left}, 0)`)
+        .call(d3.axisLeft(yScale)
+          .tickSizeOuter(0)
+        )
+        .call(styleYAxis);
 
       function onMouseOver(d, i) {
         svg.select('#rect_' + i)
           .attr('filter', 'url(#barChartLighten)');
-  
-        chartTooltip.style('display', 'block');
-      }
-  
-      function onMouseMove(d, i) {
-        const isLeft = i < histogram.length / 2;
+
         chartTooltip.html(`
           <div style="position: absolute;
-            top: 50%;
-            right: ${ isLeft? '100%' : 'unset'};
-            left: ${isLeft ? 'unset' : '100%'};
-            margin-top: -5px;
-            border-width: 5px;
+            bottom: -12px;
+            right: unset;
+            left: calc(50% - 6px);
+            border-width: 6px;
             border-style: solid;
-            border-color: ${isLeft ? 'transparent rgba(0,0,0,0.8) transparent transparent' : 'transparent transparent transparent rgba(0,0,0,0.8)'};">
+            border-color: rgba(0,0,0,0.8) transparent transparent transparent;">
           </div>
-          <div>
-            <span>${formatValue(d.y)}</span>
-          </div>
+          <table>
+            <tr>
+              <td style="padding: 0;">Range:</td>
+              <td style="padding: 0 0 0 4px; text-align: right;">
+                ${formatValue(d.x0)} - ${formatValue(d.x1)} (s)
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: center; padding: 0;">
+                ${formatValue(d.length)}
+              </td>
+            </tr>
+          </table>
         `);
-  
-        const tooltipBox = chartTooltip.node().getBoundingClientRect();
-  
-        const x =  xScale(d.x) + xScale.bandwidth() / 2 - (isLeft ? 0 : tooltipBox.width);
-        const y = yScale(d.y);
-  
+
+        const x =  xScale(d.x0) +  Math.max(0, xScale(d.x1) - xScale(d.x0)) / 2;
+        const y = yScale(accessor(d));
+
         chartTooltip
-          .style('left', (x) + 'px')
-          .style('top', (y > 0 ? y + 12 : y - 12) + 'px');
+          .style('transform', `translate(calc( -50% + ${x}px), calc(-100% + ${y}px))`)
+          .style('display', 'block');
       }
-  
+
       function onMouseOut(d, i) {
         svg.select('#rect_' + i)
           .attr('filter', null);
-  
+
         chartTooltip.style('display', 'none');
       }
     }
@@ -323,6 +331,8 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
     function styleTooltip(selection: d3.Selection<HTMLElement, unknown, HTMLElement, any>) {
       selection
         .style('position', 'absolute')
+        .style('top', '-12px')
+        .style('left', '0')
         .style('display', 'none')
         .style('pointer-events', 'none')
         .style('background', 'rgba(0,0,0,0.8)')
@@ -331,12 +341,11 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
         .style('text-align', 'start')
         .style('border-radius', '8px')
         .style('padding', '8px')
-        .style('margin-top', '-30px')
         .style('font-size', '12px')
         .style('line-height', '16px')
         .style('white-space', 'nowrap')
         .style('box-sizing', 'border-box')
-        .style('transition', 'left 0.5s');
+        .style('transition', 'transform 0.25s');
     }
 
     function styleLegend(selection: d3.Selection<HTMLElement, unknown, HTMLElement, any>) {
@@ -396,13 +405,15 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
         .call(g => g.select('.domain')
           .attr('stroke', domainColor)
         )
-        .call(g => g.selectAll('line').remove())
-        .call(g => g.selectAll('text').remove());
-        // .call(g => g.selectAll('text')
-          // .attr('class', 'font-number')
-          // .attr('fill', textColor)
-          // .attr('font-size', that.fontSize)
-        // );
+        .call(g => g.selectAll('line')
+          .attr('stroke', domainColor)
+        )
+        // .call(g => g.selectAll('text').remove());
+        .call(g => g.selectAll('text')
+          .attr('class', 'font-number')
+          .attr('fill', textColor)
+          .attr('font-size', that.fontSize)
+        );
 
       if (!that.showYAxisTick) {
         selection.call(g => g.selectAll('text').remove());
@@ -439,35 +450,13 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     function zoomed(event) {
-      // const transform = d3.event.transform;
-
-      // svg.attr('transform', transform);
-    }
-
-    function scale(ratio: number) {
-      svg.call(zoom.scaleTo, ratio);
-    }
-
-    function center() {
-      const groupBox = svg.node().getBBox();
-      const translateX = (that.width - groupBox.width) / 2;
-      const translateY = (that.height - groupBox.height) / 2;
-
-      if (Number.isNaN(translateX) || Number.isNaN(translateY)) {
-        return;
-      }
-
-      svg.call(
-        zoom.transform,
-        d3.zoomIdentity.translate(translateX, translateY).scale(1)
-      );
+      const transform = d3.event.transform;
+      svg.attr('transform', transform);
     }
 
     return this.chartControl = Object.assign(svg.node(), {
       zoomIn: () => svg.transition().call(zoom.scaleBy, 2),
-      zoomOut: () => svg.transition().call(zoom.scaleBy, 0.5),
-      zoomReset: center,
-      zoomScale: scale,
+      zoomOut: () => svg.transition().call(zoom.scaleBy, 0.5)
     });
   }
 
@@ -488,7 +477,7 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /////////////// UTILS ///////////////
-  generateDataset(mean: number, stdev: number, interval: number, sample: number) {
+  generateDataset(mean: number, stdev: number, interval: number) {
     const dataset: {x: number, y: number}[] = [];
     const upperBound = mean + 3 * stdev;
     const lowerBound = mean - 3 * stdev;
@@ -508,6 +497,14 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
     return dataset;
   }
 
+  generateBins(dataset: any[], accessor: any, domain: any[]) {
+    const generator = d3
+      .histogram()
+      .domain(domain)
+      .value(accessor)
+      .thresholds(12);
+  }
+
   calcSvgSize() {
     if (this.chartContainer) {
       const element = this.chartContainer.nativeElement;
@@ -522,6 +519,60 @@ export class GaussianChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     return {width: 400, height: 300};
+  }
+
+  STDEV(dataset: number[]) {
+    const n = dataset.length;
+    const sum = dataset.reduce((accumulator, current) => accumulator + current);
+    const mean = sum / n;
+
+    let variance = 0.0;
+    let v1 = 0.0;
+    let v2 = 0.0;
+    let stdev;
+
+    if (n != 1) {
+      for (let i = 0; i < n; i++) {
+        v1 = v1 + (dataset[i] - mean) * (dataset[i] - mean);
+        v2 = v2 + (dataset[i] - mean);
+      }
+
+      v2 = v2 * v2 / n;
+      variance = (v1 - v2) / (n-1);
+
+      if (variance < 0) { variance = 0; }
+
+      stdev = Math.sqrt(variance);
+    }
+
+    return Math.round(stdev * 100) / 100;
+  };
+
+  mock() {
+    console.log('mock');
+    const dataset = MOCK.generate();
+
+    const accessor = d => d;
+    const generator = d3
+      .histogram()
+      .domain(d3.extent(dataset, accessor))
+      .value(accessor)
+      .thresholds(12);
+
+    const mean = d3.mean(dataset, accessor);
+    const stdev = this.STDEV(dataset);
+    const bins: any[] = generator(dataset);
+
+    console.log({bins, mean, stdev});
+
+    this.mean = mean;
+    this.stdev = stdev;
+    this.sample = dataset.length;
+    this.min = d3.min(dataset, accessor);
+    this.max = d3.max(dataset, accessor);
+    this.histogram = bins;
+
+    return setTimeout(() => this.draw(), 1500);
   }
 
 }
