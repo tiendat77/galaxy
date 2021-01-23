@@ -1,1 +1,1 @@
-export const STORAGE_LANG = '[GALAXY] LANG';
+export const STORAGE_LANGUAGE = '[GALAXY] LANGUAGE';

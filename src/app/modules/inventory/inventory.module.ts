@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ToolsRoutingModule } from './tools-routing.module';
+import { InventoryRoutingModule } from './inventory-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    ToolsRoutingModule
+    InventoryRoutingModule
   ]
 })
-export class ToolsModule { }
+export class InventoryModule { }

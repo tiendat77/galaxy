@@ -1,42 +1,23 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { TranslateService as NgxTranslate } from '@ngx-translate/core';
 
-// Services
-import { TranslateService } from './translate.service';
+const snackBarConfig: MatSnackBarConfig = {
+  duration: 3000,
+  panelClass: ['snackbar-style-success']
+};
 
 @Injectable({ providedIn: 'root' })
 export class NotifyService {
 
   constructor(
-    private translate: TranslateService,
-    private snackBar: MatSnackBar
+    private translate: NgxTranslate,
+    private snackbar: MatSnackBar
   ) { }
 
-  pushNotify(message: string, duration = 3000, delayTime = 0) {
-    setTimeout(() => {
-      this.snackBar.open(message, 'OK', { duration });
-    }, delayTime);
-  }
-
-  async pushTranslatedNotify(i18nValue: string, duration = 3000, delayTime = 0) {
-    const message = await this.translate.get(i18nValue);
-
-    setTimeout(() => {
-      this.snackBar.open(message, 'OK', { duration });
-    }, delayTime);
-  }
-
-  async pushSuccessTranslatedNotify(i18nValue: string, duration = 3000, delayTime = 0) {
-    const message = await this.translate.get(i18nValue);
-
-    const snackBarConfig: MatSnackBarConfig = {
-      duration,
-      panelClass: ['snackbar-style-success']
-    };
-
-    setTimeout(() => {
-      this.snackBar.open(message, 'OK', snackBarConfig);
-    }, delayTime);
+  async push(i18nValue: string, params: object = {}, duration = 3000) {
+    const message = await this.translate.get(i18nValue, params).toPromise();
+    this.snackbar.open(message, 'OK', {...snackBarConfig, duration});
   }
 
 }

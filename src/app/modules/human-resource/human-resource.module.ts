@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ToolsRoutingModule } from './tools-routing.module';
+import { HumanResourceRoutingModule } from './human-resource-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    ToolsRoutingModule
+    HumanResourceRoutingModule
   ]
 })
-export class ToolsModule { }
+export class HumanResourceModule { }
