@@ -1,0 +1,43 @@
+.galaxy-button-base {
+  height: 42px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.25px;
+  padding: 10px 30px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+}
+
+.galaxy-button {
+  color: var(--color-green);
+  background: #fff;
+  border: 1px solid #dadce0;
+
+  &:focus {
+    background-color: #f8fcf9;
+    border: 1px solid #c8e7d1;
+  }
+
+  &:hover {
+    background-color: #f8fcf9;
+    border: 1px solid #c8e7d1;
+  }
+}
+
+.galaxy-raised-button {
+  color: #fff;
+  border: 1px solid var(--color-green);
+  background-color: var(--color-green);
+  
+
+  &:focus {
+    background: #15bb5a;
+  }
+
+  &:hover {
+    background: #15bb5a;
+  }
+}
