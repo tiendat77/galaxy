@@ -1,25 +1,34 @@
 import { NgModule } from '@angular/core';
 
-import { GalaxyNavigationModule } from './navigation';
-import { GalaxyToolbarModule } from './toolbar';
+import { GalaxyAvatarModule } from './avatar';
 import { GalaxyButtonModule } from './button';
 import { GalaxyCardModule } from './card';
 import { GalaxyFormModule } from './form';
+import { GalaxyMenuModule } from './menu';
+import { GalaxyNavigationModule } from './navigation';
+import { GalaxySpinnerModule } from './spinner';
+import { GalaxyToolbarModule } from './toolbar';
 
 @NgModule({
   imports: [
-    GalaxyNavigationModule,
-    GalaxyToolbarModule,
+    GalaxyAvatarModule,
     GalaxyButtonModule,
     GalaxyCardModule,
     GalaxyFormModule,
+    GalaxyMenuModule,
+    GalaxyNavigationModule,
+    GalaxySpinnerModule,
+    GalaxyToolbarModule,
   ],
   exports: [
-    GalaxyNavigationModule,
-    GalaxyToolbarModule,
+    GalaxyAvatarModule,
     GalaxyButtonModule,
     GalaxyCardModule,
     GalaxyFormModule,
+    GalaxyMenuModule,
+    GalaxyNavigationModule,
+    GalaxySpinnerModule,
+    GalaxyToolbarModule,
   ],
   declarations: [],
 })

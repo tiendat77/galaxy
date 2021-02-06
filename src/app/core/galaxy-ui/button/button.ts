@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewEncapsulation } from '@angular/core';
 
-class GalaxyButtonBase {
-  constructor(public _elementRef: ElementRef) {}
-}
-
 const BUTTON_HOST_ATTRIBUTES = [
   'galaxy-button',
   'galaxy-raised-button',
@@ -19,26 +15,20 @@ const BUTTON_HOST_ATTRIBUTES = [
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalaxyButton extends GalaxyButtonBase {
+export class GalaxyButton {
 
   constructor(elementRef: ElementRef) {
-    super(elementRef);
-
     for (const attr of BUTTON_HOST_ATTRIBUTES) {
-      if (this._hasHostAttributes(attr)) {
-        (this._getHostElement() as HTMLElement).classList.add(attr);
+      if (hasHostAttributes(attr)) {
+        (elementRef.nativeElement as HTMLElement).classList.add(attr);
       }
     }
 
     elementRef.nativeElement.classList.add('galaxy-button-base');
-  }
 
-  _hasHostAttributes(...attributes: string[]) {
-    return attributes.some(attribute => this._getHostElement().hasAttribute(attribute));
-  }
-
-  _getHostElement() {
-    return this._elementRef.nativeElement;
+    function hasHostAttributes(...attributes: string[]) {
+      return attributes.some(attribute => elementRef.nativeElement.hasAttribute(attribute));
+    }
   }
 
 }

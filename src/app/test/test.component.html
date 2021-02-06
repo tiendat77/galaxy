@@ -40,4 +40,26 @@
     <h1>Bonjour</h1>
     <h1>Vietnam xin chào!</h1>
   </div>
+
+  <div style="margin-top: 10px;">
+    <galaxy-avatar [source]="'https://cdn.dribbble.com/users/724973/screenshots/6417933/bullshit-dribbble.png'"></galaxy-avatar>
+    <galaxy-avatar [diameter]="100"></galaxy-avatar>
+  </div>
+
+  <div style="margin-top: 10px;
+              padding: 24px;
+              border-radius: 4px;
+              border: 1px solid rgba(1,2,0,0.4);">
+    <galaxy-menu class="menu">
+      <galaxy-menu-trigger>
+        <button galaxy-button>Open menu!</button>
+      </galaxy-menu-trigger>
+
+      <galaxy-menu-content>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </galaxy-menu-content>
+    </galaxy-menu>
+  </div>
 </div>

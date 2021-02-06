@@ -7,8 +7,19 @@
   width: 100%;
 }
 
-.galaxy-form {
+.galaxy-process-spinner {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
 
+.galaxy-avatar {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.galaxy-menu {
+  display: inline-block;
 }
 
 a {
