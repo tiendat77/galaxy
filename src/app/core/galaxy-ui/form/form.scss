@@ -65,4 +65,11 @@
     transition-delay: 0ms;
     transform: translate(1px, -22px) scale(0.72);
   }
+
+  input:not(:placeholder-shown) ~ .galaxy-label {
+    color: var(--color-green);
+    z-index: 2;
+    transition-delay: 0ms;
+    transform: translate(1px, -22px) scale(0.72);
+  }
 }

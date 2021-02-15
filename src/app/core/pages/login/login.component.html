@@ -11,24 +11,28 @@
 
       <section class="auth-content">
         <div class="auth-form flex center">
-          <form>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h1 class="title">Sign in to <span style="color: #78af9f;">Galaxy</span></h1>
 
             <galaxy-form style="margin: 4px 0 26px 0;">
               <galaxy-label>Username</galaxy-label>
-              <input type="text" name="username">
+              <input type="text" name="username" placeholder=" " formControlName="username">
             </galaxy-form>
 
             <galaxy-form style="margin: 4px 0 0 0;">
               <galaxy-label>Password</galaxy-label>
-              <input type="password" name="password">
+              <input type="password" name="password" placeholder=" " formControlName="password">
             </galaxy-form>
+
+            <div class="error">
+              {{ error$ | async }}
+            </div>
 
             <a class="forgot-password" style="margin: 4px 0 16px 0;">
               Forgot password?
             </a>
 
-            <button type="submit" class="submit">
+            <button type="submit" class="submit" [disabled]="loading$ | async">
               Login
             </button>
           </form>
@@ -36,4 +40,8 @@
       </section>
     </div>
   </main>
+
+  <div class="overlay flex center" *ngIf="loading$ | async">
+    <galaxy-spinner></galaxy-spinner>
+  </div>
 </div>

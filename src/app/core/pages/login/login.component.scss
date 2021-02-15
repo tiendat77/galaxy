@@ -1,12 +1,13 @@
 .main-container {
   margin: 0;
   padding: 0;
-  display: flex;
   flex-grow: 1;
+  min-height: 100%;
+  display: flex;
+  position: relative;
   align-items: center;
   box-sizing: border-box;
   justify-content: center;
-  min-height: 100%;
   background-color: #f6fef5;
 }
 
@@ -55,6 +56,12 @@ main {
     text-align: center;
   }
 
+  .error {
+    color: #ff6d6d;
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
   .forgot-password {
     cursor: pointer;
     display: block;
@@ -88,6 +95,15 @@ main {
       background-position: right;
     }
   }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(186 186 186 / 50%);
 }
 
 @media (min-width: 600px) {
