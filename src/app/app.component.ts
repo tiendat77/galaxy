@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './core/auth/auth.service';
 import { TranslateService } from './core/services/translate.service';
 
 @Component({
@@ -9,5 +10,15 @@ import { TranslateService } from './core/services/translate.service';
 export class AppComponent {
   title = 'galaxy';
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private auth: AuthService,
+    private translate: TranslateService
+  ) {
+    this.init();
+  }
+
+  init() {
+    this.auth.init();
+  }
+
 }

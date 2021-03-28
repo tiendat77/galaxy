@@ -1,0 +1,42 @@
+svg {
+  top: 0;
+  left: 0;
+  z-index: 2;
+  position: absolute;
+  overflow: visible;
+  animation: rotate 2s linear infinite;
+}
+
+circle {
+  fill: transparent;
+  stroke-linecap: round;
+  stroke: var(--color-green);
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 1, 150;
+  }
+
+  50% {
+    stroke-dashoffset: -35;
+    stroke-dasharray: 90, 150;
+  }
+
+  100% {
+    stroke-dashoffset: -124;
+    stroke-dasharray: 90, 150;
+  }
+}

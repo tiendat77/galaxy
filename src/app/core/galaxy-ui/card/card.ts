@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'galaxy-toolbar',
-  templateUrl: 'toolbar.html',
-  styleUrls: ['toolbar.scss'],
+  selector: '[galaxy-card]',
+  template: '<ng-content></ng-content>',
+  styleUrls: ['card.scss'],
   host: {
-    'class': 'galaxy-toolbar'
+    'class': 'galaxy-card'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalaxyToolbar {
+export class GalaxyCard {
 
   constructor() { }
 

@@ -1,14 +1,16 @@
-<div class="container">
-  <div class="limiter">
+<div class="page-not-found center center-horizontal">
+  <div class="wrapper">
     <div class="left">
-      <img class="image" src="assets/images/not-found.svg" />
+      <img class="stretch" src="assets/images/not-found.svg" />
     </div>
 
     <div class="right">
-      <div class="title">404</div>
-      <div class="text">Looks like you're lost.</div>
-      <div class="text">Don't worry, we are here to rescue you!</div>
-      <button type="button" class="ripple" routerLink="/dashboard">HOME</button>
+      <div class="center center-verical stretch">
+        <div class="line-1">404</div>
+        <div class="line-2">Looks like you're lost.</div>
+        <div class="line-3">Don't worry, we are here to rescue you!</div>
+        <a type="button" class="home ripple" [routerLink]="['/dashboard']">HOME</a>
+      </div>
     </div>
   </div>
 </div>

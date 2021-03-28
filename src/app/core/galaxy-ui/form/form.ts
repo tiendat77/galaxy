@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'galaxy-toolbar',
-  templateUrl: 'toolbar.html',
-  styleUrls: ['toolbar.scss'],
+  selector: 'galaxy-form',
+  templateUrl: 'form.html',
+  styleUrls: ['form.scss'],
   host: {
-    'class': 'galaxy-toolbar'
+    'class': 'galaxy-form'
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalaxyToolbar {
+export class GalaxyForm {
 
   constructor() { }
 
