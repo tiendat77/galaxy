@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+.flex.center {
+  justify-content: center;
+}
+
 .flex.space-between {
   flex: 100%;
   max-width: 100%;

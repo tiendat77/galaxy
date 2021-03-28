@@ -2,6 +2,7 @@
   display: inline-block;
   position: relative;
   font-size: 16px;
+  width: 100%;
 
   label {
     border-color: #b3bbc1;
@@ -60,7 +61,14 @@
 
   input:focus ~ .galaxy-label {
     color: var(--color-green);
-    z-index: 2;
+    z-index: 0;
+    transition-delay: 0ms;
+    transform: translate(1px, -22px) scale(0.72);
+  }
+
+  input:not(:placeholder-shown) ~ .galaxy-label {
+    color: var(--color-green);
+    z-index: 0;
     transition-delay: 0ms;
     transform: translate(1px, -22px) scale(0.72);
   }
