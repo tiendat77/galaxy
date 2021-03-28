@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,7 +13,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 @NgModule({
   imports: [
     RouterModule,
-    TranslateModule,
     CommonModule,
     RouterModule,
     FormsModule,
