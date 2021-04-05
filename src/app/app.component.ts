@@ -9,7 +9,6 @@ import { TranslateService } from './core/services/translate.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'galaxy';
 
   constructor(
     private auth: AuthService,
@@ -22,9 +21,7 @@ export class AppComponent {
   init() {
     this.auth.init();
 
-    setTimeout(() => {
-      this.splash.set(false);
-    }, 1500);
+    setTimeout(() => this.splash.hide(), 1500);
   }
 
 }

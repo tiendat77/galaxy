@@ -124,6 +124,7 @@ export class AuthService {
     }
 
     this.authorized$.next(true);
+    return Promise.resolve(true);
   }
 
   login(username: string, password: string) {

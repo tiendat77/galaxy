@@ -14,4 +14,12 @@ export class SplashService {
     this.subject$.next(state);
   }
 
+  show() {
+    this.subject$.next(true);
+  }
+
+  hide() {
+    this.subject$.next(false);
+  }
+
 }
