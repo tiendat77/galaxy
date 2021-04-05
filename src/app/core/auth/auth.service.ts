@@ -86,8 +86,6 @@ export class AuthService {
   private isExpire() {
     const expiration = this.getExpiration();
 
-    console.log(expiration);
-
     if (!expiration) {
       return true;
     }
@@ -95,8 +93,6 @@ export class AuthService {
     try {
       const now = moment();
       const expire = moment.unix(expiration);
-
-      console.log(now, expire);
 
       if (now.isAfter(expire)) {
         return true;
@@ -128,7 +124,6 @@ export class AuthService {
     }
 
     this.authorized$.next(true);
-    return this.router.navigate(['/dashboard']);
   }
 
   login(username: string, password: string) {

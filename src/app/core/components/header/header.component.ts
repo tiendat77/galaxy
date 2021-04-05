@@ -11,12 +11,14 @@ import { MENU_ITEMS } from '../../../menu';
 export class HeaderComponent implements OnInit {
 
   menuItems = MENU_ITEMS;
+  user;
 
   constructor(
     private auth: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.user = this.auth.user$.value;
   }
 
 }
