@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './core/auth/auth.service';
+import { SplashService } from './core/services/splash.service';
 import { TranslateService } from './core/services/translate.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class AppComponent {
 
   constructor(
     private auth: AuthService,
+    private splash: SplashService,
     private translate: TranslateService
   ) {
     this.init();
@@ -19,6 +21,10 @@ export class AppComponent {
 
   init() {
     this.auth.init();
+
+    setTimeout(() => {
+      this.splash.set(false);
+    }, 1500);
   }
 
 }
