@@ -38,6 +38,7 @@
     "moment": "2.27.0",
     "moment-timezone": "0.5.31",
     "rxjs": "6.5.4",
+    "scrollmagic": "2.0.8",
     "tslib": "^1.10.0",
     "zone.js": "^0.10.2"
   },
