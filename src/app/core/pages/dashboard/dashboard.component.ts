@@ -1,7 +1,10 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 // https://scrollmagic.io/examples/basic/reveal_on_scroll.html
-import * as ScrollMagic from 'scrollmagic';
+import { ScrollMagic, Controller, Scene } from 'scrollmagic';
+
+// https://github.com/inorganik/CountUp.js
+import { CountUp } from 'countup.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,19 +20,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const controller = new ScrollMagic.Controller();
-    // build scenes
-    let revealElements = document.getElementsByClassName('digit');
-    for (let i = 0; i < revealElements.length; i++) { // create a scene for each element
-      const scene = new ScrollMagic.Scene({
-        triggerElement: revealElements[i], // y value not modified, so we can use element as trigger as well
-        offset: 50, // start a little later
-        triggerHook: 0.9,
-      })
-        .setClassToggle(revealElements[i], 'visible') // add class toggle
-        .addIndicators({ name: 'digit ' + (i + 1) }); // add indicators (requires plugin)
+    this.scrollMagic();
+    this.countUp();
+  }
 
-      controller.addScene(scene);
+  scrollMagic() {
+    const controller = new Controller();
+  }
+
+  countUp() {
+    let demo = new CountUp('myTargetElement', 6701);
+    if (!demo.error) {
+      demo.start();
+    } else {
+      console.error(demo.error);
     }
   }
 
