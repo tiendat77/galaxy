@@ -16,6 +16,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('scrollTrigger') scrollTrigger: ElementRef;
 
+  stats = [
+    { id: 'dashboardStats1', value: 6071 },
+    { id: 'dashboardStats2', value: 9600 },
+    { id: 'dashboardStats3', value: 115200 },
+    { id: 'dashboardStats4', value: 2000 },
+  ];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -45,25 +52,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   countUp() {
-    const stats1 = new CountUp('dashboardStats1', 6701);
-    if (stats1 && !stats1.error) {
-      stats1.start();
-    }
+    this.stats.forEach((stat) => {
+      const counter = new CountUp(stat.id, stat.value);
 
-    const stats2 = new CountUp('dashboardStats2', 1234);
-    if (stats2 && !stats2.error) {
-      stats2.start();
-    }
-
-    const stats3 = new CountUp('dashboardStats3', 9600);
-    if (stats3 && !stats3.error) {
-      stats3.start();
-    }
-
-    const stats4 = new CountUp('dashboardStats4', 115200);
-    if (stats4 && !stats4.error) {
-      stats4.start();
-    }
+      if (counter && !counter.error) {
+        counter.start();
+      }
+    });
   }
 
 }

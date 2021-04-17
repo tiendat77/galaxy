@@ -92,7 +92,64 @@
 
     <section class="section-5">
       <div class="container">
-        <div class="flex row space-between center">
+        <div class="row">
+          <div class="left">
+            <galaxy-terminal [height]="236">
+              <div class="about-me">
+                <p>
+                  <em>const&nbsp;</em>
+                  <span class="text-green">&nbsp;aboutMe&nbsp;</span>
+                  <span class="text-pink">&nbsp;=&nbsp;</span>
+                  <em>&nbsp;function&nbsp;</em>
+                  <span>()</span>
+                  <span>&nbsp;{{ '{' }}&nbsp;</span>
+                </p>
+                <p>
+                  <span>&nbsp;&nbsp;</span>
+                  <em class="text-pink">return&nbsp;</em>
+                  <span>&nbsp;{{ '{' }}&nbsp;</span>
+                </p>
+                <p>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span>name:&nbsp;&nbsp;</span>
+                  <span class="text-yellow">'Tiến Đạt Huỳnh'</span>,
+                </p>
+                <p>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span>position:&nbsp;&nbsp;</span>
+                  <span class="text-yellow">'Front-end Developer'</span>,
+                </p>
+                <p>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span>website:&nbsp;&nbsp;</span>
+                  <a class="text-yellow" href="https://galaxy-tiendat77.vercel.app/dashboard" target="_blank">
+                    'https://tiendathuynh.com'
+                  </a>,
+                </p>
+                <p>
+                  <span>&nbsp;&nbsp;{{ '}' }}</span>
+                </p>
+                <p>
+                  <span>{{ '}' }}</span>
+                </p>
+              </div>
+            </galaxy-terminal>
+          </div>
+
+          <div class="right flex center">
+            <div class="get-in-touch">
+              <h6>Get in touch</h6>
+              <h3>Let's start a Project! Hire Me.</h3>
+              <div class="flex row center">
+                <a href="#" galaxy-raised-button style="margin-right: 1.5rem;">
+                  Hire Me
+                </a>
+                <a href="#" galaxy-button>
+                  Get In Touch
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

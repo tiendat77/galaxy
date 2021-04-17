@@ -11,69 +11,100 @@
     flex: auto;
   }
 
-  section {
-    display: block;
-    padding: 50px 0;
-
-    .container {
-      width: 100%;
-      padding-right: 32px;
-      padding-left: 32px;
-      margin-right: auto;
-      margin-left: auto;
-
-      .row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        box-sizing: border-box;
-      }
-
-      .image {
-        text-align: center;
-        max-width: 50%;
-        flex: 0 0 50%;
-        padding: 0 14px;
-        box-sizing: border-box;
-      }
-
-      .content {
-        max-width: 50%;
-        flex: 0 0 50%;
-        padding: 0 14px;
-        box-sizing: border-box;
-      }
-
-      @media (max-width: 576px) {
-        .image, .content {
-          flex: 0 0 100%;
-          max-width: 100%;
-          margin-bottom: 24px;
-        }
-      }
-    }
-  }
-
   app-footer {
     box-sizing: border-box;
     width: 100%;
     margin: auto;
     padding: 32px;
   }
+}
 
-  @media (min-width: 1280px) {
-    section .container {
-      max-width: 1200px;
+$bg-light: #f3fbf8;
+
+section {
+  display: block;
+  padding: 50px 0;
+
+  .container {
+    width: 100%;
+    padding-right: 32px;
+    padding-left: 32px;
+    margin-right: auto;
+    margin-left: auto;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      box-sizing: border-box;
     }
 
-    app-footer {
-      max-width: 1200px;
+    .left, .right, .image, .content {
+      max-width: 50%;
+      flex: 0 0 50%;
+      padding: 0 14px;
+      box-sizing: border-box;
+    }
+
+    .image {
+      text-align: center;
+    }
+
+    @media (max-width: 576px) {
+      .left, .right, .image, .content {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin: 14px 0;
+      }
+    }
+  }
+
+  .about {
+    .title-small {
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+      font-weight: 500;
+      text-transform: uppercase;
+      line-height: 2em;
+      letter-spacing: 1px;
+      color: #8c89a2;
+    }
+
+    .title-big {
+      margin: 0;
+      padding: 0;
+      color: #78af9f;
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 48px;
+    }
+
+    .card {
+      border-radius: 10px;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+      font-size: 1.2em;
+      line-height: 28px;
+      color: #696969;
+      font-family: 'Jost', sans-serif;
     }
   }
 }
 
-$bg-light: #f3fbf8;
+@media (min-width: 1280px) {
+  section .container {
+    max-width: 1200px;
+  }
+
+  app-footer {
+    max-width: 1200px;
+  }
+}
 
 .section-1 {
   background-color: $bg-light;
@@ -97,47 +128,11 @@ $bg-light: #f3fbf8;
   }
 }
 
-.about {
-  .title-small {
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: uppercase;
-    line-height: 2em;
-    letter-spacing: 1px;
-    color: #8c89a2;
-  }
-
-  .title-big {
-    margin: 0;
-    padding: 0;
-    color: #78af9f;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
-  }
-
-  .card {
-    border-radius: 10px;
-  }
-
-  p {
-    margin: 0;
-    padding: 0;
-    font-size: 1.2em;
-    line-height: 28px;
-    color: #696969;
-    font-family: 'Jost', sans-serif;
-  }
-}
-
 .section-3 {
   background-color: $bg-light;
 }
 
 .section-4 {
-
   .grid {
     flex: 0 0 25%;
     max-width: 25%;
@@ -179,4 +174,62 @@ $bg-light: #f3fbf8;
 
 .section-5 {
   background-color: $bg-light;
+
+  .about-me {
+    p {
+      margin: 0;
+      white-space: nowrap;
+      line-height: 1.5;
+      letter-spacing: 0.1em;
+    }
+
+    em {
+      color: #63b3ed;
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--color-green);
+      }
+    }
+
+    .text-green {
+      color: #68d391;
+    }
+
+    .text-pink {
+      color: #ed64a6;
+    }
+
+    .text-yellow {
+      color: #faf089;
+    }
+  }
+
+  .get-in-touch {
+    text-align: center;
+
+    h6 {
+      font-size: 18px;
+      font-weight: 500;
+      text-transform: uppercase;
+      line-height: 2em;
+      letter-spacing: 1px;
+      color: #8c89a2;
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 48px;
+      color: #696969;
+      margin: 0;
+      margin-bottom: 2rem;
+    }
+  }
 }
