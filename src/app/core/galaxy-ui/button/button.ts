@@ -9,7 +9,9 @@ const BUTTON_HOST_ATTRIBUTES = [
 
 @Component({
   selector: `button[galaxy-button], button[galaxy-raised-button],
-             button[galaxy-stroked-button], button[galaxy-icon-button]`,
+             button[galaxy-stroked-button], button[galaxy-icon-button],
+             a[galaxy-button], a[galaxy-raised-button],
+             a[galaxy-stroked-button], a[galaxy-icon-button]`,
   template: '<ng-content></ng-content>',
   styleUrls: ['button.scss'],
   encapsulation: ViewEncapsulation.None,
