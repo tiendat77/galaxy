@@ -94,6 +94,10 @@ section {
       font-family: 'Jost', sans-serif;
     }
   }
+
+  &:nth-child(odd) {
+    background-color: $bg-light;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -106,8 +110,7 @@ section {
   }
 }
 
-.section-1 {
-  background-color: $bg-light;
+.galaxy-section {
   height: 500px;
   flex: auto;
 
@@ -128,11 +131,39 @@ section {
   }
 }
 
-.section-3 {
-  background-color: $bg-light;
+.quote-section {
+  .title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 2em;
+    letter-spacing: 1px;
+    color: #8c89a2;
+  }
+
+  .quote {
+    margin: 0;
+    padding: 0;
+    color: #78af9f;
+    font-size: 2em;
+    line-height: 2em;
+    font-weight: 400;
+  }
+
+  .author {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: end;
+    color: #8c89a2;
+    font-size: 1.3em;
+    font-weight: 500;
+    line-height: 2em;
+  }
 }
 
-.section-4 {
+.numbers-section {
   .grid {
     flex: 0 0 25%;
     max-width: 25%;
@@ -172,9 +203,7 @@ section {
   }
 }
 
-.section-5 {
-  background-color: $bg-light;
-
+.about-section {
   .about-me {
     p {
       margin: 0;
