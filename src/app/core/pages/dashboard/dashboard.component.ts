@@ -45,14 +45,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   countUp() {
-    const emoji1 = new CountUp('dashboardEmoji1', 6701);
-    if (emoji1 && !emoji1.error) {
-      emoji1.start();
+    const stats1 = new CountUp('dashboardStats1', 6701);
+    if (stats1 && !stats1.error) {
+      stats1.start();
     }
 
-    const emoji2 = new CountUp('dashboardEmoji2', 1234);
-    if (emoji2 && !emoji2.error) {
-      emoji2.start();
+    const stats2 = new CountUp('dashboardStats2', 1234);
+    if (stats2 && !stats2.error) {
+      stats2.start();
+    }
+
+    const stats3 = new CountUp('dashboardStats3', 9600);
+    if (stats3 && !stats3.error) {
+      stats3.start();
+    }
+
+    const stats4 = new CountUp('dashboardStats4', 115200);
+    if (stats4 && !stats4.error) {
+      stats4.start();
     }
   }
 

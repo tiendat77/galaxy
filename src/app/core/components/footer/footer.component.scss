@@ -10,14 +10,21 @@
   border-top: 1px solid #efefef;
   box-sizing: border-box;
 
+  .row {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+
   .left {
-    width: 50%;
-    margin-right: 32px;
+    flex: 0 0 50%;
+    max-width: 50%;
     box-sizing: border-box;
   }
 
   .right {
-    width: 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
     box-sizing: border-box;
 
     ul {
@@ -58,6 +65,19 @@
       &:hover {
         color: var(--color-green);
       }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .left, .right {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .left {
+      order: 1;
+      margin-top: 6px;
     }
   }
 }
