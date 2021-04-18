@@ -40,3 +40,21 @@
     background: #15bb5a;
   }
 }
+
+.galaxy-icon-button {
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  line-height: 40px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  outline: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

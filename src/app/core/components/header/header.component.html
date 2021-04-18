@@ -15,7 +15,17 @@
     </div>
 
     <div class="flex end stretch">
-      <galaxy-avatar [diameter]="40" [name]="user?.name" [source]="user?.avatar"></galaxy-avatar>
+      <galaxy-menu>
+        <galaxy-menu-trigger>
+          <galaxy-avatar [diameter]="40" [name]="user?.name" [source]="user?.avatar"></galaxy-avatar>
+        </galaxy-menu-trigger>
+
+        <galaxy-menu-content>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </galaxy-menu-content>
+      </galaxy-menu>
     </div>
   </nav>
 </galaxy-toolbar>
