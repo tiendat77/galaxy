@@ -1,0 +1,291 @@
+main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  .header {
+    flex: 1 1 100%;
+    max-height: 70px;
+    box-sizing: border-box;
+  }
+
+  .container {
+    overflow: hidden;
+    flex: 1 1 1e-09px;
+    box-sizing: border-box;
+
+    .scrollable {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: hidden auto;
+    }
+  }
+}
+
+.section {
+  width: 100%;
+  flex: auto;
+
+  $bg-light: #f3fbf8;
+
+  section {
+    display: block;
+    padding: 50px 0;
+
+    .section-container {
+      width: 100%;
+      padding-right: 32px;
+      padding-left: 32px;
+      margin-right: auto;
+      margin-left: auto;
+      box-sizing: border-box;
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+
+      .left, .right, .image, .content {
+        max-width: 50%;
+        flex: 0 0 50%;
+        padding: 0 14px;
+        box-sizing: border-box;
+      }
+
+      .image {
+        text-align: center;
+      }
+
+      @media (max-width: 576px) {
+        .left, .right, .image, .content {
+          flex: 0 0 100%;
+          max-width: 100%;
+          margin: 14px 0;
+        }
+      }
+    }
+
+    .about {
+      .title-small {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 2em;
+        letter-spacing: 1px;
+        color: #8c89a2;
+      }
+
+      .title-big {
+        margin: 0;
+        padding: 0;
+        color: #78af9f;
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 48px;
+      }
+
+      .card {
+        border-radius: 10px;
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 1.2em;
+        line-height: 28px;
+        color: #696969;
+        font-family: 'Jost', sans-serif;
+      }
+    }
+
+    &:nth-child(odd) {
+      background-color: $bg-light;
+    }
+  }
+
+  .galaxy-section {
+    flex: auto;
+    display: flex;
+    height: 500px;
+    align-items: center;
+
+    .logo {
+      width: auto;
+    }
+
+    .title {
+      color: #676767;
+      text-align: center;
+      font-size: 1.75em;
+      margin-top: 52px;
+      margin-bottom: 15px;
+      letter-spacing: 10px;
+      text-transform: uppercase;
+      font-variant: tabular-nums;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+  }
+
+  .quote-section {
+    .title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+      text-transform: uppercase;
+      line-height: 2em;
+      letter-spacing: 1px;
+      color: #8c89a2;
+    }
+
+    .quote {
+      margin: 0;
+      padding: 0;
+      color: #78af9f;
+      font-size: 2em;
+      line-height: 2em;
+      font-weight: 400;
+    }
+
+    .author {
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: end;
+      color: #8c89a2;
+      font-size: 1.3em;
+      font-weight: 500;
+      line-height: 2em;
+    }
+  }
+
+  .numbers-section {
+    .grid {
+      flex: 0 0 25%;
+      max-width: 25%;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 30px;
+      margin-bottom: 0;
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 50px;
+      color: var(--color-green);
+    }
+
+    h4 {
+      font-size: 20px;
+      line-height: 25px;
+      text-transform: capitalize;
+      color: #696969;
+      margin-top: 16px;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    svg {
+      width: 64px;
+      height: 64px;
+    }
+
+    @media (max-width: 576px) {
+      .grid {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  .about-section {
+    .about-me {
+      p {
+        margin: 0;
+        white-space: nowrap;
+        line-height: 1.5;
+        letter-spacing: 0.1em;
+      }
+
+      em {
+        color: #63b3ed;
+      }
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+          color: var(--color-green);
+        }
+      }
+
+      .text-green {
+        color: #68d391;
+      }
+
+      .text-pink {
+        color: #ed64a6;
+      }
+
+      .text-yellow {
+        color: #faf089;
+      }
+    }
+
+    .get-in-touch {
+      text-align: center;
+
+      h6 {
+        font-size: 18px;
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 2em;
+        letter-spacing: 1px;
+        color: #8c89a2;
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 48px;
+        color: #696969;
+        margin: 0;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+app-footer {
+  box-sizing: border-box;
+  width: 100%;
+  margin: auto;
+  padding: 32px;
+}
+
+@media (min-width: 1280px) {
+  section .section-container {
+    max-width: 1200px;
+  }
+
+  app-footer {
+    max-width: 1200px;
+  }
+}

@@ -116,11 +116,11 @@ export class AuthService {
     this.expiration = expiration;
 
     if (!token || !user || !expiration) {
-      return this.router.navigate(['/login']);
+      return Promise.resolve(false);
     }
 
     if (this.isExpire()) {
-      return this.router.navigate(['/login']);
+      return Promise.resolve(false);
     }
 
     this.authorized$.next(true);

@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ContentChild, Directive, ElementRef
 @Directive({
   selector: 'galaxy-menu-trigger',
   host: {
-    'style': 'display: inline-block;'
+    'class': 'galaxy-menu-trigger'
   }
 })
 export class GalaxyMenuTrigger {
@@ -29,9 +29,6 @@ export type MENU_TRIGGER_TYPE = 'click' | 'hover';
   selector: 'galaxy-menu',
   templateUrl: 'menu.html',
   styleUrls: ['menu.scss'],
-  host: {
-    'class': 'galaxy-menu'
-  },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

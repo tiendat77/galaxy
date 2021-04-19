@@ -1,32 +1,51 @@
-.galaxy-menu-wrapper {
-  position: relative;
-  color: red;
+:host {
+  display: inline-block;
 }
 
-.galaxy-menu-wrapper:hover {
+.galaxy-menu-wrapper {
+  overflow: hidden;
+  display: inline-flex;
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+
+  .galaxy-menu-trigger {
+    display: inline-block;
+  }
+
   .galaxy-menu-content {
-    display: block !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(#000, .1);
+    text-align: left;
+    transition: 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10;
+
+    .galaxy-menu-card {
+      overflow: auto;
+      font-family: inherit;
+      box-sizing: border-box;
+      padding: 16px;
+      border-radius: 8px;
+      max-width: 400px;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+    }
   }
 }
 
-.galaxy-menu-content {
-  z-index: 10;
-  display: none;
-  position: absolute;
-}
-
-.galaxy-menu-content.galaxy-menu-show {
-  display: block !important;
-}
-
-.galaxy-menu-content.galaxy-menu-card {
-  overflow: auto;
-  font-family: inherit;
-  box-sizing: border-box;
-  padding: 16px;
-  border-radius: 8px;
-  max-width: 400px;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+.galaxy-menu-wrapper {
+  &:hover, &:focus {
+    .galaxy-menu-content {
+      opacity: 1;
+      transform: translate(0, 20px);
+      visibility: visible;
+    }
+  }
 }

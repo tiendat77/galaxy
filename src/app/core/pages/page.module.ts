@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentModule } from '../components/component.module';
 import { GalaxyUIModule } from '../galaxy-ui/galaxy-ui.module';
 
-import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
@@ -18,16 +20,19 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    ComponentModule,
     GalaxyUIModule
   ],
   exports: [
-    LoginComponent,
+    AboutComponent,
     DashboardComponent,
+    LoginComponent,
     NotFoundComponent,
   ],
   declarations: [
-    LoginComponent,
+    AboutComponent,
     DashboardComponent,
+    LoginComponent,
     NotFoundComponent,
   ],
 })
