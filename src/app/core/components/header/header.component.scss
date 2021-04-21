@@ -41,3 +41,117 @@
     }
   }
 }
+
+.user-info-menu {
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    white-space: nowrap;
+
+    .user-image {
+      margin-bottom: 12px;
+    }
+
+    .user-name {
+      color: #202124;
+      font-size: 18px;
+      letter-spacing: 0.3px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .user-email {
+      color: #5f6368;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .manage {
+      background-color: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 100px;
+      color: #606365;
+      font-size: 14px;
+      max-width: 254px;
+      outline: 0;
+      padding: 8px 16px;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f7f8f8;
+      }
+    }
+  }
+
+  .settings {
+    margin: 12px 0;
+
+    ul>li {
+      border-radius: 10px;
+
+      a {
+        align-items: center;
+        box-sizing: border-box;
+        cursor: pointer;
+        color: #3c4043;
+        display: flex;
+        padding: 12px 6px;
+        outline: 0;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .icon {
+        border: none;
+        display: table-cell;
+        vertical-align: middle;
+        line-height: 24px;
+        height: 24px;
+        width: 24px;
+        padding: 0 8px;
+
+        svg {
+          width: 24px;
+          height: 24px;
+          fill: #3c4043;
+        }
+      }
+
+      &:hover {
+        background-color: #f7f8f8;
+
+        a {
+          color: var(--color-green);
+        }
+
+        .icon svg {
+          fill: var(--color-green);
+        }
+      }
+    }
+  }
+
+  .logout {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .hr {
+    border-top: 1px solid #e8eaed;
+  }
+}
