@@ -3,28 +3,24 @@
 }
 
 .galaxy-menu-wrapper {
-  overflow: hidden;
-  display: inline-flex;
-  cursor: pointer;
-  outline: 0;
-  border: 0;
+  position: relative;
+  display: inline-block;
 
   .galaxy-menu-trigger {
+    cursor: pointer;
     display: inline-block;
   }
 
   .galaxy-menu-content {
     position: absolute;
-    top: 100%;
-    left: 0;
     width: 100%;
+    min-width: 200px;
     border-radius: 4px;
     box-shadow: 0 4px 12px rgba(#000, .1);
-    text-align: left;
-    transition: 0.3s ease;
-    opacity: 0;
-    visibility: hidden;
+    background: #fff;
+    padding: 24px;
     z-index: 10;
+    display: none;
 
     .galaxy-menu-card {
       overflow: auto;
@@ -40,12 +36,49 @@
   }
 }
 
-.galaxy-menu-wrapper {
-  &:hover, &:focus {
-    .galaxy-menu-content {
-      opacity: 1;
-      transform: translate(0, 20px);
-      visibility: visible;
-    }
+.galaxy-menu-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: none;
+}
+
+.galaxy-menu-show {
+  .galaxy-menu-backdrop, .galaxy-menu-content {
+    display: block;
+  }
+}
+
+.galaxy-menu-top {
+  .galaxy-menu-content {
+    top: auto;
+    bottom: 100%;
+    transform: translate(0, -10px);
+  }
+}
+
+.galaxy-menu-bottom {
+  .galaxy-menu-content {
+    top: 100%;
+    bottom: auto;
+    transform: translate(0, 10px);
+  }
+}
+
+.galaxy-menu-left {
+  .galaxy-menu-content {
+    left: auto;
+    right: 0;
+  }
+}
+
+.galaxy-menu-right {
+  .galaxy-menu-content {
+    left: 0;
+    right: auto;
   }
 }
