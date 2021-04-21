@@ -43,10 +43,12 @@
 }
 
 .user-info-menu {
-  width: 300px;
+  width: 324px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  padding: 24px;
 
   .user {
     display: flex;
