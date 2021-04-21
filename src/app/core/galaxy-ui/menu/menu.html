@@ -1,5 +1,9 @@
 <div class="galaxy-menu-wrapper">
-  <ng-content select="galaxy-menu-trigger"></ng-content>
+  <div class="galaxy-menu-trigger" (click)="toggle($event)">
+    <ng-content select="galaxy-menu-trigger"></ng-content>
+  </div>
+
+  <div class="galaxy-menu-backdrop" (click)="backdrop($event)"></div>
 
   <div class="galaxy-menu-content galaxy-menu-card">
     <ng-content select="galaxy-menu-content"></ng-content>

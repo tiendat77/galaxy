@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, Directive, ElementRef, HostListener, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 
 @Directive({
   selector: 'galaxy-menu-trigger',
@@ -6,23 +6,15 @@ import { ChangeDetectionStrategy, Component, ContentChild, Directive, ElementRef
     'class': 'galaxy-menu-trigger'
   }
 })
-export class GalaxyMenuTrigger {
-
-  @HostListener('focus') onTrigger() {
-
-  }
-
-}
+export class GalaxyMenuTrigger { }
 
 @Directive({
-  selector: 'galaxy-menu-content',
-  host: {
-    'style': 'display: inline-block;'
-  }
+  selector: 'galaxy-menu-content'
 })
 export class GalaxyMenuContent { }
 
-export type MENU_POSITION = 'top' | 'bottom' | 'left' | 'right';
+export type MENU_POSITION_X = 'left' | 'right';
+export type MENU_POSITION_Y = 'top' | 'bottom';
 export type MENU_TRIGGER_TYPE = 'click' | 'hover';
 
 @Component({
@@ -34,14 +26,74 @@ export type MENU_TRIGGER_TYPE = 'click' | 'hover';
 })
 export class GalaxyMenu {
 
-  @Input() position: MENU_POSITION = 'bottom';
+  @Input() positionX: MENU_POSITION_X = 'left';
+  @Input() positionY: MENU_POSITION_Y = 'bottom';
   @Input() triggerBy: MENU_TRIGGER_TYPE = 'click';
 
-  @ContentChild(GalaxyMenuTrigger) menuTrigger;
-  @ContentChild(GalaxyMenuContent) menuContent;
+  isShow = false;
 
-  constructor(private elementRef: ElementRef) {
-    (elementRef.nativeElement as HTMLElement).classList.add(`galaxy-menu-${this.position}`);
+  constructor(public elementRef: ElementRef) {
+    if (this._hasHostAttributes('positionX')) {
+      this.positionX = this._getAttribute('positionX');
+    }
+    (elementRef.nativeElement as HTMLElement).classList.add(`galaxy-menu-${this.positionX}`);
+
+    if (this._hasHostAttributes('positionY')) {
+      this.positionY = this._getAttribute('positionY');
+    }
+    (elementRef.nativeElement as HTMLElement).classList.add(`galaxy-menu-${this.positionY}`);
+
+    if (this._hasHostAttributes('triggerBy')) {
+      this.triggerBy = this._getAttribute('triggerBy');
+    }
+  }
+
+  toggle(event) {
+    if (this.isShow) {
+      this._hide();
+      this.isShow = false;
+      return;
+    }
+
+    this._show();
+    this.isShow = true;
+  }
+
+  backdrop(event) {
+    if (!this.isShow) {
+      return;
+    }
+
+    this._hide();
+    this.isShow = false;
+  }
+
+  private _hasHostAttributes(...attributes: string[]) {
+    return attributes.some(attribute => this.elementRef.nativeElement.hasAttribute(attribute));
+  }
+
+  private _getAttribute(attribute: string) {
+    return this.elementRef.nativeElement.getAttribute(attribute);
+  }
+
+  private _show() {
+    const element = this.elementRef.nativeElement;
+
+    if (!element) {
+      return;
+    }
+
+    element.classList.add('galaxy-menu-show');
+  }
+
+  private _hide() {
+    const element = this.elementRef.nativeElement;
+
+    if (!element) {
+      return;
+    }
+
+    element.classList.remove('galaxy-menu-show');
   }
 
 }
