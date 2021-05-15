@@ -86,8 +86,6 @@ export class AuthService {
   private isExpire() {
     const expiration = this.getExpiration();
 
-    console.log(expiration);
-
     if (!expiration) {
       return true;
     }
@@ -95,8 +93,6 @@ export class AuthService {
     try {
       const now = moment();
       const expire = moment.unix(expiration);
-
-      console.log(now, expire);
 
       if (now.isAfter(expire)) {
         return true;
@@ -120,15 +116,15 @@ export class AuthService {
     this.expiration = expiration;
 
     if (!token || !user || !expiration) {
-      return this.router.navigate(['/login']);
+      return Promise.resolve(false);
     }
 
     if (this.isExpire()) {
-      return this.router.navigate(['/login']);
+      return Promise.resolve(false);
     }
 
     this.authorized$.next(true);
-    return this.router.navigate(['/dashboard']);
+    return Promise.resolve(true);
   }
 
   login(username: string, password: string) {

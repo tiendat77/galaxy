@@ -1,3 +1,4 @@
-<div class="galaxy-avatar-wrapper" [style.width.px]="diameter" [style.height.px]="diameter">
-  <img [src]="source">
+<div class="galaxy-avatar" [style.width.px]="diameter" [style.height.px]="diameter">
+  <img #avatarImg (error)="onError($event)" >
+  <div #avatarDiv class="galaxy-avatar-wrapper"></div>
 </div>

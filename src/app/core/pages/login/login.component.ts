@@ -5,7 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { AuthService } from '../../auth/auth.service';
+import { SplashService } from '@app/core/services/splash.service';
+import { AuthService } from '@app/core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
+    private splash: SplashService,
   ) { }
 
   ngOnInit(): void {
