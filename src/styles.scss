@@ -4,9 +4,6 @@
 @import './assets//style//material-theming.scss';
 @import './app/core/galaxy-ui/galaxy-ui.scss';
 
-html, body { height: 100%; overflow: hidden }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { overflow: hidden auto; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ul { margin: 0; padding: 0; list-style: none; }
