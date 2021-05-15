@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+/**
+ * @example
+ * <galaxy-spinner [diameter]="50"></galaxy-spinner>
+ */
+
 @Component({
   selector: 'galaxy-spinner',
   templateUrl: 'spinner.html',

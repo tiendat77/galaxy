@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
+/**
+ * @example
+ * <galaxy-toolbar>
+ *   <span>title<span>
+ * </galaxy-toolbar>
+ */
+
 @Component({
   selector: 'galaxy-toolbar',
   templateUrl: 'toolbar.html',

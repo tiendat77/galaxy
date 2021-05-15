@@ -1,5 +1,21 @@
 import { ChangeDetectionStrategy, Component, Directive, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 
+/**
+ * @example
+ * <galaxy-menu positionX="left">
+ *   <galaxy-menu-trigger>
+ *     <button>Open menu</button>
+ *   </galaxy-menu-trigger>
+ *
+ *   <galaxy-menu-content>
+ *     <ul>
+ *       <li>Home</li>
+ *       <li>About</li>
+ *     </ul>
+ *   <galaxy-menu-content>
+ * </galaxy-menu>
+ */
+
 @Directive({
   selector: 'galaxy-menu-trigger',
   host: {

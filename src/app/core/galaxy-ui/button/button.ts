@@ -7,6 +7,12 @@ const BUTTON_HOST_ATTRIBUTES = [
   'galaxy-icon-button'
 ];
 
+/**
+ * @example
+ * <button galaxy-button>Galaxy</button>
+ * <a galaxy-button>Galaxy</a>
+ */
+
 @Component({
   selector: `button[galaxy-button], button[galaxy-raised-button],
              button[galaxy-stroked-button], button[galaxy-icon-button],

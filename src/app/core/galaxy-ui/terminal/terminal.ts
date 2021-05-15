@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+/**
+ * @example
+ * <galaxy-terminal [height]="236">
+ *   <pre>$ hello world!</pre>
+ * </galaxy-terminal>
+ */
+
 @Component({
   selector: 'galaxy-terminal',
   templateUrl: 'terminal.html',

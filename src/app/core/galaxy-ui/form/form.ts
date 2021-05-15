@@ -1,5 +1,13 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
+/**
+ * @example
+ * <galaxy-form>
+ *   <galaxy-label>Your email?</galaxy-label>
+ *   <input name="email">
+ * </galaxy-form>
+ */
+
 @Component({
   selector: 'galaxy-form',
   templateUrl: 'form.html',

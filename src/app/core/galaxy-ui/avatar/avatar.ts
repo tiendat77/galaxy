@@ -2,6 +2,11 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, V
 import { nonaccent } from './non-accent';
 import { ColorMapping } from './color-mapping';
 
+/**
+ * @example
+ * <galaxy-avatar [source]="/assets/avatar.png" [diameter]="100"></galaxy-avatar>
+ */
+
 @Component({
   selector: 'galaxy-avatar',
   templateUrl: 'avatar.html',

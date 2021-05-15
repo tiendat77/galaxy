@@ -8,6 +8,7 @@ import { GalaxyMenuModule } from './menu';
 import { GalaxyNavigationModule } from './navigation';
 import { GalaxySpinnerModule } from './spinner';
 import { GalaxyToolbarModule } from './toolbar';
+import { GalaxyTooltipModule } from './tooltip';
 import { GalaxyTerminalModule } from './terminal';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { GalaxyTerminalModule } from './terminal';
     GalaxyNavigationModule,
     GalaxySpinnerModule,
     GalaxyToolbarModule,
+    GalaxyTooltipModule,
     GalaxyTerminalModule,
   ],
   exports: [
