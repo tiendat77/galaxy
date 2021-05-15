@@ -4,12 +4,13 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  overflow: hidden auto;
 }
 
 .galaxy-welcome {
-  height: 100%;
   width: 100%;
+  height: 100vh;
+  margin-top: -70px;
+  padding-top: 70px;
   box-sizing: border-box;
 
   .logo {
