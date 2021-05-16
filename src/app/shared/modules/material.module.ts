@@ -11,28 +11,37 @@ import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
+const MATERIAL_COMPONENTS = [
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatIconModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatProgressBarModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  ScrollingModule
+];
+
 @NgModule({
+  imports: [
+    ...MATERIAL_COMPONENTS
+  ],
   exports: [
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatIconModule,
-    MatListModule,
-    MatNativeDateModule,
-    MatProgressBarModule,
-    MatSidenavModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    ScrollingModule,
+    ...MATERIAL_COMPONENTS
   ]
 })
 export class MaterialModule { }

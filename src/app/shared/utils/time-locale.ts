@@ -9,7 +9,7 @@ export interface TimeLocaleDefinition {
   shortMonths: [string, string, string, string, string, string, string, string, string, string, string, string];
 }
 
-const viDefaultLocale: TimeLocaleDefinition = {
+export const viDefaultLocale: TimeLocaleDefinition = {
   dateTime: '%a %b %e %X %Y',
   date: '%m/%d/%Y',
   time: '%H:%M:%S',
@@ -20,7 +20,7 @@ const viDefaultLocale: TimeLocaleDefinition = {
   shortMonths: ['Thg 1', ' Thg 2', 'Thg 3', 'Thg 4', 'Thg 5', 'Thg 6', 'Thg 7', 'Thg 8', 'Thg 9', 'Thg 10', 'Thg 11', 'Thg 12']
 };
 
-const enDefaultLocale: TimeLocaleDefinition = {
+export const enDefaultLocale: TimeLocaleDefinition = {
   dateTime: '%a %b %e %X %Y',
   date: '%m/%d/%Y',
   time: '%H:%M:%S',
@@ -31,7 +31,7 @@ const enDefaultLocale: TimeLocaleDefinition = {
   shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 };
 
-const ruDefaultLocale: TimeLocaleDefinition = {
+export const ruDefaultLocale: TimeLocaleDefinition = {
   dateTime: '%A, %e %B %Y г. %X',
   date: '%d.%m.%Y',
   time: '%H:%M:%S',
@@ -42,4 +42,8 @@ const ruDefaultLocale: TimeLocaleDefinition = {
   shortMonths: ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']
 };
 
-export { viDefaultLocale, enDefaultLocale, ruDefaultLocale }
+export default {
+  viDefaultLocale,
+  enDefaultLocale,
+  ruDefaultLocale
+}

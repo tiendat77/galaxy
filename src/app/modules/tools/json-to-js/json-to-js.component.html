@@ -1,0 +1,58 @@
+<div class="container">
+  <h1 class="header">JSON to JS</h1>
+
+  <section>
+    <h3 class="sub-header">JSON data</h3>
+
+    <div class="flex column center">
+      <div class="content json">
+        <textarea class="input" placeholder="{ }" [(ngModel)]="input"></textarea>
+      </div>
+
+      <div class="content flex row end">
+        <!-- action here -->
+        <div class="nothing"></div>
+      </div>
+
+      <div class="content flex row center">
+        <div class="error">{{ error }}</div>
+      </div>
+
+      <div class="flex center">
+        <button class="button-convert" (click)="convert()">
+          Convert to JavaScript
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="output">
+    <h3 class="sub-header">JavaScript Object Literal</h3>
+
+    <div class="flex column center">
+      <div class="content js">
+        <textarea class="output" readonly>{{ output }}</textarea>
+      </div>
+
+      <div class="flex column center">
+        <input #outputRef class="hidden">
+        <button class="button-convert" (click)="copy()">
+          Copy
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 class="sub-header">How to use</h3>
+
+    <div class="flex column center">
+      <div class="content panel">
+        <ul class="list">
+          <li>Paste your JSON content in the JSON Data section or upload your JSON file by clicking on the "Upload json file" icon</li>
+          <li>Click on the "Convert to JavaScript" button and your JSON content will be converted to JavaScript Object Literal.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>

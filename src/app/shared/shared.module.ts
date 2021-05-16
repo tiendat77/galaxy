@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 
+import { CommonModule } from './modules/common.module';
+import { MaterialModule } from './modules/material.module';
+
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
+    CommonModule,
+    MaterialModule
   ],
   exports: [
+    CommonModule,
+    MaterialModule
   ],
-  providers: [
-  ]
+  providers: []
 })
 export class GalaxySharedModule { }

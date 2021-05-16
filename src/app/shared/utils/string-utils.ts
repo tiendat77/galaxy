@@ -1,4 +1,4 @@
-function unsigned(str) {
+export function unsigned(str) {
   str = str.toLowerCase();
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
   str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
@@ -10,7 +10,7 @@ function unsigned(str) {
   return str;
 }
 
-function serialize(obj: any, parent?: string): string {
+export function serialize(obj: any, parent?: string): string {
   if (typeof obj !== 'object') {
     return '';
   }
@@ -40,8 +40,8 @@ function serialize(obj: any, parent?: string): string {
   return stringify;
 }
 
-function isNull(value: any) {
+export function isNull(value: any) {
   return value === undefined || value === null || value.length === 0;
 }
 
-export { serialize, unsigned, isNull }
+export default { serialize, unsigned, isNull }
