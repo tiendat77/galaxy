@@ -1,6 +1,6 @@
 <galaxy-toolbar>
-  <nav class="navigation flex space-between">
-    <div class="flex start stretch">
+  <nav class="navigation flex row space-between">
+    <div class="flex row start align-center">
       <div class="menu">
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -14,7 +14,7 @@
       <galaxy-navigation [menu]="menuItems"></galaxy-navigation>
     </div>
 
-    <div class="flex end stretch">
+    <div class="flex row end align-center">
       <galaxy-menu positionX="left">
         <galaxy-menu-trigger>
           <galaxy-avatar [diameter]="40" [name]="user?.name" [source]="user?.avatar"></galaxy-avatar>

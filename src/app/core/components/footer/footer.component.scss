@@ -10,12 +10,6 @@
   border-top: 1px solid #efefef;
   box-sizing: border-box;
 
-  .row {
-    flex-wrap: wrap;
-    align-items: flex-start;
-    box-sizing: border-box;
-  }
-
   .left {
     flex: 0 0 50%;
     max-width: 50%;

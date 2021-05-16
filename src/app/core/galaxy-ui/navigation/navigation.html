@@ -1,5 +1,5 @@
 <nav class="flex">
-  <ul class="flex start stretch">
+  <ul class="flex row start align-center">
     <li class="nav-section" *ngFor="let item of menu$ | async">
       <div class="nav-title">
         <a [routerLink]="item.url">{{ item.name }}</a>
