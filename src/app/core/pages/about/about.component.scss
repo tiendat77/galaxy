@@ -10,9 +10,11 @@ main {
   width: 100%;
 
   .header {
+    top: 0;
     position: sticky;
     min-height: 70px;
-    top: 0;
+    background-color: var(--background-light);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 18%);
   }
 
   .navigation {
@@ -283,6 +285,11 @@ app-footer {
 
 @media (min-width: 1280px) {
   section .section-container {
+    max-width: 1200px;
+  }
+
+  galaxy-toolbar {
+    margin: auto;
     max-width: 1200px;
   }
 

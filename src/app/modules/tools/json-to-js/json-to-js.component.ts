@@ -71,7 +71,9 @@ export class JsonToJsComponent {
   private scrollToOutput() {
     setTimeout(() => {
       const element = this.outputRef.nativeElement;
-      element?.scrollIntoView();
+      element?.scrollIntoView({
+        behavior: 'smooth'
+      });
     }, 250);
   }
 

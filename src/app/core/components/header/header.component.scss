@@ -157,3 +157,10 @@
     border-top: 1px solid #e8eaed;
   }
 }
+
+@media (min-width: 1280px) {
+  galaxy-toolbar {
+    margin: auto;
+    max-width: 1200px;
+  }
+}

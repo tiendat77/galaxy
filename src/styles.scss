@@ -5,5 +5,9 @@
 @import './app/core/galaxy-ui/galaxy-ui.scss';
 
 html { height: 100%; }
-body { overflow: hidden auto; margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-ul { margin: 0; padding: 0; list-style: none; }
+body {
+  margin: 0;
+  overflow: hidden auto;
+  scroll-behavior: smooth;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
