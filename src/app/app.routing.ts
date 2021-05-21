@@ -10,7 +10,6 @@ import { LoginComponent } from './core/pages/login/login.component';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 
 const authorizedModules = [
-  { path: 'galaxy', loadChildren: () => import('./modules/galaxy/galaxy.module').then(m => m.GalaxyModule) },
   { path: 'tools', loadChildren: () => import('./modules/tools/tools.module').then(m => m.ToolsModule) },
   { path: 'task-mgmt', loadChildren: () => import('./modules/task/task.module').then(m => m.TaskModule) },
   { path: 'hr-mgmt', loadChildren: () => import('./modules/human-resource/human-resource.module').then(m => m.HumanResourceModule) },
@@ -27,6 +26,10 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       ...authorizedModules
     ],
+  },
+  {
+    path: 'galaxy',
+    loadChildren: () => import('./modules/galaxy/galaxy.module').then(m => m.GalaxyModule)
   },
   { path: 'test', component: TestComponent },
   { path: 'about', component: AboutComponent },

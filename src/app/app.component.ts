@@ -21,12 +21,6 @@ export class AppComponent {
   }
 
   init() {
-    this.auth.init().then((authorized) => {
-      if (!authorized) {
-        return this.router.navigate(['/about']);
-      }
-    });
-
     setTimeout(() => this.splash.hide(), 1000);
   }
 

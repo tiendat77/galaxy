@@ -17,6 +17,7 @@ main {
   align-items: center;
   box-sizing: border-box;
   position: relative;
+  max-width: 1200px;
 }
 
 .content {
@@ -114,8 +115,6 @@ main {
     padding: 24px;
     min-width: 450px;
     min-height: 500px;
-    height: 90%;
-    width: 90%;
     border-radius: 4px;
     background-color: #fff;
     box-shadow: rgb(53 53 53 / 30%) 0px 1px 4px 0px;
