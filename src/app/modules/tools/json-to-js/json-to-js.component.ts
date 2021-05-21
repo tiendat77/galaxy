@@ -12,11 +12,7 @@ export class JsonToJsComponent {
 
   @ViewChild('outputRef', { static: false }) private outputRef: ElementRef;
 
-  input = `{
-    "sender":{
-      "id":"USER_ID"
-    }
-  }`;
+  input = `{\n  "sender": {\n    "id": "USER_ID"\n  }\n}`;
   output = '';
   error = '';
 

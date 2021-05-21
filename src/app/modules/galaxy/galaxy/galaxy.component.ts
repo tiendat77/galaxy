@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
+/** Services */
 import { GalaxyService } from './galaxy.service';
 
 @Component({

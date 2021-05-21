@@ -21,6 +21,11 @@ export class AppComponent {
   }
 
   init() {
+    const path = window.location.pathname;
+    this.auth.init().then((authorized) => {
+      this.router.navigateByUrl(path);
+    });
+
     setTimeout(() => this.splash.hide(), 1000);
   }
 

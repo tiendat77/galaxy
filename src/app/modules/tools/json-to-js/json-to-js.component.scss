@@ -33,9 +33,13 @@
     font-size: 14px;
     color: #6c757d;
     letter-spacing: 1px;
-    border-radius: 5px;
+    border-radius: 6px;
     box-sizing: border-box;
     border: 1px solid #dadce0;
+
+    &:focus {
+      outline: 1px auto rgba(63, 183, 89, 0.4);
+    }
   }
 
   .error {
