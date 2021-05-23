@@ -2,8 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GalaxyRoutingModule } from './galaxy-routing.module';
-import { GalaxyService } from './galaxy/galaxy.service';
+import { GalaxySharedModule } from '../../shared/shared.module';
+import { GalaxyUIModule } from '../../core/galaxy-ui/galaxy-ui.module';
+
+/** Components */
 import { GalaxyComponent } from './galaxy/galaxy.component';
+
+/** Services */
+import { GalaxyService } from './galaxy/galaxy.service';
 
 
 @NgModule({
@@ -12,6 +18,8 @@ import { GalaxyComponent } from './galaxy/galaxy.component';
   ],
   imports: [
     CommonModule,
+    GalaxyUIModule,
+    GalaxySharedModule,
     GalaxyRoutingModule
   ],
   providers: [
