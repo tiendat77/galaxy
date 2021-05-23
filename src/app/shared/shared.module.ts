@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 
 /** Modules */
-import { CommonModule } from './modules/common.module';
+import { CommonsModule } from './modules/common.module';
 import { MaterialModule } from './modules/material.module';
 
 /** Components */
 import { AirQualityIndexComponent } from './components/air-quality-index/air-quality-index.component';
+
+/** Services */
+import { RequestService } from './services/request.service';
 
 const COMPONENTS = [
   AirQualityIndexComponent
@@ -16,14 +19,16 @@ const COMPONENTS = [
     ...COMPONENTS
   ],
   imports: [
-    CommonModule,
+    CommonsModule,
     MaterialModule
   ],
   exports: [
-    CommonModule,
+    CommonsModule,
     MaterialModule,
     ...COMPONENTS
   ],
-  providers: []
+  providers: [
+    RequestService
+  ]
 })
 export class GalaxySharedModule { }
