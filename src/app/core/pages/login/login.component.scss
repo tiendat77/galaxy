@@ -99,6 +99,14 @@ main {
       background-position: right;
     }
   }
+
+  .links {
+    margin-top: 2rem;
+
+    a { color: #bdbdbd; }
+    a:hover { color: var(--color-green); }
+    a:not(:last-child) { margin-right: 2rem; }
+  }
 }
 
 .overlay {
@@ -112,6 +120,7 @@ main {
 
 @media (min-width: 600px) {
   main {
+    margin: 24px;
     padding: 24px;
     min-width: 450px;
     min-height: 500px;
