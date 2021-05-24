@@ -1,4 +1,4 @@
-export const AQI_API_URL = 'http://api.airvisual.com/v2/nearest_city';
+export const AQI_API_URL = 'https://api.airvisual.com/v2/nearest_city';
 export const AQI_API_KEY = '7a56fc95-682e-44f0-8916-76b32400b3ae';
 
 export interface IAQI {
