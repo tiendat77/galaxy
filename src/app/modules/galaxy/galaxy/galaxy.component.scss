@@ -42,6 +42,23 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+
+  .flex-item {
+    padding: 1rem;
+    flex: 1 1 100%;
+    max-width: 50%;
+    box-sizing: border-box;
+  }
+
+  .flex-item > div {
+    height: 100%;
+  }
+}
+
 .galaxy-container {
   font-size: 1rem;
   font-weight: 400;
@@ -64,6 +81,78 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 999;
     max-width: 16rem;
     margin: 1rem 0 1rem 1rem;
+
+    hr.horizontal {
+      opacity: .25;
+      border: 0;
+      margin: 1rem 0;
+      background-color: transparent;
+      background-image: linear-gradient(90deg,transparent,rgba(0,0,0,.4),transparent);
+
+      &:not([size]) {
+        height: 1px;
+      }
+    }
+
+    .sidenav-header {
+      .brand {
+        cursor: pointer;
+        display: block;
+        padding: 1.5rem 2rem;
+      }
+
+      .brand-name {
+        color: #252f40;
+        font-weight: 600;
+        margin-left: 0.25rem;
+      }
+    }
+
+    .sidenav-main {
+      overflow: auto;
+
+      .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+
+        .nav-item {
+          width: 100%;
+          margin-top: 0.125rem;
+        }
+
+        .nav-link {
+          font-weight: 500;
+          color: #67748e;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          white-space: nowrap;
+          margin: 0 1rem;
+          padding: .675rem 1rem;
+        }
+
+        .nav-link.active {
+          color: #252f40;
+          font-weight: 600;
+          border-radius: .5rem;
+          background-color: #fff;
+          box-shadow: 0 20px 26px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .icon {
+          width: 32px;
+          height: 32px;
+          display: inline-block;
+        }
+      }
+    }
+
+    .sidenav-footer {
+
+    }
   }
 
   .main-content {
@@ -100,6 +189,13 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
 }
+
+@media (max-width: 680px) {
+  .flex-container .flex-item {
+    max-width: 100%;
+  }
+}
+
 
 @media (min-width: 1200px) {
   .main-content {
