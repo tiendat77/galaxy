@@ -42,8 +42,8 @@ export const AQI_MAP: IAQI_MAP = {
     background: '#fdd64b',
     backgroundDark: '#efbe1d'
   },
-  'light_unhealthy': {
-    level: 'light_unhealthy',
+  'lite_unhealthy': {
+    level: 'lite_unhealthy',
     description: 'Unhealthy for Sensitive Groups',
     face: 'https://www.iqair.com/assets/aqi/ic-face-orange.svg',
     color: '#974a20',
@@ -66,4 +66,38 @@ export const AQI_MAP: IAQI_MAP = {
     background: '#a87383',
     backgroundDark: '#915c6c'
   },
+};
+
+export const MOCK = {
+  status: 'success',
+  data: {
+    city: 'Mukdahan',
+    state: 'Mukdahan',
+    country: 'Thailand',
+    location: {
+      type: 'Point',
+      coordinates: [
+        104.72351,
+        16.54531
+      ]
+    },
+    current: {
+      weather: {
+        ts: '2021-05-27T12:00:00.000Z',
+        tp: 30,
+        pr: 1005,
+        hu: 66,
+        ws: 1.03,
+        wd: 40,
+        ic: '03n'
+      },
+      pollution: {
+        ts: '2021-05-27T13:00:00.000Z',
+        aqius: 41,
+        mainus: 'p2',
+        aqicn: 14,
+        maincn: 'p2'
+      }
+    }
+  }
 };

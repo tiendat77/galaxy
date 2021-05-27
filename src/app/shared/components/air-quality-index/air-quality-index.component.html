@@ -3,7 +3,8 @@
     <div class="city row">
       <span>{{ current.city }} <small class="time">{{ current.time }}</small></span>
     </div>
-    <div class="aqi-wrapper fill row" [ngClass]="current.level">
+
+    <div class="aqi-wrapper row" [ngClass]="current.level">
       <div class="face block-25 center">
         <div class="icon-face"></div>
       </div>
