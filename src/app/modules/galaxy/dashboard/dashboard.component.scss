@@ -1,0 +1,33 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+
+  .flex-item {
+    padding: 1rem;
+    flex: 1 1 100%;
+    max-width: 50%;
+    box-sizing: border-box;
+  }
+
+  .flex-item > div {
+    height: 100%;
+  }
+}
+
+.galaxy-card {
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
+  position: relative;
+  word-wrap: break-word;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #fff;
+  background-clip: border-box;
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+
+  .card-col {
+    padding: 0 0.5rem;
+  }
+}

@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      // { path: '', pathMatch: 'full', redirectTo: '/galaxy/dashboard' },
+      { path: '', pathMatch: 'full', redirectTo: '/galaxy/dashboard' },
       { path: 'dashboard', component: DashboardComponent },
       { path: ':id', component: GalaxyComponent }
     ]

@@ -25,40 +25,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.galaxy-card {
-  display: flex;
-  padding: 1rem;
-  border-radius: 1rem;
-  position: relative;
-  word-wrap: break-word;
-  flex-direction: column;
-  box-sizing: border-box;
-  background-color: #fff;
-  background-clip: border-box;
-  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
-
-  .card-col {
-    padding: 0 0.5rem;
-  }
-}
-
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-
-  .flex-item {
-    padding: 1rem;
-    flex: 1 1 100%;
-    max-width: 50%;
-    box-sizing: border-box;
-  }
-
-  .flex-item > div {
-    height: 100%;
-  }
-}
-
 .galaxy-container {
   font-size: 1rem;
   font-weight: 400;
@@ -115,6 +81,7 @@ h1, h2, h3, h4, h5, h6 {
         display: flex;
         flex-direction: column;
         padding-left: 0;
+        padding-bottom: 2rem;
         margin-bottom: 0;
         list-style: none;
 
@@ -134,7 +101,7 @@ h1, h2, h3, h4, h5, h6 {
           padding: .675rem 1rem;
         }
 
-        .nav-link.active {
+        .nav-item.active .nav-link {
           color: #252f40;
           font-weight: 600;
           border-radius: .5rem;
