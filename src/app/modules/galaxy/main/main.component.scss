@@ -3,6 +3,156 @@ h1, h2, h3, h4, h5, h6 {
   color: #252f40;
 }
 
+.galaxy-container {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #67748e;
+  min-height: 100vh;
+  min-width: 525px;
+  background-color: #f8f9fa;
+  font-family: 'Open Sans', sans-serif;
+
+  .sidenav, .main-content {
+    border-radius: 1rem;
+    transition: all .2s ease-in-out;
+  }
+
+  .sidenav {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    position: fixed;
+  }
+
+  .sidenav-pinned {
+    background-color: #fff;
+    transform: translateX(0) !important;
+    box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+.sidenav {
+  width: 100%;
+  max-width: 16rem;
+  margin: 1rem 0 1rem 1rem;
+
+  hr.horizontal {
+    opacity: .25;
+    border: 0;
+    margin: 1rem 0;
+    background-color: transparent;
+    background-image: linear-gradient(90deg,transparent,rgba(0,0,0,.4),transparent);
+
+    &:not([size]) {
+      height: 1px;
+    }
+  }
+
+  .sidenav-header {
+    .brand {
+      cursor: pointer;
+      display: block;
+      padding: 1.5rem 2rem;
+    }
+
+    .brand-name {
+      color: #252f40;
+      font-weight: 600;
+      margin-left: 0.25rem;
+    }
+  }
+
+  .sidenav-main {
+    overflow: auto;
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      padding-bottom: 2rem;
+      margin-bottom: 0;
+      list-style: none;
+
+      .nav-item {
+        width: 100%;
+        margin-top: 0.125rem;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #67748e;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        margin: 0 1rem;
+        padding: .675rem 1rem;
+      }
+
+      .nav-item.active .nav-link {
+        color: #252f40;
+        font-weight: 600;
+        border-radius: .5rem;
+        background-color: #fff;
+        box-shadow: 0 20px 26px 0 rgba(0, 0, 0, 0.05);
+      }
+
+      .icon {
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.sidenav-pinned {
+  .sidenav-main {
+    .navbar-nav .nav-item.active .nav-link {
+      box-shadow: none;
+    }
+  }
+}
+
+.main-content {
+  .container-fluid {
+    padding: 1.5rem;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-bar {
+    min-height: 70px;
+    padding: 0.5rem 0;
+    margin: 0 1.5rem;
+    border-radius: 1rem;
+    transition: box-shadow 0.25s ease-in, background-color 0.25s ease-in;
+
+    .nav-container {
+      width: 100%;
+      flex: 1 1 100%;
+      padding: 0.25rem 1rem;
+
+      h6 {
+        font-size: 1rem;
+        line-height: 1.625;
+      }
+    }
+  }
+
+  .nav-bar-sticky {
+    top: 1rem;
+    z-index: 900;
+    position: sticky;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: saturate(200%) blur(30px);
+    box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.9), 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
 [icon] {
   width: 40px;
   height: 40px;
@@ -25,157 +175,32 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.galaxy-container {
-  font-size: 1rem;
-  font-weight: 400;
-  color: #67748e;
-  min-height: 100vh;
-  min-width: 525px;
-  background-color: #f8f9fa;
-  font-family: 'Open Sans', sans-serif;
-
-  .sidenav, .main-content {
-    border-radius: 1rem;
-    transition: all .2s ease-in-out;
-  }
-
-  .sidenav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 999;
-    max-width: 16rem;
-    margin: 1rem 0 1rem 1rem;
-
-    hr.horizontal {
-      opacity: .25;
-      border: 0;
-      margin: 1rem 0;
-      background-color: transparent;
-      background-image: linear-gradient(90deg,transparent,rgba(0,0,0,.4),transparent);
-
-      &:not([size]) {
-        height: 1px;
-      }
-    }
-
-    .sidenav-header {
-      .brand {
-        cursor: pointer;
-        display: block;
-        padding: 1.5rem 2rem;
-      }
-
-      .brand-name {
-        color: #252f40;
-        font-weight: 600;
-        margin-left: 0.25rem;
-      }
-    }
-
-    .sidenav-main {
-      overflow: auto;
-
-      .navbar-nav {
-        display: flex;
-        flex-direction: column;
-        padding-left: 0;
-        padding-bottom: 2rem;
-        margin-bottom: 0;
-        list-style: none;
-
-        .nav-item {
-          width: 100%;
-          margin-top: 0.125rem;
-        }
-
-        .nav-link {
-          font-weight: 500;
-          color: #67748e;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          white-space: nowrap;
-          margin: 0 1rem;
-          padding: .675rem 1rem;
-        }
-
-        .nav-item.active .nav-link {
-          color: #252f40;
-          font-weight: 600;
-          border-radius: .5rem;
-          background-color: #fff;
-          box-shadow: 0 20px 26px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        .icon {
-          width: 32px;
-          height: 32px;
-          display: inline-block;
-        }
-      }
-    }
-
-    .sidenav-footer {
-    }
-  }
-
-  .main-content {
-    .nav-bar {
-      min-height: 70px;
-      padding: 0.5rem 0;
-      margin: 0 1.5rem;
-      border-radius: 1rem;
-      transition: box-shadow 0.25s ease-in, background-color 0.25s ease-in;
-
-      .nav-container {
-        width: 100%;
-        flex: 1 1 100%;
-        padding: 0.25rem 1rem;
-
-        h6 {
-          font-size: 1rem;
-          line-height: 1.625;
-        }
-      }
-    }
-
-    .nav-bar-sticky {
-      top: 1rem;
-      z-index: 900;
-      position: sticky;
-      background-color: rgba(255, 255, 255, 0.8);
-      backdrop-filter: saturate(200%) blur(30px);
-      box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.9), 0 20px 27px 0 rgba(0, 0, 0, 0.05);
-    }
-
-    .container-fluid {
-      padding: 1.5rem;
-    }
-  }
-}
-
 @media (max-width: 680px) {
   .flex-container .flex-item {
     max-width: 100%;
   }
 }
 
+@media (max-width: 1199.98px) {
+  .galaxy-container {
+    .sidenav {
+      transform: translateX(-17.125rem);
+    }
 
-@media (min-width: 1200px) {
-  .main-content {
-    margin-left: 17rem;
+    .main-content {
+      margin-left: 0;
+
+      .menu-toggle {
+        display: inline-block;
+      }
+    }
   }
 }
 
-@media (max-width: 1199.98px) {
-  .sidenav {
-    transform: translateX(-17.125rem);
-  }
-
-  .main-content {
-    margin-left: 0;
+@media (min-width: 1200px) {
+  .galaxy-container {
+    .main-content {
+      margin-left: 17rem;
+    }
   }
 }

@@ -27,6 +27,8 @@ export class MainComponent implements OnInit, OnDestroy {
   public moduleLink: string;
   public moduleName: string;
 
+  public isSidenavPinned: boolean;
+
   /** RxJs */
   private subscription: Subscription;
 
@@ -47,6 +49,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private initialize() {
+    this.isSidenavPinned = false;
     this.modules = GALAXY_MODULES;
     this.subscription = new Subscription();
   }
@@ -87,6 +90,10 @@ export class MainComponent implements OnInit, OnDestroy {
     } else {
       navbar.classList.remove('nav-bar-sticky');
     }
+  }
+
+  public toggleSidenav(event?) {
+    this.isSidenavPinned = !this.isSidenavPinned;
   }
 
   public selectModule(module: GalaxyMenuItem) {
