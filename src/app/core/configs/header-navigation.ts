@@ -1,6 +1,6 @@
-import { NavigationItem } from './core/interfaces/navigation-item';
+import { NavigationItem } from '../interfaces/navigation-item';
 
-export const MENU_ITEMS: NavigationItem[] = [
+export const GALAXY_HEADER_MENU: NavigationItem[] = [
   {
     name: 'Galaxy',
     url: '/galaxy'

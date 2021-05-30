@@ -1,7 +1,7 @@
 export interface GalaxyMenuItem {
-  icon: string;
   link: string;
   name: string;
+  icon?: string;
 };
 
 export const GALAXY_MODULES: GalaxyMenuItem[] = [
