@@ -23,12 +23,12 @@ export class MainComponent implements OnInit, OnDestroy {
   /** ElementRef */
   @ViewChild('navbar') private navbarRef: ElementRef;
 
-  public modules: Array<any> = GALAXY_MODULES;
+  public modules: Array<any>;
   public moduleLink: string;
   public moduleName: string;
 
   /** RxJs */
-  private subscription: Subscription = new Subscription();
+  private subscription: Subscription;
 
   constructor(
     private router: Router,
@@ -38,6 +38,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initialize();
+    this.handleUrlParam();
+    this.initScrollSubscription();
   }
 
   ngOnDestroy() {
@@ -45,12 +47,15 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private initialize() {
+    this.modules = GALAXY_MODULES;
+    this.subscription = new Subscription();
+  }
+
+  private initScrollSubscription() {
     const scrollSub = fromEvent(window, 'scroll').subscribe((event) => {
       this.onScroll(event);
     });
     this.subscription.add(scrollSub);
-
-    this.handleUrlParam();
   }
 
   private handleUrlParam() {

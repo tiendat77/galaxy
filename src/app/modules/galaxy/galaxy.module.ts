@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
+import { CoreModule } from './../../core/core.module';
 import { GalaxyRoutingModule } from './galaxy-routing.module';
 import { GalaxySharedModule } from '../../shared/shared.module';
 import { GalaxyUIModule } from '../../core/galaxy-ui/galaxy-ui.module';
@@ -20,8 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DashboardComponent
   ],
   imports: [
-    CommonModule,
-    RouterModule,
+    CoreModule,
     GalaxyUIModule,
     GalaxySharedModule,
     GalaxyRoutingModule

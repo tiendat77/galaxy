@@ -71,7 +71,7 @@ main {
         text-align: center;
       }
 
-      @media (max-width: 576px) {
+      @media (max-width: 990px) {
         .left, .right, .image, .content {
           flex: 0 0 100%;
           max-width: 100%;
@@ -206,7 +206,7 @@ main {
       height: 64px;
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 990px) {
       .grid {
         flex: 0 0 50%;
         max-width: 50%;
@@ -277,23 +277,24 @@ main {
 }
 
 app-footer {
-  box-sizing: border-box;
   width: 100%;
   margin: auto;
   padding: 32px;
+  box-sizing: border-box;
+  border-top: 1px solid #e9ecef;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1200px) {
   section .section-container {
-    max-width: 1200px;
+    max-width: var(--max-width);
   }
 
   galaxy-toolbar {
     margin: auto;
-    max-width: 1200px;
+    max-width: var(--max-width);
   }
 
   app-footer {
-    max-width: 1200px;
+    max-width: var(--max-width);
   }
 }
