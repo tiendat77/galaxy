@@ -1,0 +1,75 @@
+
+:host {
+  display: inline-block;
+}
+
+.covid-tracker {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  box-sizing: border-box;
+
+  .main-tracker {
+    padding: 1rem;
+    display: flex;
+    flex: 0 0 100%;
+    max-width: 33.33333%;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+
+    .tracker-icon {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+    }
+
+    .counter {
+      color: #67748e;
+
+      h2 {
+        font-size: 1.8rem;
+        margin-top: 0;
+        margin-bottom: 0.625rem;
+      }
+
+      p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .confirmed {
+    color: #fb542b;
+  }
+
+  .recovered {
+    color: #28a745;
+  }
+
+  .deaths {
+    color: #282f36;
+  }
+}
+
+.icon {
+  width: 58px;
+  height: 58px;
+  line-height: 58px;
+  display: inline-block;
+
+  svg {
+    width: auto;
+    height: 100%;
+  }
+}
+
+@media (max-width: 999px) {
+  .covid-tracker .main-tracker {
+    max-width: 100%;
+  }
+}

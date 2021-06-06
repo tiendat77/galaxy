@@ -6,13 +6,15 @@ import { MaterialModule } from './modules/material.module';
 
 /** Components */
 import { AirQualityIndexComponent } from './components/air-quality-index/air-quality-index.component';
+import { CovidTrackerComponent } from './components/covid-tracker/covid-tracker.component';
+
+const COMPONENTS = [
+  AirQualityIndexComponent,
+  CovidTrackerComponent
+];
 
 /** Services */
 import { RequestService } from './services/request.service';
-
-const COMPONENTS = [
-  AirQualityIndexComponent
-];
 
 @NgModule({
   declarations: [
