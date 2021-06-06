@@ -18,12 +18,13 @@ export class AirQualityIndexComponent implements AfterViewInit {
   constructor(private request: RequestService) { }
 
   ngAfterViewInit() {
-    this.getAQI();
+    this.getAQI().then((data) => {
+      this.current$.next(data);
+    });
   }
 
   private getAQI() {
-    this.current$.next(null);
-
+    // return of(MOCK).pipe(
     return this.request.get(`${AQI_API_URL}?key=${AQI_API_KEY}`).pipe(
       map((res: any) => {
         const data = res && res.data ? res.data : null;
@@ -56,9 +57,8 @@ export class AirQualityIndexComponent implements AfterViewInit {
           description: level.description,
           face: level.face,
           level: level.level
-        }
+        };
 
-        this.current$.next(cityData);
         return cityData;
       }),
       catchError((error: any) => {
@@ -127,7 +127,7 @@ export class AirQualityIndexComponent implements AfterViewInit {
         break;
       }
       case (aqi < 151): {
-        level = 'light_unhealthy';
+        level = 'lite';
         break;
       }
       case (aqi < 201): {

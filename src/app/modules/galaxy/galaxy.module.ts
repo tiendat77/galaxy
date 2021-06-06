@@ -1,29 +1,29 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
+import { CoreModule } from './../../core/core.module';
 import { GalaxyRoutingModule } from './galaxy-routing.module';
 import { GalaxySharedModule } from '../../shared/shared.module';
 import { GalaxyUIModule } from '../../core/galaxy-ui/galaxy-ui.module';
 
 /** Components */
+import { MainComponent } from './main/main.component';
 import { GalaxyComponent } from './galaxy/galaxy.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 /** Services */
-import { GalaxyService } from './galaxy/galaxy.service';
-
 
 @NgModule({
   declarations: [
-    GalaxyComponent
+    MainComponent,
+    GalaxyComponent,
+    DashboardComponent
   ],
   imports: [
-    CommonModule,
+    CoreModule,
     GalaxyUIModule,
     GalaxySharedModule,
     GalaxyRoutingModule
   ],
-  providers: [
-    GalaxyService
-  ]
+  providers: []
 })
 export class GalaxyModule { }

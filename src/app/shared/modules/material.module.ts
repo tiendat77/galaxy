@@ -37,9 +37,6 @@ const MATERIAL_COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    ...MATERIAL_COMPONENTS
-  ],
   exports: [
     ...MATERIAL_COMPONENTS
   ]

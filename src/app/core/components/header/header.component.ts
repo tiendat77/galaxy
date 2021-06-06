@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../auth/auth.service';
-import { MENU_ITEMS } from '../../../menu';
+import { NavigationItem } from '../../interfaces/navigation-item';
+import { GALAXY_HEADER_MENU } from '../../configs/header-navigation';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { MENU_ITEMS } from '../../../menu';
 })
 export class HeaderComponent implements OnInit {
 
-  menuItems = MENU_ITEMS;
+  menuItems: NavigationItem[];
   user;
 
   constructor(
@@ -18,6 +19,11 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initialize();
+  }
+
+  private initialize() {
+    this.menuItems = GALAXY_HEADER_MENU;
     this.user = this.auth.user$.value;
   }
 

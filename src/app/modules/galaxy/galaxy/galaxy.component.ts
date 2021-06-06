@@ -1,17 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { fromEvent, Subscription } from 'rxjs';
-
-/** Services */
-import { GalaxyService } from './galaxy.service';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-galaxy',
@@ -21,45 +10,42 @@ import { GalaxyService } from './galaxy.service';
 })
 export class GalaxyComponent implements OnInit, OnDestroy {
 
-  /** RxJs */
-  private subscriptions: Subscription[] = [];
+  public module$: BehaviorSubject<string>;
 
-  /** ElementRef */
-  @ViewChild('navbar') private navbarRef: ElementRef;
+  private subscription: Subscription;
 
   constructor(
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    public service: GalaxyService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.initialize();
+    this.subscribeUrlParam();
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub?.unsubscribe());
+    this.subscription?.unsubscribe();
   }
 
   private initialize() {
-    const scrollSub = fromEvent(window, 'scroll').subscribe((event) => {
-      this.onScroll(event);
-    });
-
-    this.subscriptions.push(scrollSub);
+    this.module$ = new BehaviorSubject('');
+    this.subscription = new Subscription();
   }
 
-  /////////////// TEMPLATE EVENT HANDLERS ///////////////
-  public onScroll(event) {
-    const navbar = this.navbarRef?.nativeElement;
+  private subscribeUrlParam() {
+    const sub = this.route.params.subscribe(params => {
+      this.handleUrlParamChange(params);
+    });
+    this.subscription.add(sub);
+  }
 
-    if (!navbar) return;
-
-    if (window.pageYOffset >= 50) {
-      navbar.classList.add('nav-bar-sticky');
-    } else {
-      navbar.classList.remove('nav-bar-sticky');
+  private handleUrlParamChange(params) {
+    if (!params || !params.id) {
+      return this.router.navigate(['/galaxy']);
     }
+
+    this.module$.next(params.id);
   }
 
 }
