@@ -31,18 +31,18 @@
     </div>
 
     <div class="forecast-wrapper block-flex row">
-      <div class="weather block-25 center">
-        <svg fill="#879CB2" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><g stroke-width=".725"><path d="M36.265 56.495a5.885 5.777 0 1 1 5.885-5.777 5.891 5.783 0 0 1-5.885 5.777zm0-10.11a4.413 4.333 0 1 0 4.414 4.333 4.419 4.338 0 0 0-4.414-4.332z"/><path d="M36.272 62.272c-.197 0-.392-.005-.589-.014A11.83 11.612 0 0 1 24.504 51.15a11.709 11.494 0 0 1 6.612-10.82v-1.83h1.471v2.292a.736.722 0 0 1-.44.662 10.298 10.11 0 1 0 8.238 0 .736.722 0 0 1-.442-.661V16.779a3.678 3.61 0 0 0-7.356 0v18.805h-1.47V16.779a5.149 5.055 0 0 1 10.297 0v23.553a11.769 11.554 0 0 1-5.142 21.939zm7.35-46.937h5.884v1.444H43.62zm0 5.055h3.677v1.444h-3.678z"/><path d="M43.621 25.444h5.885v1.445H43.62zm0 5.055h3.678v1.444H43.62zm0 5.055h5.885v1.444H43.62zM35.53 18.94H37v2.893h-1.47zm0 5.781H37v20.94h-1.47z"/></g></svg>
-        {{ current.temperature }}°
+      <div class="wind block-25 center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><g fill="none" fill-rule="evenodd"><path d="M0 72h72V0H0z"/><path stroke="#879CB2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.244" d="M36 54l21.708-36L36 33.354 14.292 18z"/></g></svg>
+          {{ current.wind }} km/h
       </div>
-      <div class="row block-75">
+      <div class="weather row block-75">
         <div class="humidity block-50 center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><path d="M47.678 36c-2.931-5.077-11.68-20.25-11.68-20.25L24.324 36a13.454 13.454 0 0 0-1.824 6.75c0 7.454 6.045 13.5 13.5 13.5 7.458 0 13.5-6.046 13.5-13.5 0-2.46-.672-4.762-1.821-6.75z" fill="none" stroke="#879cb2"/><path d="M36 49.5a6.758 6.758 0 0 1-6.75-6.75" fill="none" stroke="#879cb2" stroke-linecap="round"/></svg>
           {{ current.humidity }}%
         </div>
-        <div class="wind block-50 center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><g fill="none" fill-rule="evenodd"><path d="M0 72h72V0H0z"/><path stroke="#879CB2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.244" d="M36 54l21.708-36L36 33.354 14.292 18z"/></g></svg>
-          {{ current.wind }} km/h
+        <div class="temperature block-50 center">
+          <svg fill="#879CB2" viewBox="0 0 74 74" xmlns="http://www.w3.org/2000/svg"><g stroke-width=".725"><path d="M36.265 56.495a5.885 5.777 0 1 1 5.885-5.777 5.891 5.783 0 0 1-5.885 5.777zm0-10.11a4.413 4.333 0 1 0 4.414 4.333 4.419 4.338 0 0 0-4.414-4.332z"/><path d="M36.272 62.272c-.197 0-.392-.005-.589-.014A11.83 11.612 0 0 1 24.504 51.15a11.709 11.494 0 0 1 6.612-10.82v-1.83h1.471v2.292a.736.722 0 0 1-.44.662 10.298 10.11 0 1 0 8.238 0 .736.722 0 0 1-.442-.661V16.779a3.678 3.61 0 0 0-7.356 0v18.805h-1.47V16.779a5.149 5.055 0 0 1 10.297 0v23.553a11.769 11.554 0 0 1-5.142 21.939zm7.35-46.937h5.884v1.444H43.62zm0 5.055h3.677v1.444h-3.678z"/><path d="M43.621 25.444h5.885v1.445H43.62zm0 5.055h3.678v1.444H43.62zm0 5.055h5.885v1.444H43.62zM35.53 18.94H37v2.893h-1.47zm0 5.781H37v20.94h-1.47z"/></g></svg>
+          {{ current.temperature }}°
         </div>
       </div>
     </div>

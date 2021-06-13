@@ -1,0 +1,148 @@
+<div class="container">
+  <h2 class="title">Epoch & Unix Timestamp Conversion Tools</h2>
+
+  <section class="current-unix">
+    <h3 class="sub-title">The Current Epoch Unix Timestamp</h3>
+    <div class="flex row">
+      <div class="analog-clock">
+        <div style="width: 200px; height: 200px;">
+          <app-analog-clock radius="100"></app-analog-clock>
+        </div>
+      </div>
+
+      <div class="epoch flex column center">
+        <div class="value">{{currentUnix}}</div>
+        <div class="label">SECONDS SINCE JAN 01 1970. (UTC)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="unix-time">
+    <h3 class="sub-title">Convert epoch to human-readable date</h3>
+    <div class="form">
+      <h5 class="label">Enter Unix timestamp</h5>
+      <div class="input-wrapper">
+        <input type="number" min="0" [formControl]="unixTimestampCtrl"
+               (keyup.enter)="unix2human()">
+      </div>
+      <h5 class="input-hint" *ngIf="unixTimestampCtrl.errors">Invalid timestamp</h5>
+    </div>
+
+    <button galaxy-raised-button (click)="unix2human()">
+      Convert
+    </button>
+
+    <ng-template [ngIf]="convertedHumanDate">
+      <table>
+        <tr>
+          <td>Format</td>
+          <td>{{convertedHumanDate.format}}</td>
+        </tr>
+        <tr>
+          <td>GMT</td>
+          <td>{{convertedHumanDate.gmt}}</td>
+        </tr>
+        <tr>
+          <td>Your Time Zone</td>
+          <td>{{convertedHumanDate.local}}</td>
+        </tr>
+        <tr>
+          <td>Relative</td>
+          <td>{{convertedHumanDate.relative}}</td>
+        </tr>
+      </table>
+    </ng-template>
+  </section>
+
+  <section class="human-time">
+    <h3 class="sub-title">Convert human date to epoch</h3>
+    <div class="forms flex row" [formGroup]="humanTimeCtrl">
+      <div class="form">
+        <h5 class="label">Year</h5>
+        <div class="input-wrapper">
+          <input #year type="number" min="0" placeholder="YYYY"
+                 formControlName="year"
+                 (keydown)="jump2NextInput($event, monthRef)">
+        </div>
+      </div>
+
+      <div class="form">
+        <h5 class="label">Month</h5>
+        <div class="input-wrapper">
+          <input #monthRef type="number" min="0" placeholder="MM"
+                 formControlName="month"
+                 (keydown)="jump2NextInput($event, dayRef)">
+        </div>
+      </div>
+
+      <div class="form">
+        <h5 class="label">Day</h5>
+        <div class="input-wrapper">
+          <input #dayRef type="number" min="0" placeholder="DD"
+                 formControlName="day"
+                 (keydown)="jump2NextInput($event, hourRef)">
+        </div>
+      </div>
+
+      <div class="form">
+        <h5 class="label">Hour (24 hours)</h5>
+        <div class="input-wrapper">
+          <input #hourRef type="number" min="0" placeholder="HH"
+                 formControlName="hour"
+                 (keydown)="jump2NextInput($event, minuteRef)">
+        </div>
+      </div>
+
+      <div class="form">
+        <h5 class="label">Minute</h5>
+        <div class="input-wrapper">
+          <input #minuteRef type="number" min="0" placeholder="MM"
+                 formControlName="minute"
+                 (keydown)="jump2NextInput($event, secondRef)">
+        </div>
+      </div>
+
+      <div class="form">
+        <h5 class="label">Second</h5>
+        <div class="input-wrapper">
+          <input #secondRef type="number" min="0" placeholder="SS"
+                 formControlName="second"
+                 (keydown)="jump2NextInput($event)"
+                 (keyup.enter)="human2unix()">
+        </div>
+      </div>
+    </div>
+
+    <button galaxy-raised-button (click)="human2unix()">
+      Convert
+    </button>
+
+    <ng-template [ngIf]="convertedUnixTime">
+      <table>
+        <tr>
+          <td>Unix Timestamp</td>
+          <td>{{convertedUnixTime.unix}}</td>
+        </tr>
+        <tr>
+          <td>GMT</td>
+          <td>{{convertedUnixTime.gmt}}</td>
+        </tr>
+        <tr>
+          <td>Your Time Zone</td>
+          <td>{{convertedUnixTime.local}}</td>
+        </tr>
+        <tr>
+          <td>Relative</td>
+          <td>{{convertedUnixTime.relative}}</td>
+        </tr>
+      </table>
+    </ng-template>
+  </section>
+
+  <section>
+    <h3 class="sub-title">What is the unix time stamp?</h3>
+    <p class="info">
+      Unix time (also known as Epoch time, POSIX time, seconds since the Epoch or UNIX Epoch time) is a system for describing a point in time. It is the number of seconds that have elapsed since the Unix epoch, minus leap seconds; the Unix epoch is 00:00:00 UTC on 1 January 1970 (an arbitrary date); leap seconds are ignored, with a leap second having the same Unix time as the second before it, and every day is treated as if it contains exactly 86400 seconds. (Wikipedia)
+    </p>
+  </section>
+</div>

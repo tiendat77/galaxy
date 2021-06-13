@@ -26,17 +26,17 @@ export const GALAXY_HEADER_MENU: NavigationItem[] = [
     url: '/tools',
     children: [
       {
+        name: 'Flex Layout',
+        url: '/tools/flex-layout-demos'
+      },
+      {
         name: 'Json to Js',
         url: '/tools/json-to-js'
       },
       {
-        name: 'Epoch Converter',
-        url: '/tools/epoch-converter'
-      },
-      {
-        name: 'Flex Layout',
-        url: '/tools/flex-layout-demos'
-      },
+        name: 'Unix Timestamp Converter',
+        url: '/tools/unix-converter'
+      }
     ]
   }
 ];

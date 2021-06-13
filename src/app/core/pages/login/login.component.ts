@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.get('username').value;
     const password = this.loginForm.get('password').value;
 
-    this.auth.login(username, password)
+    this.auth.fakeLogin(username, password)
     .pipe(first())
     .subscribe(
       success => {
@@ -57,8 +57,14 @@ export class LoginComponent implements OnInit {
         this.error$.next(null);
       },
       error => {
-        this.error$.next('Incorrect username or password');
-        this.loading$.next(false);
+        setTimeout(() => this.loading$.next(false), 500);
+
+        if (error?.status === 400 || error?.status === 401) {
+          this.error$.next('Incorrect username or password');
+          return;
+        }
+
+        this.error$.next('Error occurred!');
         console.error(error);
     });
   }
