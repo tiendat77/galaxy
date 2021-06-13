@@ -1,0 +1,165 @@
+.container {
+  margin: auto;
+  padding: 32px;
+  min-width: 564px;
+  max-width: 1000px;
+  box-sizing: border-box;
+
+  section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  h2.title {
+    margin: 0;
+    color: #373f50;
+    font-weight: 400;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2.3rem;
+  }
+
+  h3.sub-title {
+    color: #373f50;
+    font-weight: 300;
+    font-size: 1.6rem;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+  }
+
+  p.info {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    line-height: 1.3rem;
+  }
+
+  .current-unix {
+    .analog-clock, .epoch {
+      flex: 1 1 100%;
+      max-width: 50%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      box-sizing: border-box;
+    }
+
+    .epoch {
+      .value {
+        color: #1b1c1d;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .label {
+        font-size: 1rem;
+        color: #373f50;
+      }
+    }
+  }
+
+  .forms {
+    .form {
+      margin-right: 1rem;
+    }
+
+    .form:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .form {
+    margin-bottom: 1rem;
+
+    .input-wrapper {
+      margin-bottom: 0.1rem;
+    }
+
+    .input-hint {
+      font-size: 14px;
+      font-weight: 300;
+      color: #ff3232;
+      text-align: right;
+      margin: 0;
+    }
+
+    h5.label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6d6d6d;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      margin: 0;
+      width: 100%;
+      color: #333;
+      transition: 0.4s;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      letter-spacing: 1px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+
+      &:focus {
+        outline: none;
+        border: 1px solid #6f6f6f;
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    margin: 1em 0;
+    text-align: left;
+    overflow: hidden;
+    color: #373f50;
+    border-spacing: 0;
+    border-radius: 0.25rem;
+    border-collapse: separate;
+    border: 1px solid #dedede;
+
+    td {
+      padding: 0.75rem;
+      border-left: 1px solid #dedede;
+    }
+
+    td:first-child {
+      width: 40%;
+      font-weight: 500;
+      border-left: none;
+      background-color: #f7f7f7;
+    }
+
+    tr td {
+      border-bottom: 1px solid #dedede;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .container .current-unix {
+    .analog-clock {
+      max-width: 0;
+      display: none;
+    }
+
+    .epoch {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .container .forms {
+    flex-direction: column;
+
+    .form {
+      margin-right: 0;
+    }
+  }
+}

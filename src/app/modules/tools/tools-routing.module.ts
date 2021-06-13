@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 /** Components */
 import { JsonToJsComponent } from './json-to-js/json-to-js.component';
+import { UnixConverterComponent } from './unix-converter/unix-converter.component';
 
 const routes: Routes = [
-  { path: 'json-to-js', component: JsonToJsComponent }
+  { path: 'json-to-js', component: JsonToJsComponent },
+  { path: 'unix-converter', component: UnixConverterComponent }
 ];
 
 @NgModule({

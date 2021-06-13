@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 
-import { BehaviorSubject, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, throwError, of } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
 
 import jwt_decode from 'jwt-decode';
 import * as moment from 'moment';
@@ -150,6 +150,26 @@ export class AuthService {
       map((token) => {
         this.authorized$.next(true);
         return token;
+      })
+    );
+  }
+
+  fakeLogin(username: string, password: string) {
+    return of('galaxy').pipe(
+      debounceTime(1500),
+      map(() => {
+        this.setUser({
+          id: null,
+          name: 'Tien Dat Huynh',
+          username: 'tiendathuynh',
+          avatar: 'https://uifaces.co/our-content/donated/xZ4wg2Xj.jpg',
+          password: null,
+          token: null,
+        });
+        this.setToken(null);
+        this.setExpiration(moment().add(1, 'day').unix());
+        this.authorized$.next(true);
+        return true;
       })
     );
   }

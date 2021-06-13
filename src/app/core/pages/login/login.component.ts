@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.get('username').value;
     const password = this.loginForm.get('password').value;
 
-    this.auth.login(username, password)
+    this.auth.fakeLogin(username, password)
     .pipe(first())
     .subscribe(
       success => {
