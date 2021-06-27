@@ -35,13 +35,11 @@ export class GalaxyTooltipDirective {
   onClick() { }
 
   show() {
-    console.log('show tooltip thoi nao');
     this.create();
     this.setPosition();
   }
 
   hide() {
-    console.log('hide tooltip thoi nao');
     window.setTimeout(() => {
       this.renderer.removeChild(document.body, this.tooltip);
       this.tooltip = null;
