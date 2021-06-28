@@ -12,8 +12,14 @@
     border-bottom: 1px solid #e9ecef;
   }
 
-  .code {
+  .source-code {
     padding-top: 1rem;
+  }
+
+  .code {
+    margin: 0;
+    white-space: pre;
+    letter-spacing: 1px;
   }
 }
 

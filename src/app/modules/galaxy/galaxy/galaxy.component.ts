@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, BehaviorSubject } from 'rxjs';
 
+import { GalaxyUI, GALAXY_UI } from './galaxy-ui-modules';
+
 @Component({
   selector: 'app-galaxy',
   templateUrl: './galaxy.component.html',
@@ -10,7 +12,7 @@ import { Subscription, BehaviorSubject } from 'rxjs';
 })
 export class GalaxyComponent implements OnInit, OnDestroy {
 
-  public module$: BehaviorSubject<string>;
+  public module$: BehaviorSubject<GalaxyUI>;
 
   private subscription: Subscription;
 
@@ -29,7 +31,7 @@ export class GalaxyComponent implements OnInit, OnDestroy {
   }
 
   private initialize() {
-    this.module$ = new BehaviorSubject('');
+    this.module$ = new BehaviorSubject(null);
     this.subscription = new Subscription();
   }
 
@@ -45,7 +47,13 @@ export class GalaxyComponent implements OnInit, OnDestroy {
       return this.router.navigate(['/galaxy']);
     }
 
-    this.module$.next(params.id);
+    const module = GALAXY_UI.find(g => g.id === params.id);
+
+    if (!module) {
+      return;
+    }
+
+    this.module$.next(module);
   }
 
 }

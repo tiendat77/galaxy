@@ -3,7 +3,7 @@ $breakpoints: (
   small:600px
 );
 
-$label-active: #428BFF;
+$label-active: var(--color-green);
 $label-inactive: #929daf;
 
 .text-truncate {

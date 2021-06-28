@@ -1,11 +1,8 @@
-<p>galaxy {{module$ | async}} worked!</p>
-
-<div class="main-content galaxy-card">
-  <div class="demo">
-    demo here
+<div class="main-content galaxy-card" *ngIf="(module$ | async) as module">
+  <div class="demo" [innerHTML]="module.demo | sanitizeHtml">
   </div>
 
-  <div class="code">
+  <div class="source-code">
     <galaxy-tabs>
       <galaxy-tab title="HTML" [iconRef]="tabIcon1">
         <ng-template #tabIcon1>
@@ -15,7 +12,7 @@
           </svg>
         </ng-template>
 
-        1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea dolorem sequi, quo tempore in eum obcaecati atque quibusdam officiis est dolorum minima deleniti ratione molestias numquam. Voluptas voluptates quibusdam cum?
+        <span class="code">{{module.html}}</span>
       </galaxy-tab>
 
       <galaxy-tab title="SASS" [iconRef]="tabIcon2">
@@ -26,7 +23,7 @@
           </svg>
         </ng-template>
 
-        2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea dolorem sequi, quo tempore in eum obcaecati atque quibusdam officiis est dolorum minima deleniti ratione molestias numquam. Voluptas voluptates quibusdam cum?
+        <span class="code">{{module.sass}}</span>
       </galaxy-tab>
 
       <galaxy-tab title="TYPESCRIPT" [iconRef]="tabIcon3">
@@ -37,7 +34,7 @@
           </svg>
         </ng-template>
 
-        3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea dolorem sequi, quo tempore in eum obcaecati atque quibusdam officiis est dolorum minima deleniti ratione molestias numquam. Voluptas voluptates quibusdam cum?
+        <span class="code">{{module.ts}}</span>
       </galaxy-tab>
     </galaxy-tabs>
   </div>
