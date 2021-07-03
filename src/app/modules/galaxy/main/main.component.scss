@@ -12,31 +12,13 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #f8f9fa;
   font-family: 'Open Sans', sans-serif;
 
-  .sidenav, .main-content {
+  .main-content {
     border-radius: 1rem;
     transition: all .2s ease-in-out;
-  }
-
-  .sidenav {
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 999;
-    position: fixed;
-  }
-
-  .sidenav-pinned {
-    background-color: #fff;
-    transform: translateX(0) !important;
-    box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
   }
 }
 
 .sidenav {
-  width: 100%;
-  max-width: 16rem;
-  margin: 1rem 0 1rem 1rem;
-
   hr.horizontal {
     opacity: .25;
     border: 0;
@@ -57,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .brand-name {
-      color: #252f40;
+      color: var(--color-green);
       font-weight: 600;
       margin-left: 0.25rem;
     }
@@ -90,27 +72,26 @@ h1, h2, h3, h4, h5, h6 {
         padding: .675rem 1rem;
       }
 
+      .nav-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+        border-radius: 0.5rem;
+        display: inline-block;
+      }
+
       .nav-item.active .nav-link {
-        color: #252f40;
+        color: var(--color-green);
         font-weight: 600;
         border-radius: .5rem;
         background-color: #fff;
-        box-shadow: 0 20px 26px 0 rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(245, 245, 245, 0.5);
+        box-shadow: rgb(149 157 165 / 20%) 0px 4px 16px;
       }
 
-      .icon {
-        width: 32px;
-        height: 32px;
-        display: inline-block;
+      .nav-item.active .nav-icon {
+        background: rgba(51, 195, 25, 0.5);
       }
-    }
-  }
-}
-
-.sidenav-pinned {
-  .sidenav-main {
-    .navbar-nav .nav-item.active .nav-link {
-      box-shadow: none;
     }
   }
 }
@@ -118,10 +99,6 @@ h1, h2, h3, h4, h5, h6 {
 .main-content {
   .container-fluid {
     padding: 1.5rem;
-  }
-
-  .menu-toggle {
-    display: none;
   }
 
   .nav-bar {
@@ -157,6 +134,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 40px;
   height: 40px;
   padding: 8px;
+  border-radius: 50%;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -171,7 +149,11 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   &:hover {
-    transform: scale(1.2);
+    background: rgba(239, 239, 239, 0.65);
+
+    svg {
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -183,16 +165,8 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 1199.98px) {
   .galaxy-container {
-    .sidenav {
-      transform: translateX(-17.125rem);
-    }
-
     .main-content {
       margin-left: 0;
-
-      .menu-toggle {
-        display: inline-block;
-      }
     }
   }
 }

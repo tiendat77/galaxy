@@ -1,14 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { GALAXY_MODULES, GalaxyMenuItem } from './modules';
 
@@ -27,15 +20,12 @@ export class MainComponent implements OnInit, OnDestroy {
   public moduleLink: string;
   public moduleName: string;
 
-  public isSidenavPinned: boolean;
-
   /** RxJs */
   private subscription: Subscription;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -49,13 +39,14 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private initialize() {
-    this.isSidenavPinned = false;
     this.modules = GALAXY_MODULES;
     this.subscription = new Subscription();
   }
 
   private initScrollSubscription() {
-    const scrollSub = fromEvent(window, 'scroll').subscribe((event) => {
+    const scrollSub = fromEvent(window, 'scroll').pipe(
+      debounceTime(200)
+    ).subscribe((event) => {
       this.onScroll(event);
     });
     this.subscription.add(scrollSub);
@@ -83,7 +74,7 @@ export class MainComponent implements OnInit, OnDestroy {
   public onScroll(event) {
     const navbar = this.navbarRef?.nativeElement;
 
-    if (!navbar) return;
+    if (!navbar) { return; }
 
     if (window.pageYOffset >= 50) {
       navbar.classList.add('nav-bar-sticky');
@@ -92,9 +83,6 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  public toggleSidenav(event?) {
-    this.isSidenavPinned = !this.isSidenavPinned;
-  }
 
   public selectModule(module: GalaxyMenuItem) {
     this.moduleLink = module.link;

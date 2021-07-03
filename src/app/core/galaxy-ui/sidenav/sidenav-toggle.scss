@@ -1,0 +1,19 @@
+:host {
+  display: none !important;
+  animation: 0.2s ease-in-out 0s 1 normal both running scale-up-center;
+}
+
+@keyframes scale-up-center {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1199.98px) {
+  :host {
+    display: inline-block !important;
+  }
+}

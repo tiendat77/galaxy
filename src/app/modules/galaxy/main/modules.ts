@@ -2,7 +2,7 @@ export interface GalaxyMenuItem {
   link: string;
   name: string;
   icon?: string;
-};
+}
 
 export const GALAXY_MODULES: GalaxyMenuItem[] = [
   { icon: '', link: 'dashboard', name: 'Dashboard'},
