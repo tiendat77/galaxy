@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { GALAXY_MODULES, GalaxyMenuItem } from './modules';
+import { GALAXY_MODULES, GalaxyMenuItem } from '../galaxy-modules';
+import { GalaxyService } from '../galaxy.service';
 
 @Component({
   selector: 'app-galaxy-main',
@@ -16,21 +16,15 @@ export class MainComponent implements OnInit, OnDestroy {
   /** ElementRef */
   @ViewChild('navbar') private navbarRef: ElementRef;
 
-  public modules: Array<any>;
-  public moduleLink: string;
-  public moduleName: string;
+  public modules: GalaxyMenuItem[];
 
   /** RxJs */
   private subscription: Subscription;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  constructor(public galaxy: GalaxyService) { }
 
   ngOnInit() {
     this.initialize();
-    this.handleUrlParam();
     this.initScrollSubscription();
   }
 
@@ -52,22 +46,8 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscription.add(scrollSub);
   }
 
-  private handleUrlParam() {
-    this.moduleLink = 'dashboard';
-    this.moduleName = 'Dashboard';
-
-    const params = this.route.snapshot.firstChild.params;
-    if (!params || !params.id) {
-      return this.router.navigate(['/galaxy']);
-    }
-
-    const module = GALAXY_MODULES.find(m => m.link === params.id);
-    if (!module) {
-      return this.router.navigate(['/galaxy']);
-    }
-
-    this.moduleName = module.name;
-    this.moduleLink = module.link;
+  test() {
+    console.log('tested ^^');
   }
 
   /////////////// TEMPLATE EVENT HANDLERS ///////////////
@@ -81,12 +61,6 @@ export class MainComponent implements OnInit, OnDestroy {
     } else {
       navbar.classList.remove('nav-bar-sticky');
     }
-  }
-
-
-  public selectModule(module: GalaxyMenuItem) {
-    this.moduleLink = module.link;
-    this.moduleName = module.name;
   }
 
 }

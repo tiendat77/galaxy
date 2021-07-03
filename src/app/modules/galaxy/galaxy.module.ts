@@ -9,14 +9,29 @@ import { GalaxyUIModule } from '../../core/galaxy-ui/galaxy-ui.module';
 import { MainComponent } from './main/main.component';
 import { GalaxyComponent } from './galaxy/galaxy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { GalaxyAvatarDemoComponent } from './avatar/avatar-demo';
+import { GalaxyButtonDemoComponent } from './button/button-demo';
+import { GalaxyCardDemoComponent } from './card/card-demo';
+import { GalaxyExampleDemoComponent } from './example/example-demo';
+import { GalaxyTerminalDemoComponent } from './terminal/terminal-demo';
+
+const COMPONENTS = [
+  MainComponent,
+  GalaxyComponent,
+  DashboardComponent,
+  GalaxyAvatarDemoComponent,
+  GalaxyButtonDemoComponent,
+  GalaxyCardDemoComponent,
+  GalaxyExampleDemoComponent,
+  GalaxyTerminalDemoComponent,
+];
 
 /** Services */
+import { GalaxyService } from './galaxy.service';
 
 @NgModule({
   declarations: [
-    MainComponent,
-    GalaxyComponent,
-    DashboardComponent
+    COMPONENTS
   ],
   imports: [
     CoreModule,
@@ -24,6 +39,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     GalaxySharedModule,
     GalaxyRoutingModule
   ],
-  providers: []
+  providers: [
+    GalaxyService
+  ]
 })
 export class GalaxyModule { }

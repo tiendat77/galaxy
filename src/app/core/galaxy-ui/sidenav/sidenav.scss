@@ -33,8 +33,22 @@
   padding: 1rem;
   max-width: 16rem;
   border-radius: 1rem;
+  overflow: hidden;
   box-sizing: border-box;
   transition: background-color .2s ease-in-out;
+}
+
+.sidenav:hover {
+  overflow: hidden auto;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;;
+}
+
+::-webkit-scrollbar-track {
+  margin: 0.5rem 0;
+  background-color: transparent;;
 }
 
 @media (max-width: 1199.98px) {

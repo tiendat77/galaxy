@@ -11,11 +11,7 @@ export class TestComponent implements OnInit {
 
   constructor(private translate: TranslateService) { }
 
-  ngOnInit(): void {
-  }
-
-  doit(language) {
-    this.translate.change(language);
+  ngOnInit() {
   }
 
 }

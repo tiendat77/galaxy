@@ -1,0 +1,33 @@
+.about-me {
+  p {
+    margin: 0;
+    white-space: nowrap;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+  }
+
+  em {
+    color: #63b3ed;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      color: var(--color-green);
+    }
+  }
+
+  .text-green {
+    color: #68d391;
+  }
+
+  .text-pink {
+    color: #ed64a6;
+  }
+
+  .text-yellow {
+    color: #faf089;
+  }
+}

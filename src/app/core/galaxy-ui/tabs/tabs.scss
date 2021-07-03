@@ -113,6 +113,7 @@ $label-inactive: #929daf;
 
     section {
       display: none;
+      overflow: auto;
       line-height: 1.4;
       animation: showup 0.3s ease-in-out 1;
 

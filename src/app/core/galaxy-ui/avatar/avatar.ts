@@ -21,7 +21,7 @@ export class GalaxyAvatar implements AfterViewInit {
 
   @Input() diameter = 50;
   @Input() name;
-  @Input() source = 'assets/images/default-avatar.jpg';
+  @Input('source') source;
 
   @ViewChild('avatarDiv') avatarDivRef: ElementRef;
   @ViewChild('avatarImg') avatarImgRef: ElementRef;
@@ -32,7 +32,7 @@ export class GalaxyAvatar implements AfterViewInit {
     this.set(this.source);
   }
 
-  onError(event) {
+  onError(event?) {
     this.hide();
     this.get();
   }
@@ -55,6 +55,10 @@ export class GalaxyAvatar implements AfterViewInit {
   }
 
   private set(source: string) {
+    if (!source) {
+      return this.onError();
+    }
+
     const element = this.avatarImgRef?.nativeElement;
     if (!element) {
       return;

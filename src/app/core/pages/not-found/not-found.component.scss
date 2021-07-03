@@ -28,7 +28,7 @@
   .right {
 
     .line-1 {
-      color: #43B4BA;
+      color: var(--color-green);
       font-size: 7vw;
       font-weight: 850;
       margin-bottom: 16px;
@@ -59,13 +59,13 @@
       text-decoration: none;
       padding: 10px 30px;
       box-shadow: none;
-      background: #43B4BA;
+      background: var(--color-green);
       border-radius: 2.2vw;
       font-size: 2.2vw;
       font-family: 'Indie Flower', cursive;
 
       &:hover, &:focus {
-        transform: translateY(-0.25em);
+        transform: scale(1.1);
         box-shadow: 0 0.5em 0.5em -0.4em rgba(0, 0, 0, 0.68);
       }
     }
@@ -75,11 +75,11 @@
       background-position: center;
 
       &:hover {
-        background: #45bfc5 radial-gradient(circle, transparent 1%, #41a3a8 1%) center/15000%;
+        background: var(--color-green) radial-gradient(circle, transparent 1%, #2ea35f 1%) center/15000%;
       }
 
       &:active {
-        background-color: #45bfc5;
+        background-color: var(--color-green);
         background-size: 100%;
         transition: background 0s;
       }
