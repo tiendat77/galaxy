@@ -9,6 +9,9 @@ import { GalaxyAvatarDemoComponent } from './avatar/avatar-demo';
 import { GalaxyButtonDemoComponent } from './button/button-demo';
 import { GalaxyCardDemoComponent } from './card/card-demo';
 import { GalaxyExampleDemoComponent } from './example/example-demo';
+import { GalaxyFormDemoComponent } from './form/form-demo';
+import { GalaxyMenuDemoComponent } from './menu/menu-demo';
+import { GalaxySidenavDemoComponent } from './sidenav/sidenav-demo';
 import { GalaxyTerminalDemoComponent } from './terminal/terminal-demo';
 
 const routes: Routes = [
@@ -23,9 +26,9 @@ const routes: Routes = [
       { path: 'ui/button', component: GalaxyButtonDemoComponent },
       { path: 'ui/card', component: GalaxyCardDemoComponent },
       { path: 'ui/example', component: GalaxyExampleDemoComponent },
-      { path: 'ui/form', component: GalaxyExampleDemoComponent },
-      { path: 'ui/menu', component: GalaxyExampleDemoComponent },
-      { path: 'ui/sidenav', component: GalaxyExampleDemoComponent },
+      { path: 'ui/form', component: GalaxyFormDemoComponent },
+      { path: 'ui/menu', component: GalaxyMenuDemoComponent },
+      { path: 'ui/sidenav', component: GalaxySidenavDemoComponent },
       { path: 'ui/spinner', component: GalaxyExampleDemoComponent },
       { path: 'ui/tabs', component: GalaxyExampleDemoComponent },
       { path: 'ui/terminal', component: GalaxyTerminalDemoComponent },

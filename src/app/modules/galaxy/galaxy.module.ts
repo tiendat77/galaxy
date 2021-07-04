@@ -13,6 +13,9 @@ import { GalaxyAvatarDemoComponent } from './avatar/avatar-demo';
 import { GalaxyButtonDemoComponent } from './button/button-demo';
 import { GalaxyCardDemoComponent } from './card/card-demo';
 import { GalaxyExampleDemoComponent } from './example/example-demo';
+import { GalaxyFormDemoComponent } from './form/form-demo';
+import { GalaxyMenuDemoComponent } from './menu/menu-demo';
+import { GalaxySidenavDemoComponent } from './sidenav/sidenav-demo';
 import { GalaxyTerminalDemoComponent } from './terminal/terminal-demo';
 
 const COMPONENTS = [
@@ -23,6 +26,9 @@ const COMPONENTS = [
   GalaxyButtonDemoComponent,
   GalaxyCardDemoComponent,
   GalaxyExampleDemoComponent,
+  GalaxyFormDemoComponent,
+  GalaxyMenuDemoComponent,
+  GalaxySidenavDemoComponent,
   GalaxyTerminalDemoComponent,
 ];
 

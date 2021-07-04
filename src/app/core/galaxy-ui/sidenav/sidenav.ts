@@ -21,6 +21,7 @@ export class GalaxySidenav implements OnChanges, AfterViewInit {
   @Input() show = false;
   @Input() pinned = false;
   @Input() autoHide = false;
+  @Input() align: 'left' | 'right'  = 'left';
   @Output() closed: EventEmitter<void> = new EventEmitter();
 
   @ViewChild('overlay') overlayRef: ElementRef;
@@ -29,17 +30,22 @@ export class GalaxySidenav implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes) {
     if (changes.show) {
-      this.toggle();
+      this.visibility();
     }
 
     if (changes.pinned) {
       this.pin();
     }
+
+    if (changes.align) {
+      this.position();
+    }
   }
 
   ngAfterViewInit() {
-    this.toggle();
     this.auto();
+    this.position();
+    this.visibility();
   }
 
   private auto() {
@@ -52,6 +58,28 @@ export class GalaxySidenav implements OnChanges, AfterViewInit {
 
     } else {
       element.classList.remove('auto');
+    }
+  }
+
+  private visibility() {
+    if (this.show) {
+      return this.open();
+    }
+
+    return this.close();
+  }
+
+  private position() {
+    const element = this.overlayRef?.nativeElement as HTMLElement;
+    if (!element) { return; }
+
+    if (this.align === 'left') {
+      element.classList.add('align-left');
+      element.classList.remove('align-right');
+
+    } else {
+      element.classList.add('align-right');
+      element.classList.remove('align-left');
     }
   }
 
