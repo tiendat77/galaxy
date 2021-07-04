@@ -12,7 +12,10 @@ import { GalaxyExampleDemoComponent } from './example/example-demo';
 import { GalaxyFormDemoComponent } from './form/form-demo';
 import { GalaxyMenuDemoComponent } from './menu/menu-demo';
 import { GalaxySidenavDemoComponent } from './sidenav/sidenav-demo';
+import { GalaxySpinnerDemoComponent } from './spinner/spinner-demo';
+import { GalaxyTabsDemoComponent } from './tabs/tabs-demo';
 import { GalaxyTerminalDemoComponent } from './terminal/terminal-demo';
+import { GalaxyTooltipDemoComponent } from './tooltip/tooltip-demo';
 
 const routes: Routes = [
   {
@@ -29,10 +32,10 @@ const routes: Routes = [
       { path: 'ui/form', component: GalaxyFormDemoComponent },
       { path: 'ui/menu', component: GalaxyMenuDemoComponent },
       { path: 'ui/sidenav', component: GalaxySidenavDemoComponent },
-      { path: 'ui/spinner', component: GalaxyExampleDemoComponent },
-      { path: 'ui/tabs', component: GalaxyExampleDemoComponent },
+      { path: 'ui/spinner', component: GalaxySpinnerDemoComponent },
+      { path: 'ui/tabs', component: GalaxyTabsDemoComponent },
       { path: 'ui/terminal', component: GalaxyTerminalDemoComponent },
-      { path: 'ui/tooltip', component: GalaxyExampleDemoComponent }
+      { path: 'ui/tooltip', component: GalaxyTooltipDemoComponent }
     ]
   }
 ];

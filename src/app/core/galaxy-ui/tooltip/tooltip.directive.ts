@@ -1,5 +1,7 @@
 import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
+let nextId = 0;
+
 @Directive({
   selector: '[galaxyTooltip]',
   exportAs: 'tooltip',
@@ -12,12 +14,15 @@ export class GalaxyTooltipDirective {
   @Input() placement = 'top';
 
   tooltip: HTMLElement;
+  tooltipId: number;
   offset = 10;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2
-  ) {}
+  ) {
+    this.tooltipId = nextId++;
+  }
 
   @HostListener('focusin')
   @HostListener('mouseenter')
@@ -31,9 +36,6 @@ export class GalaxyTooltipDirective {
     this.hide();
   }
 
-  @HostListener('click')
-  onClick() { }
-
   show() {
     this.create();
     this.setPosition();
@@ -41,12 +43,20 @@ export class GalaxyTooltipDirective {
 
   hide() {
     window.setTimeout(() => {
+      if (!this.tooltip) {
+        return;
+      }
+
       this.renderer.removeChild(document.body, this.tooltip);
       this.tooltip = null;
     }, this.delay);
   }
 
   private create() {
+    if (this.tooltip) {
+      return;
+    }
+
     this.tooltip = this.renderer.createElement('span');
 
     this.renderer.appendChild(
@@ -55,6 +65,7 @@ export class GalaxyTooltipDirective {
     );
 
     this.renderer.addClass(this.tooltip, 'galaxy-tooltip');
+    this.renderer.setAttribute(this.tooltip, 'id', ('galaxy-tooltip-' + this.tooltipId));
 
     this.renderer.appendChild(document.body, this.tooltip);
   }

@@ -9,7 +9,6 @@ export const GALAXY_MODULES: GalaxyMenuItem[] = [
   { icon: '', link: 'ui/avatar', name: 'Avatar' },
   { icon: '', link: 'ui/button', name: 'Button' },
   { icon: '', link: 'ui/card', name: 'Card' },
-  { icon: '', link: 'ui/example', name: 'Example'},
   { icon: '', link: 'ui/form', name: 'Form' },
   { icon: '', link: 'ui/menu', name: 'Menu' },
   { icon: '', link: 'ui/sidenav', name: 'Sidenav' },
