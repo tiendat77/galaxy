@@ -15,12 +15,20 @@ const COMPONENTS = [
   CovidTrackerComponent
 ];
 
+/** Pipes */
+import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
+
+const PIPES = [
+  SanitizeHtmlPipe
+];
+
 /** Services */
 import { RequestService } from './services/request.service';
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    COMPONENTS,
+    PIPES
   ],
   imports: [
     CommonsModule,
@@ -29,7 +37,8 @@ import { RequestService } from './services/request.service';
   exports: [
     CommonsModule,
     MaterialModule,
-    ...COMPONENTS
+    COMPONENTS,
+    PIPES
   ],
   providers: [
     RequestService

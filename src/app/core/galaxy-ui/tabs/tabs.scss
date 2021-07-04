@@ -1,0 +1,189 @@
+$breakpoints: (
+  medium: 800px,
+  small:600px
+);
+
+$label-active: var(--color-green);
+$label-inactive: #929daf;
+
+.text-truncate {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.galaxy-tabs {
+  padding: 24px;
+  min-width: 100%;
+  min-height: 200px;
+  background: #fff;
+  border-radius: 1rem;
+  position: relative;
+  box-sizing: border-box;
+
+  .galaxy-tab-control {
+    display: none;
+  }
+
+  .galaxy-tab-header {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-end;
+    box-sizing: border-box;
+    justify-content: space-between;
+  }
+
+  ul {
+    padding: 0;
+    margin-bottom: 10px;
+    list-style-type: none;
+
+    li {
+      flex: 1;
+      padding: 0 10px;
+      text-align: center;
+      box-sizing: border-box;
+
+      label {
+        @extend .text-truncate;
+        cursor: pointer;
+        color: $label-inactive;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.2s ease-in-out;
+      }
+
+      br {
+        display: none;
+      }
+
+      svg {
+        fill: $label-inactive;
+        width: 24px;
+        height: 24px;
+        margin-right: 0.5rem;
+        vertical-align: bottom;
+        transition: all 0.2s ease-in-out;
+      }
+
+      &:hover, &:focus, &:active {
+        outline: 0;
+
+        label {
+          color: lighten($label-inactive, 15%);
+        }
+
+        svg {
+          fill: lighten($label-inactive, 15%);
+        }
+      }
+    }
+
+    li.active {
+      label {
+        color: $label-active;
+      }
+
+      svg {
+        fill: $label-active;
+      }
+    }
+  }
+
+  .galaxy-tab-slider {
+    position: relative;
+    transition: all 0.33s cubic-bezier(0.5, 0.8, 0.5, 1.1);
+
+    .galaxy-tab-indicator {
+      position: relative;
+      width: 50px;
+      height: 4px;
+      margin: 0 auto;
+      max-width: 100%;
+      border-radius: 4px;
+      background: $label-active;
+    }
+  }
+
+  .galaxy-tab-content {
+    margin-top: 30px;
+
+    section {
+      display: none;
+      overflow: auto;
+      line-height: 1.4;
+      animation: showup 0.3s ease-in-out 1;
+
+      h2 {
+        display: none;
+        color: $label-inactive;
+        font-weight: bold;
+        font-size: 1.1rem;
+
+        &::after {
+          content: "";
+          height: 3px;
+          width: 30px;
+          display: block;
+          margin-top: 4px;
+          border-radius: 3px;
+          background-color: $label-active;
+        }
+      }
+    }
+
+    section.active {
+      display: block;
+    }
+  }
+
+  @keyframes showup {
+    from {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, medium)) {
+    ul li > label {
+      br {
+        display: initial;
+      }
+
+      svg {
+        height: 2rem;
+      }
+    }
+  }
+
+  @media (max-width: map-get($breakpoints, small)) {
+    ul li > label {
+      padding: 6px;
+      border-radius: 6px;
+
+      span {
+        display: none;
+      }
+    }
+
+    .galaxy-tab-slider {
+      display: none;
+    }
+
+    .galaxy-tab-content {
+      margin-top: 20px;
+
+      section h2 {
+        display: block;
+      }
+    }
+  }
+}

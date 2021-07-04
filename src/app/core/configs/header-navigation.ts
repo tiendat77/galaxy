@@ -27,7 +27,7 @@ export const GALAXY_HEADER_MENU: NavigationItem[] = [
     children: [
       {
         name: 'Flex Layout',
-        url: '/tools/flex-layout-demos'
+        url: '/tools/flex-layout'
       },
       {
         name: 'Json to Js',

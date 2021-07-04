@@ -1,0 +1,21 @@
+.container {
+  margin: auto;
+  padding: 32px;
+  min-width: 564px;
+  max-width: 1000px;
+  box-sizing: border-box;
+
+  section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  h2.title {
+    margin: 0;
+    color: #373f50;
+    font-weight: 400;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2.3rem;
+  }
+}

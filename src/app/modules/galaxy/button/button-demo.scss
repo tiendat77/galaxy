@@ -1,0 +1,9 @@
+.demo {
+  button {
+    margin-right: 2rem;
+  }
+
+  button:last-child {
+    margin-right: 0;
+  }
+}

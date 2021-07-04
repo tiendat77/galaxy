@@ -6,35 +6,31 @@ import { GalaxyCardModule } from './card';
 import { GalaxyFormModule } from './form';
 import { GalaxyMenuModule } from './menu';
 import { GalaxyNavigationModule } from './navigation';
+import { GalaxySidenavModule } from './sidenav';
 import { GalaxySpinnerModule } from './spinner';
+import { GalaxyTabsModule } from './tabs';
+import { GalaxyTerminalModule } from './terminal';
 import { GalaxyToolbarModule } from './toolbar';
 import { GalaxyTooltipModule } from './tooltip';
-import { GalaxyTerminalModule } from './terminal';
+
+const GALAXY_UI_COMPONENTS = [
+  GalaxyAvatarModule,
+  GalaxyButtonModule,
+  GalaxyCardModule,
+  GalaxyFormModule,
+  GalaxyMenuModule,
+  GalaxyNavigationModule,
+  GalaxySidenavModule,
+  GalaxySpinnerModule,
+  GalaxyTabsModule,
+  GalaxyToolbarModule,
+  GalaxyTooltipModule,
+  GalaxyTerminalModule,
+];
 
 @NgModule({
-  imports: [
-    GalaxyAvatarModule,
-    GalaxyButtonModule,
-    GalaxyCardModule,
-    GalaxyFormModule,
-    GalaxyMenuModule,
-    GalaxyNavigationModule,
-    GalaxySpinnerModule,
-    GalaxyToolbarModule,
-    GalaxyTooltipModule,
-    GalaxyTerminalModule,
-  ],
-  exports: [
-    GalaxyAvatarModule,
-    GalaxyButtonModule,
-    GalaxyCardModule,
-    GalaxyFormModule,
-    GalaxyMenuModule,
-    GalaxyNavigationModule,
-    GalaxySpinnerModule,
-    GalaxyToolbarModule,
-    GalaxyTerminalModule,
-  ],
+  imports: GALAXY_UI_COMPONENTS,
+  exports: GALAXY_UI_COMPONENTS,
   declarations: [],
 })
 export class GalaxyUIModule { }

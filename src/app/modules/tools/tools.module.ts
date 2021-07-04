@@ -7,6 +7,7 @@ import { ToolsRoutingModule } from './tools-routing.module';
 
 /** Components */
 import { JsonToJsComponent } from './json-to-js/json-to-js.component';
+import { FlexLayoutComponent } from './flex-layout/flex-layout.component';
 import { UnixConverterComponent } from './unix-converter/unix-converter.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { UnixConverterComponent } from './unix-converter/unix-converter.componen
   ],
   declarations: [
     JsonToJsComponent,
+    FlexLayoutComponent,
     UnixConverterComponent
   ],
 })

@@ -1,8 +1,12 @@
 .galaxy-card {
-  padding: 24px;
-  font-size: 16px;
-  color: #3c3c3c;
-  border-radius: 4px;
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
+  position: relative;
+  word-wrap: break-word;
+  flex-direction: column;
+  box-sizing: border-box;
   background-color: #fff;
-  box-shadow: rgb(53 53 53 / 30%) 0px 1px 4px 0px;
+  background-clip: border-box;
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
 }

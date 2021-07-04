@@ -1,0 +1,31 @@
+<div class="galaxy-tabs">
+  <input type="radio" class="galaxy-tab-control"
+         *ngFor="let tab of tabs; let i = index"
+         [attr.id]="tab.id"
+         [attr.name]="tabControlName"
+         (change)="tabChange(tab, i)">
+
+  <ul class="galaxy-tab-header">
+    <li *ngFor="let tab of tabs; let i = index"
+        [style.max-width.%]="(100 / tabs.length)"
+        [ngClass]="{'active': tab.active}">
+      <label [attr.for]="tab.id" role="button">
+        <ng-container [ngTemplateOutlet]="tab.iconRef"></ng-container>
+        <br>
+        <span>{{tab.title}}</span>
+      </label>
+    </li>
+  </ul>
+  <div #slider class="galaxy-tab-slider"
+       [style.width.%]="(100 / tabs.length)">
+    <div class="galaxy-tab-indicator"></div>
+  </div>
+
+  <div class="galaxy-tab-content">
+    <section *ngFor="let tab of tabs; let i = index"
+             [ngClass]="{'active': tab.active}">
+      <h2>{{tab.title}}</h2>
+      <div galaxy-tab-body [content]="tab.content"></div>
+    </section>
+  </div>
+</div>

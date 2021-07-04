@@ -8,6 +8,15 @@
   box-sizing: border-box;
   cursor: pointer;
   outline: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
 }
 
 .galaxy-button {
