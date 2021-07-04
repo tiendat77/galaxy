@@ -5,7 +5,7 @@ export interface GalaxyMenuItem {
 }
 
 export const GALAXY_MODULES: GalaxyMenuItem[] = [
-  { icon: '', link: 'dashboard', name: 'Dashboard'},
+  { icon: '', link: 'dashboard', name: 'Dashboard' },
   { icon: '', link: 'ui/avatar', name: 'Avatar' },
   { icon: '', link: 'ui/button', name: 'Button' },
   { icon: '', link: 'ui/card', name: 'Card' },
