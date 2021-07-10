@@ -1,21 +1,20 @@
 .galaxy-radio-button {
   display: flex;
+  cursor: pointer;
   align-items: center;
   color: #929daf;
   position: relative;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
 }
 
 input[type=radio] {
   display: none;
 }
 
-label {
-  display: block;
-  cursor: pointer;
+.label {
+  display: inline-block;
   font-weight: 300;
-  padding-left: 2rem;
-  position: absolute;
+  padding-left: 0.5rem;
   transition: all 0.25s linear;
 }
 
@@ -43,7 +42,7 @@ label {
 }
 
 .galaxy-radio-button:hover {
-  label {
+  .label {
     color: #d4d4d4;
   }
 
@@ -52,7 +51,7 @@ label {
   }
 }
 
-input[type=radio]:checked ~ label {
+input[type=radio]:checked ~ .label {
   color: #19ca63;
 }
 

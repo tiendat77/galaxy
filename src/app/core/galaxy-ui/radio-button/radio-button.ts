@@ -19,28 +19,17 @@ let nextId = 0;
 export class GalaxyRadioButton implements ControlValueAccessor {
 
   @Input() id = `galaxy-radio-${++nextId}-input`;
-  @Input() name;
   @Input() label;
   @Input() required;
-  @Input() value1;
+  @Input() name;
+  @Input() value;
 
-  @Input('value') _value = false;
-
-  private innerValue;
-  get value() {
-    return this.innerValue;
-  }
-
-  set value(val) {
-    this.innerValue = val;
-    this.onChange(val);
-    this.onTouched();
-  }
-
-  constructor() { }
-
+  model;
+  checked;
   onChange: Function;
   onTouched: Function;
+
+  constructor() {}
 
   registerOnChange(fn) {
     this.onChange = fn;
@@ -51,11 +40,13 @@ export class GalaxyRadioButton implements ControlValueAccessor {
   }
 
   writeValue(value) {
-    this.innerValue = value;
+    this.model = value;
+    this.checked = this.model === this.value;
   }
 
-  onChecked(value) {
-    this.value = value;
+  select(event) {
+    this.model = this.value;
+    this.onChange(this.model);
   }
 
 }

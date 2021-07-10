@@ -1,17 +1,17 @@
-<div class="galaxy-radio-button">
+<label [attr.for]="id" class="galaxy-radio-button">
   <input #input type="radio"
-      [attr.name]="name"
       [required]="required"
+      [attr.name]="name"
       [id]="id"
-      [value]="_value"
-      [ngModel]="value"
-      (ngModelChange)="onChecked($event)">
+      [value]="value"
+      [checked]="checked"
+      (change)="select($event)">
 
   <div class="indicator-outer">
     <div class="indicator-inter"></div>
   </div>
 
-  <label [attr.for]="id">
+  <span class="label">
     <ng-content></ng-content>
-  </label>
-</div>
+  </span>
+</label>
