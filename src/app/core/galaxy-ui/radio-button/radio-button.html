@@ -1,0 +1,17 @@
+<div class="galaxy-radio-button">
+  <input #input type="radio"
+      [attr.name]="name"
+      [required]="required"
+      [id]="id"
+      [value]="_value"
+      [ngModel]="value"
+      (ngModelChange)="onChecked($event)">
+
+  <div class="indicator-outer">
+    <div class="indicator-inter"></div>
+  </div>
+
+  <label [attr.for]="id">
+    <ng-content></ng-content>
+  </label>
+</div>

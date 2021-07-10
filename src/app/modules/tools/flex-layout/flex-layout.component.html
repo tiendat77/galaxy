@@ -32,25 +32,19 @@
               <div class="layout-control">
                 <h3>Layout Direction</h3>
 
-                <ul class="radio-form-group">
-                  <li>
-                    <input type="radio" id="ld-row" value="row"
-                           formControlName="direction">
-                    <div class="indicator-outer">
-                      <div class="indicator-inter"></div>
-                    </div>
-                    <label for="ld-row">Row</label>
-                  </li>
+                <galaxy-radio-button
+                    value="row"
+                    name="direction"
+                    formControlName="direction">
+                  Row
+                </galaxy-radio-button>
 
-                  <li>
-                    <input type="radio" id="ld-column" value="column"
-                           formControlName="direction">
-                    <div class="indicator-outer">
-                      <div class="indicator-inter"></div>
-                    </div>
-                    <label for="ld-column">Column</label>
-                  </li>
-                </ul>
+                <galaxy-radio-button
+                    value="column"
+                    name="direction"
+                    formControlName="direction">
+                  Column
+                </galaxy-radio-button>
               </div>
 
               <div class="layout-control">
