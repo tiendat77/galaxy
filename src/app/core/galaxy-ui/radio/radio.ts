@@ -3,20 +3,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export const RADIO_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => GalaxyRadioButton),
+  useExisting: forwardRef(() => GalaxyRadio),
   multi: true
 };
 
 let nextId = 0;
 
 @Component({
-  selector: 'galaxy-radio-button',
-  templateUrl: 'radio-button.html',
-  styleUrls: ['radio-button.scss'],
+  selector: 'galaxy-radio',
+  templateUrl: 'radio.html',
+  styleUrls: ['radio.scss'],
   providers: [RADIO_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalaxyRadioButton implements ControlValueAccessor {
+export class GalaxyRadio implements ControlValueAccessor {
 
   @Input() id = `galaxy-radio-${++nextId}-input`;
   @Input() label;

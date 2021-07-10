@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { GalaxyRadioButton } from './radio-button';
+import { GalaxyRadio } from './radio';
 
 @NgModule({
   imports: [
     FormsModule
   ],
   exports: [
-    GalaxyRadioButton
+    GalaxyRadio
   ],
   declarations: [
-    GalaxyRadioButton
+    GalaxyRadio
   ],
 })
-export class GalaxyRadioButtonModule {}
+export class GalaxyRadioModule {}

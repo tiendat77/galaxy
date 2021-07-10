@@ -3,29 +3,29 @@ import { FormControl } from '@angular/forms';
 import { GalaxyService } from '../galaxy.service';
 
 @Component({
-  selector: 'galaxy-radio-button-demo',
-  templateUrl: './radio-button-demo.html',
-  styleUrls: ['./radio-button-demo.scss'],
+  selector: 'galaxy-radio-demo',
+  templateUrl: './radio-demo.html',
+  styleUrls: ['./radio-demo.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalaxyRadioButtonDemoComponent implements OnInit {
+export class GalaxyRadioDemoComponent implements OnInit {
 
-  id = 'ui/radio-button';
+  id = 'ui/radio';
 
   html = `
-  <galaxy-radio-button
+  <galaxy-radio
     value="hero"
     name="character"
     [formControl]="character">
   Hero
-  </galaxy-radio-button>
+  </galaxy-radio>
 
-  <galaxy-radio-button
+  <galaxy-radio
     value="devil"
     name="character"
     [formControl]="character">
   Devil
-  </galaxy-radio-button>
+  </galaxy-radio>
 
   <span>Your character: {{character.value}}</span>
   `;
@@ -35,10 +35,10 @@ export class GalaxyRadioButtonDemoComponent implements OnInit {
   import { FormControl } from '@angular/forms';
 
   @Component({
-    selector: 'galaxy-radio-button-demo',
-    templateUrl: './radio-button-demo.html',
+    selector: 'galaxy-radio-demo',
+    templateUrl: './radio-demo.html',
   })
-  export class GalaxyRadioButtonDemoComponent {
+  export class GalaxyRadioDemoComponent {
 
     character: FormControl = new FormControl('hero');
 
