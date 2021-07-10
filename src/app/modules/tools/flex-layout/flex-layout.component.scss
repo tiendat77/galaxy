@@ -133,6 +133,8 @@
   color: #565a5f;
   white-space: pre;
   padding-left: 1rem;
+  user-select: all;
+  position: relative;
 
   &::before {
     content: '{';
