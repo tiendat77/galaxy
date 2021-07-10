@@ -2,6 +2,150 @@
   <h2 class="title">Flex layout</h2>
 
   <section>
-    <p>flex-layout works!</p>
+    <h3 class="sub-header">Align childrens</h3>
+
+    <div class="content">
+      <div class="flex-demo" [ngClass]="flexDirection">
+        <div #flexDemo>
+          <div class="block">Block 1</div>
+          <div class="block">Block 2</div>
+          <div class="block">Block 3</div>
+          <div class="block">Block 4</div>
+          <div class="block">Block 5</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="control">
+        <galaxy-tabs>
+          <galaxy-tab title="Controls" [iconRef]="settingsIcon">
+            <div class="flex row align-start space-between"
+                 style="min-height: 300px;"
+                 [formGroup]="flexForm">
+              <div class="layout-control">
+                <h3>Layout Direction</h3>
+
+                <galaxy-radio value="row" name="direction" formControlName="direction">
+                  Row
+                </galaxy-radio>
+
+                <galaxy-radio value="column" name="direction" formControlName="direction">
+                  Column
+                </galaxy-radio>
+              </div>
+
+              <div class="layout-control">
+                <!-- justify-content -->
+                <h3>Alignment ({{ flexDirection === 'row' ? 'Horizontal' : 'Vertical' }})</h3>
+
+                <galaxy-radio value="flex-start" name="justify" formControlName="justify">
+                  Start*
+                </galaxy-radio>
+
+                <galaxy-radio value="center" name="justify" formControlName="justify">
+                  Center
+                </galaxy-radio>
+
+                <galaxy-radio value="flex-end" name="justify" formControlName="justify">
+                  End
+                </galaxy-radio>
+
+                <galaxy-radio value="space-around" name="justify" formControlName="justify">
+                  Space Around
+                </galaxy-radio>
+
+                <galaxy-radio value="space-between" name="justify" formControlName="justify">
+                  Space Between
+                </galaxy-radio>
+
+                <galaxy-radio value="space-evenly" name="justify" formControlName="justify">
+                  Space Evenly
+                </galaxy-radio>
+              </div>
+
+              <div class="layout-control">
+                <!-- align-items align-content -->
+                <h3>Alignment ({{ flexDirection === 'row' ? 'Vertical' : 'Horizontal' }})</h3>
+
+                <galaxy-radio value="stretch" name="align" formControlName="align">
+                  Stretch*
+                </galaxy-radio>
+
+                <galaxy-radio value="flex-start" name="align" formControlName="align">
+                  Start
+                </galaxy-radio>
+
+                <galaxy-radio value="center" name="align" formControlName="align">
+                  Center
+                </galaxy-radio>
+
+                <galaxy-radio value="flex-end" name="align" formControlName="align">
+                  End
+                </galaxy-radio>
+              </div>
+            </div>
+          </galaxy-tab>
+
+          <galaxy-tab title="Styles" [iconRef]="styleIcon">
+            <div class="style-content">{{flexStyles}}</div>
+          </galaxy-tab>
+        </galaxy-tabs>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 class="sub-header">Flex fill parent</h3>
+
+    <div class="content">
+      <div #fillDemo class="fill-demo">
+        <div class="panel">Flex 60</div>
+        <div class="panel">Flex 20</div>
+        <div class="panel">Flex</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="control">
+        <galaxy-tabs>
+          <galaxy-tab title="Controls" [iconRef]="settingsIcon">
+            <div class="flex row align-start space-between"
+                 style="min-height: 300px;"
+                 [formGroup]="fillForm">
+              <div class="layout-control">
+                <h3>Layout Direction</h3>
+
+                <galaxy-radio value="row" name="fill-direction" formControlName="direction">
+                  Row
+                </galaxy-radio>
+
+                <galaxy-radio value="column" name="fill-direction" formControlName="direction">
+                  Column
+                </galaxy-radio>
+              </div>
+            </div>
+          </galaxy-tab>
+
+          <galaxy-tab title="Styles" [iconRef]="styleIcon">
+            <div class="style-content">{{fillStyles}}</div>
+          </galaxy-tab>
+        </galaxy-tabs>
+      </div>
+    </div>
   </section>
 </div>
+
+<ng-template #settingsIcon>
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 24 24">
+    <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+  </svg>
+</ng-template>
+
+<ng-template #styleIcon>
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 24 24">
+    <path d="M2.53 19.65l1.34.56v-9.03l-2.43 5.86c-.41 1.02.08 2.19 1.09 2.61zm19.5-3.7L17.07 3.98c-.31-.75-1.04-1.21-1.81-1.23-.26 0-.53.04-.79.15L7.1 5.95c-.75.31-1.21 1.03-1.23 1.8-.01.27.04.54.15.8l4.96 11.97c.31.76 1.05 1.22 1.83 1.23.26 0 .52-.05.77-.15l7.36-3.05c1.02-.42 1.51-1.59 1.09-2.6zm-9.2 3.8L7.87 7.79l7.35-3.04h.01l4.95 11.95-7.35 3.05z"/>
+    <circle cx="11" cy="9" r="1"/>
+    <path d="M5.88 19.75c0 1.1.9 2 2 2h1.45l-3.45-8.34v6.34z"/>
+  </svg>
+</ng-template>

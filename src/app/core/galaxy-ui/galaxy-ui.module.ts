@@ -6,6 +6,7 @@ import { GalaxyCardModule } from './card';
 import { GalaxyFormModule } from './form';
 import { GalaxyMenuModule } from './menu';
 import { GalaxyNavigationModule } from './navigation';
+import { GalaxyRadioModule } from './radio';
 import { GalaxySidenavModule } from './sidenav';
 import { GalaxySpinnerModule } from './spinner';
 import { GalaxyTabsModule } from './tabs';
@@ -20,6 +21,7 @@ const GALAXY_UI_COMPONENTS = [
   GalaxyFormModule,
   GalaxyMenuModule,
   GalaxyNavigationModule,
+  GalaxyRadioModule,
   GalaxySidenavModule,
   GalaxySpinnerModule,
   GalaxyTabsModule,

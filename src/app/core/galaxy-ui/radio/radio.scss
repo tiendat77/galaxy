@@ -1,0 +1,65 @@
+.galaxy-radio {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  color: #929daf;
+  position: relative;
+  padding: 0.5rem;
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.label {
+  display: inline-block;
+  font-weight: 300;
+  padding-left: 0.5rem;
+  transition: all 0.25s linear;
+}
+
+.indicator-outer {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  border-color: #929daf;
+  transition: border-color 0.25s linear;
+
+  .indicator-inter {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    transform: scale(0);
+    transition: background-color 0.25s linear, transform 0.25s linear;
+  }
+}
+
+.galaxy-radio-button:hover {
+  .label {
+    color: #d4d4d4;
+  }
+
+  .indicator-outer {
+    border-color: #d4d4d4;
+  }
+}
+
+input[type=radio]:checked ~ .label {
+  color: #19ca63;
+}
+
+input[type=radio]:checked ~ .indicator-outer {
+  border-color: #19ca63;
+
+  .indicator-inter {
+    transform: scale(1);
+    background-color: #19ca63;
+  }
+}

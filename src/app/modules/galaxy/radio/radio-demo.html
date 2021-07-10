@@ -1,6 +1,20 @@
 <div galaxy-card galaxy-ui-demo>
-  <div class="demo">
-    example works!
+  <div class="demo column">
+    <galaxy-radio
+        value="hero"
+        name="character"
+        [formControl]="character">
+      Hero
+    </galaxy-radio>
+
+    <galaxy-radio
+        value="devil"
+        name="character"
+        [formControl]="character">
+      Devil
+    </galaxy-radio>
+
+    <span>Your character: {{character.value}}</span>
   </div>
 
   <div class="source-code">

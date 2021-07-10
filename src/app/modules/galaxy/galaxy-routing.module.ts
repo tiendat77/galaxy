@@ -11,6 +11,7 @@ import { GalaxyCardDemoComponent } from './card/card-demo';
 import { GalaxyExampleDemoComponent } from './example/example-demo';
 import { GalaxyFormDemoComponent } from './form/form-demo';
 import { GalaxyMenuDemoComponent } from './menu/menu-demo';
+import { GalaxyRadioDemoComponent } from './radio/radio-demo';
 import { GalaxySidenavDemoComponent } from './sidenav/sidenav-demo';
 import { GalaxySpinnerDemoComponent } from './spinner/spinner-demo';
 import { GalaxyTabsDemoComponent } from './tabs/tabs-demo';
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'ui/example', component: GalaxyExampleDemoComponent },
       { path: 'ui/form', component: GalaxyFormDemoComponent },
       { path: 'ui/menu', component: GalaxyMenuDemoComponent },
+      { path: 'ui/radio', component: GalaxyRadioDemoComponent },
       { path: 'ui/sidenav', component: GalaxySidenavDemoComponent },
       { path: 'ui/spinner', component: GalaxySpinnerDemoComponent },
       { path: 'ui/tabs', component: GalaxyTabsDemoComponent },

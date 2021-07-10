@@ -18,7 +18,6 @@ $label-inactive: #929daf;
   padding: 24px;
   min-width: 100%;
   min-height: 200px;
-  background: #fff;
   border-radius: 1rem;
   position: relative;
   box-sizing: border-box;
@@ -36,7 +35,7 @@ $label-inactive: #929daf;
     justify-content: space-between;
   }
 
-  ul {
+  ul.galaxy-tab-header {
     padding: 0;
     margin-bottom: 10px;
     list-style-type: none;

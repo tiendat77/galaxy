@@ -62,8 +62,24 @@
   background: transparent;
   border: none;
   outline: none;
-  user-select: none;
+  text-align: center;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  svg {
+    fill: #67748e;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+  }
+
+  &:hover {
+    background: rgba(239, 239, 239, 0.65);
+
+    svg {
+      fill: var(--color-green);
+    }
+  }
 }
