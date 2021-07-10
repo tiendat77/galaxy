@@ -26,12 +26,16 @@ export const GALAXY_HEADER_MENU: NavigationItem[] = [
     url: '/tools',
     children: [
       {
+        name: 'Json to Js',
+        url: '/tools/json-to-js'
+      },
+      {
         name: 'Flex Layout',
         url: '/tools/flex-layout'
       },
       {
-        name: 'Json to Js',
-        url: '/tools/json-to-js'
+        name: 'Box Shadow Collection',
+        url: '/tools/box-shadow'
       },
       {
         name: 'Unix Timestamp Converter',

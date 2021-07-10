@@ -6,8 +6,9 @@ import { GalaxySharedModule } from '../../shared/shared.module';
 import { ToolsRoutingModule } from './tools-routing.module';
 
 /** Components */
-import { JsonToJsComponent } from './json-to-js/json-to-js.component';
+import { BoxShadowComponent } from './box-shadow/box-shadow.component';
 import { FlexLayoutComponent } from './flex-layout/flex-layout.component';
+import { JsonToJsComponent } from './json-to-js/json-to-js.component';
 import { UnixConverterComponent } from './unix-converter/unix-converter.component';
 
 @NgModule({
@@ -18,8 +19,9 @@ import { UnixConverterComponent } from './unix-converter/unix-converter.componen
     GalaxySharedModule,
   ],
   declarations: [
-    JsonToJsComponent,
+    BoxShadowComponent,
     FlexLayoutComponent,
+    JsonToJsComponent,
     UnixConverterComponent
   ],
 })
