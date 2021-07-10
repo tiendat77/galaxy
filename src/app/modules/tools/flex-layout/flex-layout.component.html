@@ -5,8 +5,8 @@
     <h3 class="sub-header">Align childrens</h3>
 
     <div class="content">
-      <div class="demo">
-        <div #demo>
+      <div class="flex-demo" [ngClass]="flexDirection">
+        <div #flexDemo>
           <div class="block">Block 1</div>
           <div class="block">Block 2</div>
           <div class="block">Block 3</div>
@@ -18,48 +18,114 @@
       <div class="divider"></div>
 
       <div class="control">
-        <button galaxy-icon-button class="btn-copy" (click)="copy()">
-          <svg viewBox="0 0 24 24" width="24px" height="24px">
-            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-          </svg>
-        </button>
-
         <galaxy-tabs>
           <galaxy-tab title="Controls" [iconRef]="settingsIcon">
             <div class="flex row align-start space-between"
                  style="min-height: 300px;"
-                 [formGroup]="alignmentForm">
+                 [formGroup]="flexForm">
               <div class="layout-control">
                 <h3>Layout Direction</h3>
 
-                <galaxy-radio-button
-                    value="row"
-                    name="direction"
-                    formControlName="direction">
+                <galaxy-radio value="row" name="direction" formControlName="direction">
                   Row
-                </galaxy-radio-button>
+                </galaxy-radio>
 
-                <galaxy-radio-button
-                    value="column"
-                    name="direction"
-                    formControlName="direction">
+                <galaxy-radio value="column" name="direction" formControlName="direction">
                   Column
-                </galaxy-radio-button>
+                </galaxy-radio>
               </div>
 
               <div class="layout-control">
-                <h3>Alignment Horizontal</h3>
+                <!-- justify-content -->
+                <h3>Alignment ({{ flexDirection === 'row' ? 'Horizontal' : 'Vertical' }})</h3>
+
+                <galaxy-radio value="flex-start" name="justify" formControlName="justify">
+                  Start*
+                </galaxy-radio>
+
+                <galaxy-radio value="center" name="justify" formControlName="justify">
+                  Center
+                </galaxy-radio>
+
+                <galaxy-radio value="flex-end" name="justify" formControlName="justify">
+                  End
+                </galaxy-radio>
+
+                <galaxy-radio value="space-around" name="justify" formControlName="justify">
+                  Space Around
+                </galaxy-radio>
+
+                <galaxy-radio value="space-between" name="justify" formControlName="justify">
+                  Space Between
+                </galaxy-radio>
+
+                <galaxy-radio value="space-evenly" name="justify" formControlName="justify">
+                  Space Evenly
+                </galaxy-radio>
               </div>
 
               <div class="layout-control">
-                <h3>Alignment Vertical</h3>
+                <!-- align-items align-content -->
+                <h3>Alignment ({{ flexDirection === 'row' ? 'Vertical' : 'Horizontal' }})</h3>
+
+                <galaxy-radio value="stretch" name="align" formControlName="align">
+                  Stretch*
+                </galaxy-radio>
+
+                <galaxy-radio value="flex-start" name="align" formControlName="align">
+                  Start
+                </galaxy-radio>
+
+                <galaxy-radio value="center" name="align" formControlName="align">
+                  Center
+                </galaxy-radio>
+
+                <galaxy-radio value="flex-end" name="align" formControlName="align">
+                  End
+                </galaxy-radio>
               </div>
             </div>
           </galaxy-tab>
 
           <galaxy-tab title="Styles" [iconRef]="styleIcon">
+            <div class="style-content">{{flexStyles}}</div>
+          </galaxy-tab>
+        </galaxy-tabs>
+      </div>
+    </div>
+  </section>
 
-            got the styles here
+  <section>
+    <h3 class="sub-header">Flex fill parent</h3>
+
+    <div class="content">
+      <div class="demo">
+        <div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="control">
+        <galaxy-tabs>
+          <galaxy-tab title="Controls" [iconRef]="settingsIcon">
+            <div class="flex row align-start space-between"
+                 style="min-height: 300px;">
+              <div class="layout-control">
+                <h3>Layout Direction</h3>
+
+                <!-- <galaxy-radio value="row" name="direction" formControlName="direction">
+                  Row
+                </galaxy-radio>
+
+                <galaxy-radio value="column" name="direction" formControlName="direction">
+                  Column
+                </galaxy-radio> -->
+              </div>
+            </div>
+          </galaxy-tab>
+
+          <galaxy-tab title="Styles" [iconRef]="styleIcon">
+            <div class="style-content"></div>
           </galaxy-tab>
         </galaxy-tabs>
       </div>

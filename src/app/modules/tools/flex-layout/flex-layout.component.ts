@@ -2,6 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
+export interface FlexLayoutStyles {
+  align: string;
+  justify: string;
+  direction: string;
+}
+
 @Component({
   selector: 'app-flex-layout',
   templateUrl: './flex-layout.component.html',
@@ -9,9 +15,14 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class FlexLayoutComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('demo') demoRef: ElementRef;
+  @ViewChild('flexDemo') flexDemoRef: ElementRef;
 
-  alignmentForm: FormGroup;
+  flexStyles: string;
+  flexForm: FormGroup;
+
+  get flexDirection() {
+    return this.flexForm?.get('direction').value;
+  }
 
   constructor() { }
 
@@ -21,25 +32,31 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.initView();
+    setTimeout(() => {
+      this.initView();
+      this.styleChanged();
+    }, 100);
   }
 
   private initForm() {
-    this.alignmentForm = new FormGroup({
-      direction: new FormControl('row')
+    this.flexForm = new FormGroup({
+      align: new FormControl('flex-start'),
+      justify: new FormControl('flex-start'),
+      direction: new FormControl('row'),
     });
   }
 
   private initSubcription() {
-    this.alignmentForm.valueChanges.pipe(
+    this.flexForm.valueChanges.pipe(
       debounceTime(200)
     ).subscribe((value) => {
-      this.alignmentChanged();
+      this.flexChanged();
+      this.styleChanged();
     });
   }
 
   private initView() {
-    const element = this.demoRef?.nativeElement as HTMLElement;
+    const element = this.flexDemoRef?.nativeElement as HTMLElement;
 
     if (!element) { return; }
 
@@ -47,33 +64,42 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
     element.style.display = 'flex';
     element.style.flexDirection = 'row';
     element.style.boxSizing = 'border-box';
+    element.style.alignItems = 'flex-start';
+    element.style.alignContent = 'flex-start';
+    element.style.justifyContent = 'flex-start';
   }
 
-  private getAlignmentFormValue() {
-    const styles = this.alignmentForm.value;
+  private getFlexFormValue() {
+    const styles = this.flexForm.value;
 
-    return {
-      flexDirection: styles.direction
-    };
+    return styles as FlexLayoutStyles;
   }
 
-  private alignmentChanged() {
-    const element = this.demoRef?.nativeElement as HTMLElement;
+  private flexChanged() {
+    const element = this.flexDemoRef?.nativeElement as HTMLElement;
 
     if (!element) { return; }
 
-    const styles = this.getAlignmentFormValue();
+    const styles = this.getFlexFormValue();
 
-    element.style.flexDirection = styles.flexDirection;
+    element.style.alignItems = styles.align;
+    element.style.alignContent = styles.align;
+    element.style.justifyContent = styles.justify;
+    element.style.flexDirection = styles.direction;
+  }
+
+  private styleChanged() {
+    const element = this.flexDemoRef?.nativeElement as HTMLElement;
+
+    if (!element) { return; }
+
+    const raw = element.getAttribute('style').toString();
+    const _styles = raw.split(';').map(s => s?.trim()).join(';\n');
+    this.flexStyles = _styles;
   }
 
   copy() {
-    const element = this.demoRef?.nativeElement as HTMLElement;
-
-    if (!element) { return; }
-
-    const styles = element.getAttribute('style').toString();
-    console.log(styles.split(';'));
+    console.log(this.flexStyles);
   }
 
 }
