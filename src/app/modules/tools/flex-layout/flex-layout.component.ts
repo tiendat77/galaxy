@@ -2,9 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
-export interface FlexLayoutStyles {
+interface FlexLayoutStyles {
   align: string;
   justify: string;
+  direction: string;
+}
+
+interface FillLayoutStyles {
   direction: string;
 }
 
@@ -24,6 +28,15 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
     return this.flexForm?.get('direction').value;
   }
 
+  @ViewChild('fillDemo') fillDemoRef: ElementRef;
+
+  fillStyles: string;
+  fillForm: FormGroup;
+
+  get fillDirection() {
+    return this.fillForm?.get('direction').value;
+  }
+
   constructor() { }
 
   ngOnInit() {
@@ -33,8 +46,11 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.initView();
-      this.styleChanged();
+      this.initFlexView();
+      this.flexStylesChanged();
+
+      this.initFillView();
+      this.fillStylesChanged();
     }, 100);
   }
 
@@ -44,6 +60,10 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
       justify: new FormControl('flex-start'),
       direction: new FormControl('row'),
     });
+
+    this.fillForm = new FormGroup({
+      direction: new FormControl('row')
+    });
   }
 
   private initSubcription() {
@@ -51,11 +71,18 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
       debounceTime(200)
     ).subscribe((value) => {
       this.flexChanged();
-      this.styleChanged();
+      this.flexStylesChanged();
+    });
+
+    this.fillForm.valueChanges.pipe(
+      debounceTime(200)
+    ).subscribe((value) => {
+      this.fillChanged();
+      this.fillStylesChanged();
     });
   }
 
-  private initView() {
+  private initFlexView() {
     const element = this.flexDemoRef?.nativeElement as HTMLElement;
 
     if (!element) { return; }
@@ -69,9 +96,9 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
     element.style.justifyContent = 'flex-start';
   }
 
+  /////////////// FLEX LAYOUT ///////////////
   private getFlexFormValue() {
     const styles = this.flexForm.value;
-
     return styles as FlexLayoutStyles;
   }
 
@@ -88,18 +115,95 @@ export class FlexLayoutComponent implements OnInit, AfterViewInit {
     element.style.flexDirection = styles.direction;
   }
 
-  private styleChanged() {
+  private flexStylesChanged() {
     const element = this.flexDemoRef?.nativeElement as HTMLElement;
 
     if (!element) { return; }
 
-    const raw = element.getAttribute('style').toString();
-    const _styles = raw.split(';').map(s => s?.trim()).join(';\n');
-    this.flexStyles = _styles;
+    this.flexStyles = this.getStyles(element);
   }
 
-  copy() {
-    console.log(this.flexStyles);
+  /////////////// FILL PARENT ///////////////
+  private initFillView() {
+    const element = this.fillDemoRef?.nativeElement as HTMLElement;
+
+    if (!element) { return; }
+
+    element.style.flexDirection = 'row';
+
+    const child1 = element.children[0] as HTMLElement;
+    const child2 = element.children[1] as HTMLElement;
+    const child3 = element.children[2] as HTMLElement;
+
+    child1.style.flex = '1 1 100%';
+    child1.style.maxWidth = '60%';
+    child1.style.boxSizing = 'border-box';
+    child2.style.flex = '1 1 100%';
+    child2.style.maxWidth = '20%';
+    child2.style.boxSizing = 'border-box';
+    child3.style.flex = '1 1 0%';
+    child3.style.boxSizing = 'border-box';
+  }
+
+  private getFillFormValue() {
+    const styles = this.fillForm.value;
+    return styles as FillLayoutStyles;
+  }
+
+  private fillChanged() {
+    const element = this.fillDemoRef?.nativeElement as HTMLElement;
+
+    if (!element) { return; }
+
+    const { direction } = this.getFillFormValue();
+
+    element.style.flexDirection = direction;
+
+    const child1 = element.children[0] as HTMLElement;
+    const child2 = element.children[1] as HTMLElement;
+    const child3 = element.children[2] as HTMLElement;
+
+    if (direction === 'row') {
+      child1.style.maxHeight = null;
+      child1.style.maxWidth = '60%';
+      child2.style.maxHeight = null;
+      child2.style.maxWidth = '20%';
+      child3.style.flex = '1 1 0%';
+    } else {
+      child1.style.maxHeight = '60%';
+      child1.style.maxWidth = null;
+      child2.style.maxHeight = '20%';
+      child2.style.maxWidth = null;
+      child3.style.flex = '1 1 1e-09px';
+    }
+  }
+
+  private fillStylesChanged() {
+    const element = this.fillDemoRef?.nativeElement as HTMLElement;
+
+    if (!element) { return; }
+
+    const child1 = element.children[0] as HTMLElement;
+    const child2 = element.children[1] as HTMLElement;
+    const child3 = element.children[2] as HTMLElement;
+
+    const styles = [];
+    styles.push('.flex-60  {\n' + this.getStyles(child1, '  ') + '\n}\n');
+    styles.push('.flex-20  {\n' + this.getStyles(child2, '  ') + '\n}\n');
+    styles.push('.flex  {\n' + this.getStyles(child3, '  ') + '\n}');
+
+    this.fillStyles = styles.join('\n');
+  }
+
+  private getStyles(element: HTMLElement, spaces = '') {
+    const raw = element.getAttribute('style').toString();
+    const styles = raw
+      .split(';')
+      .filter(s => s !== '')
+      .map(s => (spaces + s?.trim()))
+      .join(';\n');
+
+    return styles + ';';
   }
 
 }

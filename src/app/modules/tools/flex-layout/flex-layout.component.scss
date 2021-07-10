@@ -129,6 +129,33 @@
   }
 }
 
+.panel {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.panel:nth-child(1) {
+  background-color: #15B097;
+}
+
+.panel:nth-child(2) {
+  background-color: #D66BA0;
+}
+
+.panel:nth-child(3) {
+  background-color: #7678ED;
+}
+
+.fill-demo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  height: 240px;
+}
+
 .style-content {
   color: #565a5f;
   white-space: pre;

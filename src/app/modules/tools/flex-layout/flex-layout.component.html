@@ -99,8 +99,10 @@
     <h3 class="sub-header">Flex fill parent</h3>
 
     <div class="content">
-      <div class="demo">
-        <div></div>
+      <div #fillDemo class="fill-demo">
+        <div class="panel">Flex 60</div>
+        <div class="panel">Flex 20</div>
+        <div class="panel">Flex</div>
       </div>
 
       <div class="divider"></div>
@@ -109,23 +111,24 @@
         <galaxy-tabs>
           <galaxy-tab title="Controls" [iconRef]="settingsIcon">
             <div class="flex row align-start space-between"
-                 style="min-height: 300px;">
+                 style="min-height: 300px;"
+                 [formGroup]="fillForm">
               <div class="layout-control">
                 <h3>Layout Direction</h3>
 
-                <!-- <galaxy-radio value="row" name="direction" formControlName="direction">
+                <galaxy-radio value="row" name="fill-direction" formControlName="direction">
                   Row
                 </galaxy-radio>
 
-                <galaxy-radio value="column" name="direction" formControlName="direction">
+                <galaxy-radio value="column" name="fill-direction" formControlName="direction">
                   Column
-                </galaxy-radio> -->
+                </galaxy-radio>
               </div>
             </div>
           </galaxy-tab>
 
           <galaxy-tab title="Styles" [iconRef]="styleIcon">
-            <div class="style-content"></div>
+            <div class="style-content">{{fillStyles}}</div>
           </galaxy-tab>
         </galaxy-tabs>
       </div>
