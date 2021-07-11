@@ -1,8 +1,12 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
 import { GalaxySwitch } from './switch';
 
 @NgModule({
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   exports: [
     GalaxySwitch
   ],

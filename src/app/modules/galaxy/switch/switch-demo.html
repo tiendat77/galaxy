@@ -27,11 +27,17 @@
       Bulb is: {{ checked ? 'ON' : 'OFF' }}
     </div>
 
-    <galaxy-toggle class="example-margin"></galaxy-toggle>
+    <galaxy-switch class="example-margin" [(ngModel)]="checked">
+      Toggle the bulb (ngModel)
+    </galaxy-switch>
 
-    <button galaxy-raised-button (click)="test()">
-      Toggle
-    </button>
+    <galaxy-switch class="example-margin" [formControl]="subCtrl">
+      Tell me when someone switch the bulb (Form Control)
+    </galaxy-switch>
+
+    <div class="example-margin">
+      Your bulb subscription: {{subCtrl.value ? 'YES' : 'NO'}}
+    </div>
   </div>
 
   <div class="source-code">

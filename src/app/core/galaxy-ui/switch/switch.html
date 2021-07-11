@@ -1,1 +1,17 @@
-example works!
+<div class="galaxy-switch">
+  <label [attr.for]="id" class="switch">
+    <input type="checkbox"
+      [id]="id"
+      [checked]="checked"
+      [ngModel]="checked"
+      (ngModelChange)="toggle($event)">
+
+    <div class="layer">
+      <div class="knob"></div>
+    </div>
+  </label>
+
+  <div class="label">
+    <ng-content></ng-content>
+  </div>
+</div>

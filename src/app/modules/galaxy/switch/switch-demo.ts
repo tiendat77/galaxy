@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { GalaxyService } from '../galaxy.service';
 
 @Component({
@@ -39,7 +40,17 @@ export class GalaxySwitchDemoComponent implements OnInit {
     Bulb is: {{ checked ? 'ON' : 'OFF' }}
   </div>
 
-  <galaxy-toggle class="example-margin"></galaxy-toggle>
+  <galaxy-switch class="example-margin" [(ngModel)]="checked">
+    Toggle the bulb (ngModel)
+  </galaxy-switch>
+
+  <galaxy-switch class="example-margin" [formControl]="subCtrl">
+    Tell me when someone switch the bulb (Form Control)
+  </galaxy-switch>
+
+  <div class="example-margin">
+    Your bulb subscription: {{subCtrl.value ? 'YES' : 'NO'}}
+  </div>
   `;
   sass = `
   .bulb {
@@ -68,6 +79,7 @@ export class GalaxySwitchDemoComponent implements OnInit {
   export class GalaxySwitchDemoComponent {
 
     checked: boolean = false;
+    subCtrl: FormControl = new FormControl(true);
 
     constructor() { }
 
@@ -75,6 +87,7 @@ export class GalaxySwitchDemoComponent implements OnInit {
   `;
 
   checked: boolean = false;
+  subCtrl: FormControl = new FormControl(true);
 
   constructor(private galaxy: GalaxyService) { }
 

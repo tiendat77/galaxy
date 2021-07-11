@@ -1,0 +1,64 @@
+$color-on: var(--color-green);
+$background-on: #b1ffd2;
+$color-off: #ff88d5;
+$background-off: #ffedf9;
+
+.galaxy-switch {
+  color: #929daf;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.switch {
+  width: 72px;
+  height: 38px;
+  padding: 4px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.label {
+  display: inline-block;
+  font-weight: 300;
+  padding-left: 0.5rem;
+  transition: all 0.25s linear;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+.layer {
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+  background-color: $background-off;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.knob {
+  margin: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: $color-off;
+  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+}
+
+.knob:before {
+  content: '';
+  padding-top: 100%;
+}
+
+input[type=checkbox]:checked ~ .layer {
+  background-color: $background-on;
+}
+
+input[type=checkbox]:checked ~ .layer .knob {
+  transform: translateX(34px);
+  background-color: $color-on;
+}
