@@ -1,5 +1,4 @@
-import { ElementRef, ViewChild } from '@angular/core';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 
 import { BOX_SHADOWS } from './box-shadows';
 
@@ -9,7 +8,7 @@ import { BOX_SHADOWS } from './box-shadows';
   styleUrls: ['./box-shadow.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BoxShadowComponent implements OnInit {
+export class BoxShadowComponent {
 
   @ViewChild('copier') copier: ElementRef;
 
@@ -17,33 +16,34 @@ export class BoxShadowComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  copy(event: Event, style: string) {
+    this.clipboard(style);
+
+    const element = event.target as HTMLElement;
+    const origin = element.innerHTML;
+
+    element.innerHTML = 'Copied!';
+    setTimeout(() => element.innerHTML = origin, 1000);
   }
 
-  copy(style: string) {
-    setTimeout(() => {
-      /* Get the text field */
-      const element = this.copier?.nativeElement;
+  clipboard(style: string) {
+    /* Get the text field */
+    const element = this.copier?.nativeElement;
 
-      if (!element) {
-        alert('Oops! Unable to copy');
-        return;
-      }
+    try {
+      element.value = `box-shadow: ${style};`;
 
       /* Select the text field */
-      element.value = style;
       element.select();
       element.setSelectionRange(0, 99999); /* For mobile devices */
 
-      try {
-        document.execCommand('copy');
-        // this.notify.push('Copied to clipboard!');
+      /* Do copy */
+      document.execCommand('copy');
 
-      } catch (error) {
-        console.log(error);
-        alert('Oops! Unable to copy');
-      }
-    }, 250);
+    } catch (error) {
+      console.log(error);
+      alert('Oops! Unable to copy');
+    }
   }
 
 }
