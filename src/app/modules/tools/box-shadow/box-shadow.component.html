@@ -1,1 +1,29 @@
-<p>box-shadow works!</p>
+<div class="container">
+  <h2 class="title">Box shadow collection</h2>
+
+  <section>
+    <h3 class="sub-header">How to use</h3>
+
+    <div class="flex column center">
+      <div class="content panel">
+        <span class="about">Click in the card to copy box shadow to your clipboard</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="clipboard">
+    <textarea #copier></textarea>
+  </div>
+
+  <section>
+    <ul class="collection">
+      <li *ngFor="let style of collection; let i = index">
+        <div class="card"
+             [style.boxShadow]="style"
+             (click)="copy($event, style)">
+          Box #{{i + 1}}
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>
