@@ -14,8 +14,10 @@ import { GalaxyMenuDemoComponent } from './menu/menu-demo';
 import { GalaxyRadioDemoComponent } from './radio/radio-demo';
 import { GalaxySidenavDemoComponent } from './sidenav/sidenav-demo';
 import { GalaxySpinnerDemoComponent } from './spinner/spinner-demo';
+import { GalaxySwitchDemoComponent } from './switch/switch-demo';
 import { GalaxyTabsDemoComponent } from './tabs/tabs-demo';
 import { GalaxyTerminalDemoComponent } from './terminal/terminal-demo';
+import { GalaxyToggleDemoComponent } from './toggle/toggle-demo';
 import { GalaxyTooltipDemoComponent } from './tooltip/tooltip-demo';
 
 const routes: Routes = [
@@ -35,8 +37,10 @@ const routes: Routes = [
       { path: 'ui/radio', component: GalaxyRadioDemoComponent },
       { path: 'ui/sidenav', component: GalaxySidenavDemoComponent },
       { path: 'ui/spinner', component: GalaxySpinnerDemoComponent },
+      { path: 'ui/switch', component: GalaxySwitchDemoComponent },
       { path: 'ui/tabs', component: GalaxyTabsDemoComponent },
       { path: 'ui/terminal', component: GalaxyTerminalDemoComponent },
+      { path: 'ui/toggle', component: GalaxyToggleDemoComponent },
       { path: 'ui/tooltip', component: GalaxyTooltipDemoComponent }
     ]
   }

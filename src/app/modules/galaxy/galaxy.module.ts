@@ -18,8 +18,10 @@ import { GalaxyMenuDemoComponent } from './menu/menu-demo';
 import { GalaxyRadioDemoComponent } from './radio/radio-demo';
 import { GalaxySidenavDemoComponent } from './sidenav/sidenav-demo';
 import { GalaxySpinnerDemoComponent } from './spinner/spinner-demo';
+import { GalaxySwitchDemoComponent } from './switch/switch-demo';
 import { GalaxyTabsDemoComponent } from './tabs/tabs-demo';
 import { GalaxyTerminalDemoComponent } from './terminal/terminal-demo';
+import { GalaxyToggleDemoComponent } from './toggle/toggle-demo';
 import { GalaxyTooltipDemoComponent } from './tooltip/tooltip-demo';
 
 const COMPONENTS = [
@@ -35,8 +37,10 @@ const COMPONENTS = [
   GalaxyRadioDemoComponent,
   GalaxySidenavDemoComponent,
   GalaxySpinnerDemoComponent,
+  GalaxySwitchDemoComponent,
   GalaxyTabsDemoComponent,
   GalaxyTerminalDemoComponent,
+  GalaxyToggleDemoComponent,
   GalaxyTooltipDemoComponent,
 ];
 

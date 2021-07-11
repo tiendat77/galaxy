@@ -9,8 +9,10 @@ import { GalaxyNavigationModule } from './navigation';
 import { GalaxyRadioModule } from './radio';
 import { GalaxySidenavModule } from './sidenav';
 import { GalaxySpinnerModule } from './spinner';
+import { GalaxySwitchModule } from './switch';
 import { GalaxyTabsModule } from './tabs';
 import { GalaxyTerminalModule } from './terminal';
+import { GalaxyToggleModule } from './toggle';
 import { GalaxyToolbarModule } from './toolbar';
 import { GalaxyTooltipModule } from './tooltip';
 
@@ -24,7 +26,9 @@ const GALAXY_UI_COMPONENTS = [
   GalaxyRadioModule,
   GalaxySidenavModule,
   GalaxySpinnerModule,
+  GalaxySwitchModule,
   GalaxyTabsModule,
+  GalaxyToggleModule,
   GalaxyToolbarModule,
   GalaxyTooltipModule,
   GalaxyTerminalModule,

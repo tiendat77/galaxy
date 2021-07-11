@@ -14,7 +14,9 @@ export const GALAXY_MODULES: GalaxyMenuItem[] = [
   { icon: '', link: 'ui/radio', name: 'Radio' },
   { icon: '', link: 'ui/sidenav', name: 'Sidenav' },
   { icon: '', link: 'ui/spinner', name: 'Spinner' },
+  { icon: '', link: 'ui/switch', name: 'Switch' },
   { icon: '', link: 'ui/tabs', name: 'Tabs' },
   { icon: '', link: 'ui/terminal', name: 'Terminal' },
+  // { icon: '', link: 'ui/toggle', name: 'Toggle' },
   { icon: '', link: 'ui/tooltip', name: 'Tooltip' }
 ];
