@@ -10,6 +10,7 @@ import { BoxShadowComponent } from './box-shadow/box-shadow.component';
 import { FlexLayoutComponent } from './flex-layout/flex-layout.component';
 import { JsonToJsComponent } from './json-to-js/json-to-js.component';
 import { UnixConverterComponent } from './unix-converter/unix-converter.component';
+import { SignalrParserComponent } from './signalr-parser/signalr-parser.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { UnixConverterComponent } from './unix-converter/unix-converter.componen
     BoxShadowComponent,
     FlexLayoutComponent,
     JsonToJsComponent,
-    UnixConverterComponent
+    UnixConverterComponent,
+    SignalrParserComponent
   ],
 })
 export class ToolsModule { }

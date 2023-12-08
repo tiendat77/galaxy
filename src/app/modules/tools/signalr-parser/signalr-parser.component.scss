@@ -1,0 +1,127 @@
+.container {
+  margin: auto;
+  max-width: 1200px;
+  padding: 36px;
+
+  .title {
+    margin-bottom: 2.3rem;
+  }
+
+  .header {
+    margin: 0;
+    color: #373f50;
+    font-weight: 400;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .sub-header {
+    color: #373f50;
+    font-weight: 300;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .icon {
+    margin-left: 1rem;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  .input, .output {
+    height: 200px;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    color: #6c757d;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: 1px solid #dadce0;
+
+    &:focus {
+      outline: 1px auto rgba(63, 183, 89, 0.4);
+    }
+  }
+
+  .error {
+    color: #212529;
+    line-height: 1.5;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 1.3rem;
+    margin-bottom: .2rem;
+  }
+
+  .hidden {
+    opacity: 0;
+    height: 0;
+  }
+
+  .button-convert {
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 400;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    margin-top: 1.3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 1px solid transparent;
+    background-color: var(--color-green);
+
+    &:hover {
+      background: #15bb5a;
+    }
+  }
+
+  .panel {
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: 1px solid #dadce0;
+  }
+
+  .list {
+    font-weight: 300;
+    padding-left: 20px;
+    list-style: initial;
+
+    li:not(:last-child) {
+      margin-bottom: 12px;
+    }
+  }
+
+  section:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}

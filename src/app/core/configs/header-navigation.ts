@@ -40,6 +40,10 @@ export const GALAXY_HEADER_MENU: NavigationItem[] = [
       {
         name: 'Unix Timestamp Converter',
         url: '/tools/unix-converter'
+      },
+      {
+        name: 'SignalR Parser',
+        url: '/tools/signalr-parser'
       }
     ]
   }

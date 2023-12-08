@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="title flex row center">
+    <h1 class="header">SignalR Parser</h1>
+  </div>
+
+  <section>
+    <h3 class="sub-header">SignalR Response</h3>
+
+    <div class="flex column center">
+      <div class="content json">
+        <textarea class="input" placeholder="{...}" [(ngModel)]="input"></textarea>
+      </div>
+
+      <div class="content flex row end">
+        <!-- action here -->
+        <div class="nothing"></div>
+      </div>
+
+      <div class="content flex row center">
+        <div class="error">{{ error }}</div>
+      </div>
+
+      <div class="flex center">
+        <button class="button-convert" (click)="convert()">Convert</button>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="output">
+    <h3 class="sub-header">JavaScript Object Literal</h3>
+
+    <div class="flex column center">
+      <div class="content js">
+        <textarea class="output" readonly>{{ output }}</textarea>
+      </div>
+
+      <div class="flex column center">
+        <textarea #outputRef class="hidden"></textarea>
+        <button class="button-convert" (click)="copy()">Copy</button>
+      </div>
+    </div>
+  </section>
+</div>
